@@ -1,4 +1,4 @@
-name: Build Release
+name: macOS Build
 on: [push]
 jobs:
   macOS-Build:
@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: ./makr.rb macos
+      - run: ./make.rb macos
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
