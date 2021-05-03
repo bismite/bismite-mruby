@@ -9,7 +9,6 @@ TARGET = ARGV[0] || HOST
 DST_DIR = ARGV[1] || "build/#{TARGET}/share/bismite/templates"
 
 MINGW_DLLS = %w(
-  glew32.dll
   libmpg123-0.dll
   libpng16-16.dll
   SDL2.dll
