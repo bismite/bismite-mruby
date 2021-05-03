@@ -29,7 +29,13 @@ def download(files,target)
     if check filepath,hash
       puts "already downloaded #{filepath}"
     else
-      run "curl -JL#S -o #{filepath} #{url}"
+			if which "curl"
+	      run "curl -JL#S -o #{filepath} #{url}"
+			elsif which "wget"
+				run "wget -O #{filepath} #{url}"
+			else
+				raise "require curl or wget"
+			end
       check! filepath,hash
     end
   end
