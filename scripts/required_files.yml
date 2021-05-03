@@ -1,0 +1,33 @@
+common:
+  -
+    - https://github.com/bismite/bismite-library-core/archive/master.tar.gz
+    - bismite-library-core.tar.gz
+  - 5b681988d0da21703c7aeacf935eeb0a
+  -
+    - https://github.com/bismite/bismite-library-ext/archive/master.tar.gz
+    - bismite-library-ext.tar.gz
+  - 4f7b7e70010476ba0e0c56f92968aa4d
+  -
+    - https://github.com/mruby/mruby/archive/3.0.0.tar.gz
+    - mruby-3.0.0.tar.gz
+  - 381c36a37c722b3568a932306cc63e59
+linux:
+emscripten:
+macos:
+  - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz
+  - 435d5c21d71adcbce06e74e5c7c945eb
+x86_64-w64-mingw32:
+  - https://www.libsdl.org/release/SDL2-devel-2.0.14-mingw.tar.gz
+  - 1f331c4e29f54cfc470976ac43994617
+  - https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.5-mingw.tar.gz
+  - 2704080296a24b765ce1e9c3c427a970
+  - https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-mingw.tar.gz
+  - 067275e50b40aed65dc472b9964c1d38
+  - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt
+  - 3edacf7e64e1b7a634666ac043f6b13c
+  - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64/COPYING.MinGW-w64.txt
+  - 5bb2c9f26ed3acd4c9cfa4445a7a9772
+  -
+    - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/mingw-w64-libraries/winpthreads/COPYING
+    - COPYING.winpthreads.txt
+  - 06a442d2c46dd1e90807932a0c544789
