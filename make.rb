@@ -18,7 +18,7 @@ end
 targets.each do |target|
 
   if target == "clean"
-    run "rm -rf build/macos build/linux build/x86_64-w64-mingw32"
+    run "rm -rf build/macos build/linux build/x86_64-w64-mingw32 build/emscripten"
     run "rm -f scripts/mruby_config/*.lock"
     next
   end
