@@ -18,7 +18,7 @@ end
 targets.each do |target|
 
   if target == "clean"
-    run "rm -rf build/macos build/linux build/x86_64-w64-mingw32"
+    run "rm -rf build/macos build/linux build/x86_64-w64-mingw32 build/emscripten"
     run "rm -f scripts/mruby_config/*.lock"
     next
   end
@@ -54,4 +54,15 @@ targets.each do |target|
   }
 
   run "./scripts/build_template.rb #{target}"
+
+  rm_rf "tmp/#{target}"
+  mkdir_p "tmp/#{target}"
+  cp_r "build/#{target}/bin", "tmp/#{target}"
+  cp_r "build/#{target}/lib", "tmp/#{target}"
+  cp_r "build/#{target}/include", "tmp/#{target}"
+  cp_r "build/#{target}/share", "tmp/#{target}"
+  cp_r "build/#{target}/licenses", "tmp/#{target}"
+  Dir.chdir("tmp"){
+    run "tar czf #{target}.tgz #{target}"
+  }
 end
