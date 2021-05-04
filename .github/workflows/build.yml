@@ -4,7 +4,7 @@ on:
     tags:
       - '*'
 jobs:
-  macOS-Build:
+  macOS:
     runs-on: macos-10.15
     env:
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
@@ -16,11 +16,11 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: macos.tgz
+          file: tmp/macos.tgz
           asset_name: macos.tgz
           tag: ${{ github.ref }}
           overwrite: true
-  linux-Build:
+  linux:
     runs-on: ubuntu-20.04
     steps:
       - name: Install dependencies
@@ -32,7 +32,23 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: linux.tgz
+          file: tmp/linux.tgz
           asset_name: linux.tgz
+          tag: ${{ github.ref }}
+          overwrite: true
+  mingw-w64:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get install mingw-w64
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: ./make.rb x86_64-w64-mingw32
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: tmp/x86_64-w64-mingw32.tgz
+          asset_name: x86_64-w64-mingw32.tgz
           tag: ${{ github.ref }}
           overwrite: true

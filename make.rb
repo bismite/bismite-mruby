@@ -55,11 +55,14 @@ targets.each do |target|
 
   run "./scripts/build_template.rb #{target}"
 
-  rm_rf target
-  mkdir_p target
-  cp_r "build/#{target}/bin", target
-  cp_r "build/#{target}/lib", target
-  cp_r "build/#{target}/include", target
-  cp_r "build/#{target}/share", target
-  run "tar czf #{target}.tgz #{target}"
+  rm_rf "tmp/#{target}"
+  mkdir_p "tmp/#{target}"
+  cp_r "build/#{target}/bin", "tmp/#{target}"
+  cp_r "build/#{target}/lib", "tmp/#{target}"
+  cp_r "build/#{target}/include", "tmp/#{target}"
+  cp_r "build/#{target}/share", "tmp/#{target}"
+  cp_r "build/#{target}/licenses", "tmp/#{target}"
+  Dir.chdir("tmp"){
+    run "tar czf #{target}.tgz #{target}"
+  }
 end
