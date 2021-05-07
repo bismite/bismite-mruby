@@ -29,7 +29,7 @@ when /linux/
   mkdir_p "#{DST_DIR}/linux"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
   run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config.rb --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer"
-  copy_license_files "linux", "#{DST_DIR}/linux/licenses"
+  copy_license_files "linux", "#{DST_DIR}/linux"
 
 when /macos/
   mkdir_p "#{DST_DIR}/macos"
