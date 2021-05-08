@@ -35,9 +35,15 @@ targets.each do |target|
 
   case target
   when /macos/
+    # install msgpack-c
     run "tar zxf build/download/macos/msgpack-c-macos.tgz -C build/macos/"
-    cp_r "build/macos/msgpack-c/lib", "build/macos"
-    run "./scripts/macos/install_sdl.rb"
+    cp_r "build/macos/msgpack-c/lib", "build/macos", remove_destination:true
+    # install SDL
+    run "tar zxf build/download/macos/SDL-macOS-UniversalBinaries.tgz -C build/macos"
+    cp_r "build/macos/SDL-macOS-UniversalBinaries/lib", "build/macos", remove_destination:true
+    cp_r "build/macos/SDL-macOS-UniversalBinaries/include", "build/macos", remove_destination:true
+    cp_r "build/macos/SDL-macOS-UniversalBinaries/licenses", "build/macos", remove_destination:true
+    #
     cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /linux/
     cp "src/bismite-config.rb", "#{install_path(target)}/bin"
