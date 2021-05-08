@@ -26,14 +26,17 @@ targets.each do |target|
   puts "TARGET: #{target}"
   puts install_path target
 
-  mkdir_p "#{install_path(target)}/bin"
-  mkdir_p "#{install_path(target)}/lib"
-  mkdir_p "#{install_path(target)}/include"
+  mkdir_p install_path(target)
+  Dir.chdir(install_path(target)){
+    mkdir_p %w(bin lib include licenses)
+  }
 
   run "./scripts/download_required_files.rb #{target}"
 
   case target
   when /macos/
+    run "tar zxf build/download/macos/msgpack-c-macos.tgz -C build/macos/"
+    cp_r "build/macos/msgpack-c/lib", "build/macos"
     run "./scripts/macos/install_sdl.rb"
     cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /linux/
