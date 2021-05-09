@@ -14,7 +14,7 @@ ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{TARGET}.rb"
 #
 Dir.chdir("build/#{TARGET}/#{MRUBY}"){
   run "patch -p0 < mruby.patch"
-  run "rake"
+  run "rake MRUBY_YAML_USE_SYSTEM_LIBRARY=true"
 }
 
 #

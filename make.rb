@@ -38,6 +38,10 @@ targets.each do |target|
     # install msgpack-c
     run "tar zxf build/download/macos/msgpack-c-macos.tgz -C build/macos/"
     cp_r "build/macos/msgpack-c/lib", "build/macos", remove_destination:true
+    # install libyaml
+    run "tar zxf build/download/macos/libyaml-0.2.5-macos.tgz -C build/macos/"
+    cp_r "build/macos/libyaml-0.2.5-macos/lib", "build/macos", remove_destination:true
+    cp "build/macos/libyaml-0.2.5-macos/License", "build/macos/licenses/License.libyaml.txt"
     # install SDL
     run "tar zxf build/download/macos/SDL-macOS-UniversalBinaries.tgz -C build/macos"
     cp_r "build/macos/SDL-macOS-UniversalBinaries/lib", "build/macos", remove_destination:true
