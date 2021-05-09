@@ -26,9 +26,14 @@ end
 
 case TARGET
 when /linux/
-  mkdir_p "#{DST_DIR}/linux"
+  mkdir_p "#{DST_DIR}/linux/lib"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
-  run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config.rb --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer"
+  run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config.rb --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
+
+  libs = %w( libmsgpackc.so libmsgpackc.so.2 libmsgpackc.so.2.0.0 )
+  libs_origin = libs.map{|l| "build/linux/lib/#{l}" }
+  cp libs_origin, "#{DST_DIR}/linux/lib/"
+
   copy_license_files "linux", "#{DST_DIR}/linux"
 
 when /macos/

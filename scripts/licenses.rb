@@ -11,7 +11,7 @@ cp "build/#{TARGET}/bismite-library-ext/LICENSE", "#{LICENSE_DIR}/LICENSE.bismit
 
 case TARGET
 when /linux/
-  cp "build/#{TARGET}/#{MRUBY}/build/host/LEGAL", "#{LICENSE_DIR}/LEGAL.mruby.txt"
+  cp "build/#{TARGET}/#{MRUBY}/build/linux/LEGAL", "#{LICENSE_DIR}/LEGAL.mruby.txt"
 
 when /macos/
   cp "build/#{TARGET}/#{MRUBY}/build/macos-x86_64/LEGAL", "#{LICENSE_DIR}/LEGAL.mruby.txt"

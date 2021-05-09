@@ -12,8 +12,8 @@ common:
     - mruby-3.0.0.tar.gz
   - 381c36a37c722b3568a932306cc63e59
 linux:
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.7/msgpack-c-linux.tgz
-  - 5dd709f505354a29583317e42c974214
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.8/msgpack-c-linux.tgz
+  - 32bdeb91e91378722e5a47e0701176c2
 emscripten:
 macos:
   - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz

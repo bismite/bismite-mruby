@@ -40,8 +40,4 @@ def install_mruby(target,build_name)
   end
 end
 
-if /linux/ === TARGET
-  install_mruby TARGET, "host"
-else
-  install_mruby TARGET, TARGET
-end
+install_mruby TARGET, TARGET
