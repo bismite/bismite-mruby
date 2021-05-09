@@ -24,6 +24,7 @@ MRuby::CrossBuild.new('macos-arm64') do |conf|
     cc.include_paths << "#{INSTALL_PREFIX}/include"
     cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
     cc.include_paths << "#{INSTALL_PREFIX}/msgpack-c/include"
+    cc.include_paths << "#{INSTALL_PREFIX}/libyaml-0.2.5-macos/include"
     cc.flags = COMMON_CFLAGS + [ OPTIMIZE, C_STD ]
     cc.flags << "-fPIC -arch arm64"
   end
@@ -31,7 +32,7 @@ MRuby::CrossBuild.new('macos-arm64') do |conf|
   conf.linker do |linker|
     linker.command = 'clang'
     linker.library_paths << "#{INSTALL_PREFIX}/lib"
-    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc )
+    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc yaml )
     linker.flags << "-framework OpenGL -arch arm64"
   end
 end
@@ -47,6 +48,7 @@ MRuby::CrossBuild.new('macos-x86_64') do |conf|
     cc.include_paths << "#{INSTALL_PREFIX}/include"
     cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
     cc.include_paths << "#{INSTALL_PREFIX}/msgpack-c/include"
+    cc.include_paths << "#{INSTALL_PREFIX}/libyaml-0.2.5-macos/include"
     cc.flags = COMMON_CFLAGS + [ OPTIMIZE, C_STD ]
     cc.flags << "-fPIC -arch x86_64"
   end
@@ -54,7 +56,7 @@ MRuby::CrossBuild.new('macos-x86_64') do |conf|
   conf.linker do |linker|
     linker.command = 'clang'
     linker.library_paths << "#{INSTALL_PREFIX}/lib"
-    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc )
+    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc yaml )
     linker.flags << "-framework OpenGL -arch x86_64"
   end
 end

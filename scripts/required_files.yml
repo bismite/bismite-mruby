@@ -20,6 +20,8 @@ macos:
   - 435d5c21d71adcbce06e74e5c7c945eb
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.7/msgpack-c-macos.tgz
   - 7cfccf446a0387eab9c643e974ff6a2f
+  - https://github.com/bismite/libyaml-binary/releases/download/0.1.0/libyaml-0.2.5-macos.tgz
+  - ec7c0b3a5afd5af6fbbe34d804e8e16c
 x86_64-w64-mingw32:
   - https://www.libsdl.org/release/SDL2-devel-2.0.14-mingw.tar.gz
   - 1f331c4e29f54cfc470976ac43994617

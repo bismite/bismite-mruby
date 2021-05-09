@@ -8,7 +8,7 @@ if /Darwin/ === `uname -a` # macos
   ARGV.each do |command|
     case command
     when "--libs"
-      puts "-L#{root}/lib -lmruby -lbismite-core -lbismite-ext -lSDL2 -lSDL2_mixer -lSDL2_image -lmsgpackc -framework OpenGL"
+      puts "-L#{root}/lib -lmruby -lbismite-core -lbismite-ext -lSDL2 -lSDL2_mixer -lSDL2_image -lmsgpackc -lyaml -framework OpenGL"
     when "--static-libs"
       puts "-L#{root}/lib #{STATIC_LIBS} -liconv -lm -framework OpenGL -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal"
     when "--cflags"
