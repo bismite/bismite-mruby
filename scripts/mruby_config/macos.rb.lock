@@ -46,8 +46,8 @@ builds:
       version: 0.0.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
-      branch: mruby3
-      commit: 75c00b6b7cb0939b6659b24711d1c0ae34db65fe
+      branch: master
+      commit: '09faa4fc038737fe321c69a0341c0c9ca276c656'
       version: 0.0.0
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
@@ -132,8 +132,8 @@ builds:
       version: 0.0.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
-      branch: mruby3
-      commit: 75c00b6b7cb0939b6659b24711d1c0ae34db65fe
+      branch: master
+      commit: '09faa4fc038737fe321c69a0341c0c9ca276c656'
       version: 0.0.0
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
