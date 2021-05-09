@@ -26,7 +26,7 @@ MRuby::CrossBuild.new('linux') do |conf|
   conf.linker do |linker|
     linker.command = 'clang'
     linker.library_paths << "#{BUILD_DIR}/#{HOST}/lib"
-    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc GL )
+    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer GL msgpackc yaml )
     linker.flags << "-Wl,-rpath,'$ORIGIN/../lib'"
   end
 end

@@ -3,7 +3,7 @@ mruby:
   version: 3.0.0
   release_no: 30000
 builds:
-  host:
+  linux:
     https://github.com/katzer/mruby-os.git:
       url: https://github.com/katzer/mruby-os.git
       branch: master
@@ -44,10 +44,15 @@ builds:
       branch: master
       commit: f1408e76765b33cd798b53f8cba41747239e16b3
       version: 0.0.0
+    https://github.com/mrbgems/mruby-yaml.git:
+      url: https://github.com/mrbgems/mruby-yaml.git
+      branch: master
+      commit: 0606652a6e99d902cd3101cf2d757a7c0c37a7fd
+      version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
-      branch: mruby3
-      commit: 75c00b6b7cb0939b6659b24711d1c0ae34db65fe
+      branch: master
+      commit: '09faa4fc038737fe321c69a0341c0c9ca276c656'
       version: 0.0.0
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git

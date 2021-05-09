@@ -19,7 +19,7 @@ else # linux
   ARGV.each do |command|
     case command
     when "--libs"
-      puts "-L#{root}/lib -lmruby -lbismite-core -lbismite-ext -lm -lGL -ldl -lmsgpackc"
+      puts "-L#{root}/lib -lmruby -lbismite-core -lbismite-ext -lm -lGL -ldl -lmsgpackc -lyaml"
     when "--cflags"
       puts "-DMRB_INT64 -DMRB_UTF8_STRING -DMRB_NO_BOXING -I#{root}/include"
     end
