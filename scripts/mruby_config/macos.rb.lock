@@ -44,6 +44,11 @@ builds:
       branch: master
       commit: f1408e76765b33cd798b53f8cba41747239e16b3
       version: 0.0.0
+    https://github.com/mrbgems/mruby-yaml.git:
+      url: https://github.com/mrbgems/mruby-yaml.git
+      branch: master
+      commit: 0606652a6e99d902cd3101cf2d757a7c0c37a7fd
+      version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
       branch: master
@@ -130,6 +135,11 @@ builds:
       branch: master
       commit: f1408e76765b33cd798b53f8cba41747239e16b3
       version: 0.0.0
+    https://github.com/mrbgems/mruby-yaml.git:
+      url: https://github.com/mrbgems/mruby-yaml.git
+      branch: master
+      commit: 0606652a6e99d902cd3101cf2d757a7c0c37a7fd
+      version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
       branch: master
