@@ -58,6 +58,15 @@ targets.each do |target|
   when /mingw/
     run "./scripts/mingw/install_sdl.sh"
     cp "src/bismite-config-mingw.rb", "#{install_path(target)}/bin"
+    # install msgpack-c
+    run "tar zxf build/download/x86_64-w64-mingw32/msgpack-c-x86_64-w64-mingw32.tgz -C build/x86_64-w64-mingw32/"
+    cp_r "build/x86_64-w64-mingw32/msgpack-c/lib", "build/x86_64-w64-mingw32", remove_destination:true
+    cp "build/x86_64-w64-mingw32/lib/libmsgpackc.dll", "build/x86_64-w64-mingw32/bin/"
+    # install libyaml
+    run "tar zxf build/download/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32.tgz -C build/x86_64-w64-mingw32/"
+    cp_r "build/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32/lib", "build/x86_64-w64-mingw32", remove_destination:true
+    cp "build/x86_64-w64-mingw32/lib/libyaml.dll", "build/x86_64-w64-mingw32/bin/"
+    cp "build/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32/License", "build/x86_64-w64-mingw32/licenses/License.libyaml.txt"
   when /emscripten/
     cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin"
   end
@@ -73,11 +82,11 @@ targets.each do |target|
   run "./scripts/build_template.rb #{target}"
 
   rm_rf "tmp/#{target}"
-  mkdir_p "tmp/#{target}"
+  mkdir_p "tmp/#{target}/share"
   cp_r "build/#{target}/bin", "tmp/#{target}"
   cp_r "build/#{target}/lib", "tmp/#{target}"
   cp_r "build/#{target}/include", "tmp/#{target}"
-  cp_r "build/#{target}/share", "tmp/#{target}"
+  cp_r "build/#{target}/share/bismite", "tmp/#{target}/share/"
   cp_r "build/#{target}/licenses", "tmp/#{target}"
   Dir.chdir("tmp"){
     run "tar czf #{target}.tgz #{target}"
