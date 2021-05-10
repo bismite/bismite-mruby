@@ -21,8 +21,6 @@ when /mingw/
   Dir["src/licenses/mingw/*.txt"].each{|f| cp f,LICENSE_DIR }
   cp "build/download/#{TARGET}/COPYING.MinGW-w64-runtime.txt", LICENSE_DIR
   cp "build/download/#{TARGET}/COPYING.MinGW-w64.txt", LICENSE_DIR
-  # DLL license
-  cp "build/x86_64-w64-mingw32/bin/LICENSE.mpg123.txt",LICENSE_DIR
 
 when /emscripten/
   cp "build/#{TARGET}/#{MRUBY}/build/#{TARGET}/LEGAL", "#{LICENSE_DIR}/LEGAL.mruby.txt"

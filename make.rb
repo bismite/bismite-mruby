@@ -56,17 +56,42 @@ targets.each do |target|
     #
     cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /mingw/
-    run "./scripts/mingw/install_sdl.sh"
     cp "src/bismite-config-mingw.rb", "#{install_path(target)}/bin"
-    # install msgpack-c
-    run "tar zxf build/download/x86_64-w64-mingw32/msgpack-c-x86_64-w64-mingw32.tgz -C build/x86_64-w64-mingw32/"
-    cp_r "build/x86_64-w64-mingw32/msgpack-c/lib", "build/x86_64-w64-mingw32", remove_destination:true
-    cp "build/x86_64-w64-mingw32/lib/libmsgpackc.dll", "build/x86_64-w64-mingw32/bin/"
-    # install libyaml
-    run "tar zxf build/download/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32.tgz -C build/x86_64-w64-mingw32/"
-    cp_r "build/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32/lib", "build/x86_64-w64-mingw32", remove_destination:true
-    cp "build/x86_64-w64-mingw32/lib/libyaml.dll", "build/x86_64-w64-mingw32/bin/"
-    cp "build/x86_64-w64-mingw32/libyaml-0.2.5-x86_64-w64-mingw32/License", "build/x86_64-w64-mingw32/licenses/License.libyaml.txt"
+    dldir = "build/download/x86_64-w64-mingw32"
+    dstdir = "build/x86_64-w64-mingw32"
+    # unarchive
+    Dir.glob("#{dldir}/*gz"){|archive| run "tar zxf #{archive} -C #{dstdir}" }
+    Dir.chdir(dstdir) do
+      # install SDL
+      srcdir="SDL2-2.0.14/x86_64-w64-mingw32"
+      cp_r "#{srcdir}/include/", "./"
+      cp "#{srcdir}/bin/SDL2.dll", "bin/"
+      cp "#{srcdir}/lib/libSDL2main.a", "lib/"
+      cp "#{srcdir}/bin/sdl2-config", "bin/"
+      File.write(
+       "bin/sdl2-config",
+        File.read("bin/sdl2-config").gsub("/opt/local/x86_64-w64-mingw32", "$(dirname $(dirname $(realpath $0)))")
+      )
+      # install SDL_image
+      srcdir="SDL2_image-2.0.5/x86_64-w64-mingw32"
+      cp_r "#{srcdir}/include/", "./"
+      %w(SDL2_image.dll libpng16-16.dll zlib1.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
+      %w(LICENSE.zlib.txt LICENSE.png.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
+      # install SDL_mixer
+      srcdir="SDL2_mixer-2.0.4/x86_64-w64-mingw32"
+      cp_r "#{srcdir}/include/", "./"
+      %w(SDL2_mixer.dll libmpg123-0.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
+      %w(LICENSE.mpg123.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
+      # copy SDL licenses
+      %w(SDL2-2.0.14 SDL2_image-2.0.5 SDL2_mixer-2.0.4).each{|sdl|
+        cp "#{sdl}/COPYING.txt", "licenses/COPYING.#{sdl}.txt"
+      }
+      # install msgpack-c
+      cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
+      # install libyaml
+      cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
+      cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/License.libyaml.txt"
+    end
   when /emscripten/
     cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin"
   end

@@ -53,12 +53,7 @@ when /mingw/
   cp "build/main.mrb", "#{DST_DIR}/x86_64-w64-mingw32/main.mrb"
   run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw.rb --cflags --libs`"
   # copy dlls
-  libs = %w(libmpg123-0.dll libpng16-16.dll SDL2.dll SDL2_image.dll SDL2_mixer.dll zlib1.dll).map{|dll|
-    cp "build/x86_64-w64-mingw32/bin/#{dll}",  "#{DST_DIR}/x86_64-w64-mingw32/"
-  }
-  libs = %w(libmsgpackc.dll libyaml.dll).map{|dll|
-    cp "build/x86_64-w64-mingw32/lib/#{dll}", "#{DST_DIR}/x86_64-w64-mingw32/"
-  }
+  cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/"
   copy_license_files "x86_64-w64-mingw32", "#{DST_DIR}/x86_64-w64-mingw32/"
 
 when /emscripten/
