@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Install dependencies
-        run: sudo apt-get install libgl-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev clang
+        run: sudo apt-get install libgl-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libyaml-dev clang
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: ./make.rb linux
