@@ -12,16 +12,20 @@ common:
     - mruby-3.0.0.tar.gz
   - 381c36a37c722b3568a932306cc63e59
 linux:
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.8/msgpack-c-linux.tgz
-  - 32bdeb91e91378722e5a47e0701176c2
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-linux.tgz
+  - 00fe8133cf40faf862c2ece53cba2dd9
 emscripten:
+  - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-emscripten.tgz
+  - 5773a075a15f19495aaeea918ddba719
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-emscripten.tgz
+  - de8eb962a4e284a7adcb38b0da929774
 macos:
   - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz
   - 435d5c21d71adcbce06e74e5c7c945eb
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.8/msgpack-c-macos.tgz
-  - 326598f9546d663cae545e9ba61cd7cd
-  - https://github.com/bismite/libyaml-binary/releases/download/0.1.3/libyaml-0.2.5-macos.tgz
-  - 7ac7adcc6d7d616c996f924de055bbe2
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-macos.tgz
+  - 2b50044cd9e92b0dbecdf979e5811447
+  - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-macos.tgz
+  - 17b3853f11b939e91af21f33fc0926db
 x86_64-w64-mingw32:
   - https://www.libsdl.org/release/SDL2-devel-2.0.14-mingw.tar.gz
   - 1f331c4e29f54cfc470976ac43994617
@@ -29,10 +33,10 @@ x86_64-w64-mingw32:
   - 2704080296a24b765ce1e9c3c427a970
   - https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-mingw.tar.gz
   - 067275e50b40aed65dc472b9964c1d38
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.8/msgpack-c-x86_64-w64-mingw32.tgz
-  - 5bc8b689f466ca5b24c06149cc127cbc
-  - https://github.com/bismite/libyaml-binary/releases/download/0.1.3/libyaml-0.2.5-x86_64-w64-mingw32.tgz
-  - 51ffe2186b4653f0c2e301142dfafedf
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-x86_64-w64-mingw32.tgz
+  - e8d224f9735bafe1b1fb6f13aa7ff0ab
+  - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-x86_64-w64-mingw32.tgz
+  - fc614d41c9f7fa307a2b0f1a7d0d4c85
   - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt
   - 3edacf7e64e1b7a634666ac043f6b13c
   - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64/COPYING.MinGW-w64.txt

@@ -94,6 +94,13 @@ targets.each do |target|
     end
   when /emscripten/
     cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin"
+    # install msgpack-c
+    run "tar zxf build/download/emscripten/msgpack-c-emscripten.tgz -C build/emscripten/"
+    cp_r "build/emscripten/msgpack-c/lib", "build/emscripten", remove_destination:true
+    # install libyaml
+    run "tar zxf build/download/emscripten/libyaml-0.2.5-emscripten.tgz -C build/emscripten/"
+    cp_r "build/emscripten/libyaml-0.2.5-emscripten/lib", "build/emscripten", remove_destination:true
+    cp "build/emscripten/libyaml-0.2.5-emscripten/License", "build/emscripten/licenses/License.libyaml.txt"
   end
 
   %w(

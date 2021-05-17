@@ -42,6 +42,8 @@ when /macos/
     libSDL2_image-2.0.0.dylib
     libSDL2_mixer-2.0.0.dylib
     libmpg123.0.dylib
+    libmsgpackc.2.0.0.dylib
+    libyaml-0.2.dylib
   )
   libs_origin = libs.map{|l| "build/macos/lib/#{l}" }
   cp libs_origin, "#{resource_dir}/lib"
@@ -60,14 +62,14 @@ when /emscripten/
   options = {
     "wasm" => "-s WASM=1",
     "js" => "-s WASM=0",
-    "wasm-dl" => "-s WASM=1 -s MAIN_MODULE=1",
+    "wasm-dl" => "-s WASM=1 -s MAIN_MODULE=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0",
   }
   %w(wasm js wasm-dl).each{|t|
     mkdir_p "#{DST_DIR}/#{t}"
     cp "build/main.mrb", "#{DST_DIR}/#{t}/main.mrb"
     flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{options[t]}"
     shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc src/main-emscripten.c src/support-emscripten.c -o #{DST_DIR}/#{t}/index.html #{flags} `build/emscripten/bin/bismite-config-emscripten.rb --cflags --libs` #{shell}"
+    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{DST_DIR}/#{t}/index.html #{flags} `build/emscripten/bin/bismite-config-emscripten.rb --cflags --libs` #{shell}"
     copy_license_files "emscripten", "#{DST_DIR}/#{t}/"
     # Remove unexpected file path contained in SDL.
     empath = File.dirname which "emcc"
