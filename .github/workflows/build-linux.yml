@@ -18,7 +18,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: tmp/linux.tgz
-          asset_name: linux.tgz
+          file: tmp/bismite-mruby-linux.tgz
+          asset_name: bismite-mruby-linux.tgz
           tag: ${{ github.ref }}
           overwrite: true
