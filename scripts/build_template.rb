@@ -59,7 +59,7 @@ when /mingw/
   cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/system"
   # frontman
   run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/x86_64-w64-mingw32/frontman-mingw.res"
-  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/x86_64-w64-mingw32/frontman-mingw.res -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/main.exe -mwindows"
+  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/x86_64-w64-mingw32/frontman-mingw.res -std=c11 -Os -mwindows -o #{DST_DIR}/x86_64-w64-mingw32/start.exe"
   copy_license_files "x86_64-w64-mingw32", "#{DST_DIR}/x86_64-w64-mingw32/"
 
 when /emscripten/
