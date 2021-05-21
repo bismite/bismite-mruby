@@ -51,11 +51,15 @@ when /macos/
   copy_license_files "macos", "#{DST_DIR}/macos/"
 
 when /mingw/
-  mkdir_p "#{DST_DIR}/x86_64-w64-mingw32"
-  cp "build/main.mrb", "#{DST_DIR}/x86_64-w64-mingw32/main.mrb"
-  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw.rb --cflags --libs`"
+  mkdir_p "#{DST_DIR}/x86_64-w64-mingw32/system"
+  cp "build/main.mrb", "#{DST_DIR}/x86_64-w64-mingw32/system/main.mrb"
+  # real main.exe
+  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/system/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw.rb --cflags --libs`"
   # copy dlls
-  cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/"
+  cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/system"
+  # frontman
+  run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/x86_64-w64-mingw32/frontman-mingw.res"
+  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/x86_64-w64-mingw32/frontman-mingw.res -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/main.exe -mwindows"
   copy_license_files "x86_64-w64-mingw32", "#{DST_DIR}/x86_64-w64-mingw32/"
 
 when /emscripten/

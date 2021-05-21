@@ -19,11 +19,7 @@ static void _define_argv(mrb_state *mrb, int argc, const char* argv[])
   if(argc>1){
     ARGV = mrb_ary_new_capa(mrb, argc-1);
     for (int i = 1; i < argc; i++) {
-      char* utf8 = mrb_utf8_from_locale(argv[i], -1);
-      if (utf8) {
-        mrb_ary_push(mrb, ARGV, mrb_str_new_cstr(mrb, utf8));
-        mrb_utf8_free(utf8);
-      }
+      mrb_ary_push(mrb, ARGV, mrb_str_new_cstr(mrb, argv[i]));
     }
   }else{
     ARGV = mrb_ary_new_capa(mrb, 0);
