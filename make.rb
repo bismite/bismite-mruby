@@ -113,14 +113,16 @@ targets.each do |target|
 
   run "./scripts/build_template.rb #{target}"
 
-  rm_rf "tmp/#{target}"
-  mkdir_p "tmp/#{target}/share"
-  cp_r "build/#{target}/bin", "tmp/#{target}"
-  cp_r "build/#{target}/lib", "tmp/#{target}"
-  cp_r "build/#{target}/include", "tmp/#{target}"
-  cp_r "build/#{target}/share/bismite", "tmp/#{target}/share/"
-  cp_r "build/#{target}/licenses", "tmp/#{target}"
+  # archive
+  name = "bismite-mruby-#{target}"
+  rm_rf "tmp/#{name}"
+  mkdir_p "tmp/#{name}/share"
+  cp_r "build/#{target}/bin", "tmp/#{name}"
+  cp_r "build/#{target}/lib", "tmp/#{name}"
+  cp_r "build/#{target}/include", "tmp/#{name}"
+  cp_r "build/#{target}/share/bismite", "tmp/#{name}/share/"
+  cp_r "build/#{target}/licenses", "tmp/#{name}"
   Dir.chdir("tmp"){
-    run "tar czf #{target}.tgz #{target}"
+    run "tar czf #{name}.tgz #{name}"
   }
 end
