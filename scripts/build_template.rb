@@ -38,6 +38,7 @@ when /macos/
   run "install_name_tool -add_rpath @executable_path/lib #{resource_dir}/main"
 
   libs = %w(
+    libmruby.dylib
     libSDL2-2.0.0.dylib
     libSDL2_image-2.0.0.dylib
     libSDL2_mixer-2.0.0.dylib

@@ -25,7 +25,7 @@ def install_mruby(target,build_name)
   %w(bin include lib).each{|d| mkdir_p "build/#{target}/#{d}/" }
 
   if /macos/ === target
-    run "lipo -create build/macos/#{MRUBY}/build/macos-x86_64/lib/libmruby.a build/macos/#{MRUBY}/build/macos-arm64/lib/libmruby.a -output #{prefix}/lib/libmruby.a"
+    run "lipo -create build/macos/#{MRUBY}/build/macos-x86_64/lib/libmruby.dylib build/macos/#{MRUBY}/build/macos-arm64/lib/libmruby.dylib -output #{prefix}/lib/libmruby.dylib"
     %w(mirb mrbc mruby mruby-strip).each{|bin|
       run "lipo -create build/macos/#{MRUBY}/build/macos-x86_64/bin/#{bin} build/macos/#{MRUBY}/build/macos-arm64/bin/#{bin} -output #{prefix}/bin/#{bin}"
       run "install_name_tool -add_rpath @executable_path/../lib #{prefix}/bin/#{bin}"

@@ -12,9 +12,6 @@ def include_gems(conf)
   conf.gem github: 'katzer/mruby-os'
   conf.gem github: 'iij/mruby-env'
   # conf.gem github: 'iij/mruby-process' # fail in mingw
-  if conf.name != "emscripten"
-    conf.gem github: 'katzer/mruby-process' # fail in emscripten module
-  end
   conf.gem github: 'ksss/mruby-singleton'
   conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-iijson'
