@@ -25,21 +25,22 @@ Dir.chdir(MRUBY_DIR){
 prefix = install_path(TARGET)
 %w(bin include lib).each{|d| mkdir_p "build/#{TARGET}/#{d}/" }
 
+cp_r "#{MRUBY_DIR}/include/.", "#{prefix}/include/"
 if /macos/ === TARGET
   run "lipo -create #{MRUBY_DIR}/build/macos-x86_64/lib/libmruby.dylib #{MRUBY_DIR}/build/macos-arm64/lib/libmruby.dylib -output #{prefix}/lib/libmruby.dylib"
   %w(mirb mrbc mruby mruby-strip).each{|bin|
     run "lipo -create #{MRUBY_DIR}/build/macos-x86_64/bin/#{bin} #{MRUBY_DIR}/build/macos-arm64/bin/#{bin} -output #{prefix}/bin/#{bin}"
     run "install_name_tool -add_rpath @executable_path/../lib #{prefix}/bin/#{bin}"
   }
-  cp_r "#{MRUBY_DIR}/include/.", "#{prefix}/include/"
   cp_r "#{MRUBY_DIR}/build/macos-x86_64/include/.", "#{prefix}/include/" rescue nil # presym headers
 else
   if /linux/ === TARGET
     cp "#{MRUBY_DIR}/build/#{TARGET}/lib/libmruby.so", "#{prefix}/lib/libmruby.so"
+  elsif TARGET == "x86_64-w64-mingw32"
+    cp "#{MRUBY_DIR}/build/#{TARGET}/lib/libmruby.dll", "#{prefix}/bin/libmruby.dll"
   else
     cp_r "#{MRUBY_DIR}/build/#{TARGET}/lib/.", "#{prefix}/lib/"
   end
   cp_r "#{MRUBY_DIR}/build/#{TARGET}/bin/.", "#{prefix}/bin/" rescue nil
-  cp_r "#{MRUBY_DIR}/include/.", "#{prefix}/include/"
   cp_r "#{MRUBY_DIR}/build/#{TARGET}/include/.", "#{prefix}/include/" rescue nil # presym headers
 end

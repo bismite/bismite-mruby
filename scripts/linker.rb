@@ -5,6 +5,7 @@ def run(cmd,args)
   exec cmd, *args
 end
 
+linker = ARGV.shift
 args = ARGV.map{|a|
   if a.end_with?("libmruby.a") or a.end_with?("libmruby_core.a")
     "-lmruby"
@@ -13,4 +14,4 @@ args = ARGV.map{|a|
   end
 }
 
-run "clang",args
+run linker,args
