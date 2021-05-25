@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-def run(cmd)
-  # puts cmd
-  `#{cmd}`
+def run(cmd,args)
+  puts "#{cmd} #{args.join(' ')}"
+  exec cmd, *args
 end
 
 args = ARGV.map{|a|
@@ -11,6 +11,6 @@ args = ARGV.map{|a|
   else
     a
   end
-}.join(" ")
+}
 
-run "clang #{args}"
+run "clang",args
