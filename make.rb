@@ -52,7 +52,7 @@ targets.each do |target|
   when /linux/
     # install msgpack-c
     run "tar zxf build/download/linux/msgpack-c-linux.tgz -C build/linux/"
-    cp_r "build/linux/msgpack-c/lib", "build/linux", remove_destination:true
+    cp "build/linux/msgpack-c/lib/libmsgpackc.so", "build/linux/lib/libmsgpackc.so"
     #
     cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /mingw/

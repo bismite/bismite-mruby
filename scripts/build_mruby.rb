@@ -9,10 +9,12 @@ cp "src/mruby.patch", "build/#{TARGET}/#{MRUBY}"
 
 ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{TARGET}.rb"
 
+MRUBY_DIR="build/#{TARGET}/#{MRUBY}"
+
 #
 # build mruby
 #
-Dir.chdir("build/#{TARGET}/#{MRUBY}"){
+Dir.chdir(MRUBY_DIR){
   run "patch -p0 < mruby.patch"
   run "rake MRUBY_YAML_USE_SYSTEM_LIBRARY=true"
 }
@@ -20,24 +22,24 @@ Dir.chdir("build/#{TARGET}/#{MRUBY}"){
 #
 # install mruby
 #
-def install_mruby(target,build_name)
-  prefix = install_path(target)
-  %w(bin include lib).each{|d| mkdir_p "build/#{target}/#{d}/" }
+prefix = install_path(TARGET)
+%w(bin include lib).each{|d| mkdir_p "build/#{TARGET}/#{d}/" }
 
-  if /macos/ === target
-    run "lipo -create build/macos/#{MRUBY}/build/macos-x86_64/lib/libmruby.dylib build/macos/#{MRUBY}/build/macos-arm64/lib/libmruby.dylib -output #{prefix}/lib/libmruby.dylib"
-    %w(mirb mrbc mruby mruby-strip).each{|bin|
-      run "lipo -create build/macos/#{MRUBY}/build/macos-x86_64/bin/#{bin} build/macos/#{MRUBY}/build/macos-arm64/bin/#{bin} -output #{prefix}/bin/#{bin}"
-      run "install_name_tool -add_rpath @executable_path/../lib #{prefix}/bin/#{bin}"
-    }
-    cp_r "build/#{target}/#{MRUBY}/include/.", "#{prefix}/include/"
-    cp_r "build/#{target}/#{MRUBY}/build/macos-x86_64/include/.", "#{prefix}/include/" rescue nil # presym headers
+if /macos/ === TARGET
+  run "lipo -create #{MRUBY_DIR}/build/macos-x86_64/lib/libmruby.dylib #{MRUBY_DIR}/build/macos-arm64/lib/libmruby.dylib -output #{prefix}/lib/libmruby.dylib"
+  %w(mirb mrbc mruby mruby-strip).each{|bin|
+    run "lipo -create #{MRUBY_DIR}/build/macos-x86_64/bin/#{bin} #{MRUBY_DIR}/build/macos-arm64/bin/#{bin} -output #{prefix}/bin/#{bin}"
+    run "install_name_tool -add_rpath @executable_path/../lib #{prefix}/bin/#{bin}"
+  }
+  cp_r "#{MRUBY_DIR}/include/.", "#{prefix}/include/"
+  cp_r "#{MRUBY_DIR}/build/macos-x86_64/include/.", "#{prefix}/include/" rescue nil # presym headers
+else
+  if /linux/ === TARGET
+    cp "#{MRUBY_DIR}/build/#{TARGET}/lib/libmruby.so", "#{prefix}/lib/libmruby.so"
   else
-    cp_r "build/#{target}/#{MRUBY}/build/#{build_name}/bin/.", "#{prefix}/bin/" rescue nil
-    cp_r "build/#{target}/#{MRUBY}/build/#{build_name}/lib/.", "#{prefix}/lib/"
-    cp_r "build/#{target}/#{MRUBY}/include/.", "#{prefix}/include/"
-    cp_r "build/#{target}/#{MRUBY}/build/#{build_name}/include/.", "#{prefix}/include/" rescue nil # presym headers
+    cp_r "#{MRUBY_DIR}/build/#{TARGET}/lib/.", "#{prefix}/lib/"
   end
+  cp_r "#{MRUBY_DIR}/build/#{TARGET}/bin/.", "#{prefix}/bin/" rescue nil
+  cp_r "#{MRUBY_DIR}/include/.", "#{prefix}/include/"
+  cp_r "#{MRUBY_DIR}/build/#{TARGET}/include/.", "#{prefix}/include/" rescue nil # presym headers
 end
-
-install_mruby TARGET, TARGET
