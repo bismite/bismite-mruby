@@ -1,7 +1,8 @@
 require 'rbconfig'
 require_relative "common.rb"
 
-HOST="linux"
+SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
+INSTALL_PREFIX = "#{BUILD_DIR}/linux"
 
 MRuby::Build.new do |conf|
   toolchain :clang
@@ -15,18 +16,23 @@ MRuby::CrossBuild.new('linux') do |conf|
   conf.cc do |cc|
     cc.command = 'clang'
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
-    cc.include_paths << "#{BUILD_DIR}/#{HOST}/include"
-    cc.include_paths << "#{BUILD_DIR}/#{HOST}/include/SDL2"
-    cc.include_paths << "#{BUILD_DIR}/#{HOST}/msgpack-c/include"
+    cc.include_paths << "#{INSTALL_PREFIX}/include"
+    cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
+    cc.include_paths << "#{INSTALL_PREFIX}/msgpack-c/include"
     cc.flags = %W( -Os -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags << "`sdl2-config --cflags`"
     cc.flags << "-fPIC"
   end
 
   conf.linker do |linker|
-    linker.command = 'clang'
-    linker.library_paths << "#{BUILD_DIR}/#{HOST}/lib"
-    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer GL msgpackc yaml )
-    linker.flags << "-Wl,-rpath,'$ORIGIN/../lib'"
+    linker.command = "#{SCRIPTS_DIR}/linker.rb"
+    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/linux/mruby-3.0.0/build/linux/lib"]
+    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer GL msgpackc )
+    linker.flags_after_libraries << "-Wl,-rpath,'$ORIGIN/../lib'"
+  end
+
+  conf.archiver do |archiver|
+    archiver.command = "#{SCRIPTS_DIR}/archiver.rb"
+    archiver.archive_options = 'linux %{outfile} %{objs}'
   end
 end
