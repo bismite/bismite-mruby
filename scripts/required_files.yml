@@ -12,18 +12,18 @@ common:
     - mruby-3.0.0.tar.gz
   - 381c36a37c722b3568a932306cc63e59
 linux:
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-linux.tgz
-  - 00fe8133cf40faf862c2ece53cba2dd9
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-linux.tgz
+  - 1c67c89de3855c62634b5129ce16fe9d
 emscripten:
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-emscripten.tgz
   - 5773a075a15f19495aaeea918ddba719
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-emscripten.tgz
-  - de8eb962a4e284a7adcb38b0da929774
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-emscripten.tgz
+  - 44e511220af2778e276ee50677bccf62
 macos:
   - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz
   - 435d5c21d71adcbce06e74e5c7c945eb
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-macos.tgz
-  - 2b50044cd9e92b0dbecdf979e5811447
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-macos.tgz
+  - 69b4120696c1c53d08383f70507588ec
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-macos.tgz
   - 17b3853f11b939e91af21f33fc0926db
 x86_64-w64-mingw32:
@@ -33,8 +33,8 @@ x86_64-w64-mingw32:
   - 2704080296a24b765ce1e9c3c427a970
   - https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-mingw.tar.gz
   - 067275e50b40aed65dc472b9964c1d38
-  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.10/msgpack-c-x86_64-w64-mingw32.tgz
-  - e8d224f9735bafe1b1fb6f13aa7ff0ab
+  - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-x86_64-w64-mingw32.tgz
+  - f2cf3b6ce07f49b46614bf4024e3cc0b
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-x86_64-w64-mingw32.tgz
   - fc614d41c9f7fa307a2b0f1a7d0d4c85
   - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt
