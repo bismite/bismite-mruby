@@ -35,6 +35,7 @@ targets.each do |target|
 
   case target
   when /macos/
+    cp "src/bismite-config.rb", "#{install_path(target)}/bin/bismite-config"
     # install msgpack-c
     run "tar zxf build/download/macos/msgpack-c-macos.tgz -C build/macos/"
     cp_r "build/macos/msgpack-c/lib", "build/macos", remove_destination:true
@@ -47,16 +48,13 @@ targets.each do |target|
     cp_r "build/macos/SDL-macOS-UniversalBinaries/lib", "build/macos", remove_destination:true
     cp_r "build/macos/SDL-macOS-UniversalBinaries/include", "build/macos", remove_destination:true
     cp_r "build/macos/SDL-macOS-UniversalBinaries/licenses", "build/macos", remove_destination:true
-    #
-    cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /linux/
+    cp "src/bismite-config.rb", "#{install_path(target)}/bin/bismite-config"
     # install msgpack-c
     run "tar zxf build/download/linux/msgpack-c-linux.tgz -C build/linux/"
     cp "build/linux/msgpack-c/lib/libmsgpackc.so", "build/linux/lib/libmsgpackc.so"
-    #
-    cp "src/bismite-config.rb", "#{install_path(target)}/bin"
   when /mingw/
-    cp "src/bismite-config-mingw.rb", "#{install_path(target)}/bin"
+    cp "src/bismite-config-mingw.rb", "#{install_path(target)}/bin/bismite-config-mingw"
     dldir = "build/download/x86_64-w64-mingw32"
     dstdir = "build/x86_64-w64-mingw32"
     # unarchive
@@ -93,7 +91,7 @@ targets.each do |target|
       cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/License.libyaml.txt"
     end
   when /emscripten/
-    cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin"
+    cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin/bismite-config-emscripten"
     # install msgpack-c
     run "tar zxf build/download/emscripten/msgpack-c-emscripten.tgz -C build/emscripten/"
     cp_r "build/emscripten/msgpack-c/lib", "build/emscripten", remove_destination:true

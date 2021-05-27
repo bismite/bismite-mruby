@@ -19,7 +19,7 @@ case TARGET
 when /linux/
   mkdir_p "#{DST_DIR}/linux/lib"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
-  run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config.rb --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
+  run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
 
   %w(libmruby.so libmsgpackc.so).each{|l|
     copy_entry "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/#{l}",false,false,true
@@ -34,7 +34,7 @@ when /macos/
   mkdir_p "#{resource_dir}/bin"
   mkdir_p "#{resource_dir}/lib"
   cp "build/main.mrb", "#{resource_dir}/main.mrb"
-  run "clang src/main.c -o #{resource_dir}/main `./build/macos/bin/bismite-config.rb --cflags --libs` -arch x86_64 -arch arm64"
+  run "clang src/main.c -o #{resource_dir}/main `./build/macos/bin/bismite-config --cflags --libs` -arch x86_64 -arch arm64"
   run "install_name_tool -add_rpath @executable_path/lib #{resource_dir}/main"
 
   libs = %w(
@@ -55,7 +55,7 @@ when /mingw/
   mkdir_p "#{DST_DIR}/x86_64-w64-mingw32/system"
   cp "build/main.mrb", "#{DST_DIR}/x86_64-w64-mingw32/system/main.mrb"
   # real main.exe
-  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/system/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw.rb --cflags --libs`"
+  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/system/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw --cflags --libs`"
   # copy dlls
   cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/system"
   # frontman
@@ -74,7 +74,7 @@ when /emscripten/
     cp "build/main.mrb", "#{DST_DIR}/#{t}/main.mrb"
     flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{options[t]}"
     shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{DST_DIR}/#{t}/index.html #{flags} `build/emscripten/bin/bismite-config-emscripten.rb --cflags --libs` #{shell}"
+    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{DST_DIR}/#{t}/index.html #{flags} `build/emscripten/bin/bismite-config-emscripten --cflags --libs` #{shell}"
     copy_license_files "emscripten", "#{DST_DIR}/#{t}/"
     # Remove unexpected file path contained in SDL.
     empath = File.dirname which "emcc"
