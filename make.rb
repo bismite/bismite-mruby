@@ -42,7 +42,7 @@ targets.each do |target|
     # install libyaml
     run "tar zxf build/download/macos/libyaml-0.2.5-macos.tgz -C build/macos/"
     cp_r "build/macos/libyaml-0.2.5-macos/lib", "build/macos", remove_destination:true
-    cp "build/macos/libyaml-0.2.5-macos/License", "build/macos/licenses/License.libyaml.txt"
+    cp "build/macos/libyaml-0.2.5-macos/License", "build/macos/licenses/libyaml-License"
     # install SDL
     run "tar zxf build/download/macos/SDL-macOS-UniversalBinaries.tgz -C build/macos"
     cp_r "build/macos/SDL-macOS-UniversalBinaries/lib", "build/macos", remove_destination:true
@@ -82,13 +82,13 @@ targets.each do |target|
       %w(LICENSE.mpg123.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
       # copy SDL licenses
       %w(SDL2-2.0.14 SDL2_image-2.0.5 SDL2_mixer-2.0.4).each{|sdl|
-        cp "#{sdl}/COPYING.txt", "licenses/COPYING.#{sdl}.txt"
+        cp "#{sdl}/COPYING.txt", "licenses/#{sdl}-COPYING"
       }
       # install msgpack-c
       cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
       # install libyaml
       cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
-      cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/License.libyaml.txt"
+      cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-License"
     end
   when /emscripten/
     cp "src/bismite-config-emscripten.rb", "#{install_path(target)}/bin/bismite-config-emscripten"
@@ -98,7 +98,7 @@ targets.each do |target|
     # install libyaml
     run "tar zxf build/download/emscripten/libyaml-0.2.5-emscripten.tgz -C build/emscripten/"
     cp_r "build/emscripten/libyaml-0.2.5-emscripten/lib", "build/emscripten", remove_destination:true
-    cp "build/emscripten/libyaml-0.2.5-emscripten/License", "build/emscripten/licenses/License.libyaml.txt"
+    cp "build/emscripten/libyaml-0.2.5-emscripten/License", "build/emscripten/licenses/libyaml-License"
   end
 
   %w(
@@ -119,7 +119,7 @@ targets.each do |target|
   cp_r "build/#{target}/lib", "tmp/#{name}"
   cp_r "build/#{target}/include", "tmp/#{name}"
   cp_r "build/#{target}/share/bismite", "tmp/#{name}/share/"
-  cp_r "build/#{target}/licenses", "tmp/#{name}"
+  cp_r "build/#{target}/Licenses.md", "tmp/#{name}"
   Dir.chdir("tmp"){
     run "tar czf #{name}.tgz #{name}"
   }

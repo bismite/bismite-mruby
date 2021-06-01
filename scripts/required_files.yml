@@ -39,8 +39,6 @@ x86_64-w64-mingw32:
   - fc614d41c9f7fa307a2b0f1a7d0d4c85
   - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt
   - 3edacf7e64e1b7a634666ac043f6b13c
-  - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64/COPYING.MinGW-w64.txt
-  - 5bb2c9f26ed3acd4c9cfa4445a7a9772
   -
     - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/mingw-w64-libraries/winpthreads/COPYING
     - COPYING.winpthreads.txt
