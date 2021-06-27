@@ -52,13 +52,13 @@ builds:
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
       branch: master
-      commit: a20af4a676478905bf02bfc4156c97e359f5ee02
-      version: 0.12.0
+      commit: 2ae859d42b3ee91a294282c0ffa223f7eb2307b2
+      version: 0.13.0
     https://github.com/bismite/mruby-bi-ext.git:
       url: https://github.com/bismite/mruby-bi-ext.git
       branch: master
-      commit: fe423bcc118390f5da32bdc7546cfcaf34adbeeb
-      version: 0.4.0
+      commit: e2fd22b7008550ff4a2d6c6f224ade5829c3c51d
+      version: 0.4.1
     https://github.com/bismite/mruby-bi-sound.git:
       url: https://github.com/bismite/mruby-bi-sound.git
       branch: master
@@ -67,8 +67,8 @@ builds:
     https://github.com/bismite/mruby-bi-archive.git:
       url: https://github.com/bismite/mruby-bi-archive.git
       branch: master
-      commit: bd548777e7cb497aca6980aff18f3e28bd8e0a28
-      version: 0.3.0
+      commit: 6c1a945920f8684b11d4b2d4dfa05ddadef01ee3
+      version: 0.4.0
     https://github.com/bismite/mruby-bi-image.git:
       url: https://github.com/bismite/mruby-bi-image.git
       branch: master
