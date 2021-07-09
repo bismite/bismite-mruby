@@ -52,7 +52,7 @@ builds:
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
       branch: master
-      commit: ede5f7a815b71d69fa27ab8ba9bf5ef75b11698a
+      commit: 3db1dfccd29bfd3fdbd0ba90db2606676714b39d
       version: 0.13.1
     https://github.com/bismite/mruby-bi-ext.git:
       url: https://github.com/bismite/mruby-bi-ext.git
