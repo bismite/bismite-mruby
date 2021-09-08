@@ -10,7 +10,7 @@ MRuby::CrossBuild.new('emscripten') do |conf|
 
   include_gems(conf)
 
-  emscripten_flags = %W(-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s DISABLE_EXCEPTION_CATCHING=0 -s MAIN_MODULE=1 -fPIC -s WASM=1)
+  emscripten_flags = %W(-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s MAIN_MODULE=1 -fPIC)
 
   conf.cc do |cc|
     cc.command = 'emcc'
