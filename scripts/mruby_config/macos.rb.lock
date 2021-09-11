@@ -9,15 +9,15 @@ builds:
       branch: master
       commit: 8e6e1dca8284f142bea681bfe032ebe7bae3851a
       version: 0.0.0
-    https://github.com/iij/mruby-env.git:
-      url: https://github.com/iij/mruby-env.git
-      branch: master
-      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
     https://github.com/ksss/mruby-singleton.git:
       url: https://github.com/ksss/mruby-singleton.git
       branch: master
       commit: 73dd4bae1a47d82e49b8f85bf27f49ec4462052e
+      version: 0.0.0
+    https://github.com/iij/mruby-env.git:
+      url: https://github.com/iij/mruby-env.git
+      branch: HEAD
+      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
     https://github.com/iij/mruby-dir.git:
       url: https://github.com/iij/mruby-dir.git
@@ -28,16 +28,6 @@ builds:
       url: https://github.com/iij/mruby-iijson.git
       branch: master
       commit: c5e730c30090d3cddae258f57ab9508edb3e9fce
-      version: 0.0.0
-    https://github.com/kabies/mruby-stable-sort.git:
-      url: https://github.com/kabies/mruby-stable-sort.git
-      branch: master
-      commit: 48a0c0b03c8de1ed40087a922b0602d58c3fde3b
-      version: 0.1.0
-    https://github.com/kabies/mruby-cellular-automaton.git:
-      url: https://github.com/kabies/mruby-cellular-automaton.git
-      branch: master
-      commit: f1408e76765b33cd798b53f8cba41747239e16b3
       version: 0.0.0
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
@@ -52,8 +42,8 @@ builds:
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
       branch: master
-      commit: e96f5da778af9c068e5201ebd1e27395372ccc0c
-      version: 0.14.1
+      commit: 51646b07fcdeb0f1e92a531653ce5d7e85d3d4ae
+      version: 0.14.2
     https://github.com/bismite/mruby-bi-ext.git:
       url: https://github.com/bismite/mruby-bi-ext.git
       branch: master
@@ -73,6 +63,11 @@ builds:
       url: https://github.com/bismite/mruby-bi-image.git
       branch: master
       commit: 8fb6017b1c4db4361188e7515deb2c47c0c51b4a
+      version: 0.1.0
+    https://github.com/bismite/mruby-bi-misc.git:
+      url: https://github.com/bismite/mruby-bi-misc.git
+      branch: master
+      commit: dcfa376eee7f587234ace5eb50735a48d6873dd8
       version: 0.1.0
     https://github.com/bismite/mruby-bi-geometry.git:
       url: https://github.com/bismite/mruby-bi-geometry.git
@@ -95,15 +90,15 @@ builds:
       branch: master
       commit: 8e6e1dca8284f142bea681bfe032ebe7bae3851a
       version: 0.0.0
-    https://github.com/iij/mruby-env.git:
-      url: https://github.com/iij/mruby-env.git
-      branch: master
-      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
     https://github.com/ksss/mruby-singleton.git:
       url: https://github.com/ksss/mruby-singleton.git
       branch: master
       commit: 73dd4bae1a47d82e49b8f85bf27f49ec4462052e
+      version: 0.0.0
+    https://github.com/iij/mruby-env.git:
+      url: https://github.com/iij/mruby-env.git
+      branch: HEAD
+      commit: 056ae324451ef16a50c7887e117f0ea30921b71b
       version: 0.0.0
     https://github.com/iij/mruby-dir.git:
       url: https://github.com/iij/mruby-dir.git
@@ -114,16 +109,6 @@ builds:
       url: https://github.com/iij/mruby-iijson.git
       branch: master
       commit: c5e730c30090d3cddae258f57ab9508edb3e9fce
-      version: 0.0.0
-    https://github.com/kabies/mruby-stable-sort.git:
-      url: https://github.com/kabies/mruby-stable-sort.git
-      branch: master
-      commit: 48a0c0b03c8de1ed40087a922b0602d58c3fde3b
-      version: 0.1.0
-    https://github.com/kabies/mruby-cellular-automaton.git:
-      url: https://github.com/kabies/mruby-cellular-automaton.git
-      branch: master
-      commit: f1408e76765b33cd798b53f8cba41747239e16b3
       version: 0.0.0
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
@@ -138,8 +123,8 @@ builds:
     https://github.com/bismite/mruby-bi-core.git:
       url: https://github.com/bismite/mruby-bi-core.git
       branch: master
-      commit: e96f5da778af9c068e5201ebd1e27395372ccc0c
-      version: 0.14.1
+      commit: 51646b07fcdeb0f1e92a531653ce5d7e85d3d4ae
+      version: 0.14.2
     https://github.com/bismite/mruby-bi-ext.git:
       url: https://github.com/bismite/mruby-bi-ext.git
       branch: master
@@ -159,6 +144,11 @@ builds:
       url: https://github.com/bismite/mruby-bi-image.git
       branch: master
       commit: 8fb6017b1c4db4361188e7515deb2c47c0c51b4a
+      version: 0.1.0
+    https://github.com/bismite/mruby-bi-misc.git:
+      url: https://github.com/bismite/mruby-bi-misc.git
+      branch: master
+      commit: dcfa376eee7f587234ace5eb50735a48d6873dd8
       version: 0.1.0
     https://github.com/bismite/mruby-bi-geometry.git:
       url: https://github.com/bismite/mruby-bi-geometry.git

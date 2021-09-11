@@ -10,28 +10,20 @@ def include_gems(conf)
   end
 
   conf.gem github: 'katzer/mruby-os'
-  conf.gem github: 'iij/mruby-env'
-  # conf.gem github: 'iij/mruby-process' # fail in mingw
   conf.gem github: 'ksss/mruby-singleton'
+  conf.gem github: 'iij/mruby-env'
   conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-iijson'
-  # conf.gem github: 'suzukaze/mruby-msgpack' # too much warn
-  # conf.gem github:"Asmod4n/mruby-simplemsgpack" # trouble in travis
-  # conf.gem github: 'hfm/mruby-fileutils' # error in mingw
-  conf.gem github: 'kabies/mruby-stable-sort'
-  conf.gem github: 'kabies/mruby-cellular-automaton'
-
+  conf.gem github: 'iij/mruby-env'
   conf.gem github: "mrbgems/mruby-yaml"
-
-  ENV['MRUBY_SIMPLEMSGPACK'] ? conf.gem(ENV['MRUBY_SIMPLEMSGPACK']) : conf.gem(github:"bismite/mruby-simplemsgpack")
-
+  ENV['MRUBY_MSGPACK']  ? conf.gem(ENV['MRUBY_MSGPACK'])  : conf.gem(github:"bismite/mruby-simplemsgpack")
   ENV['MRUBY_BI_CORE']  ? conf.gem(ENV['MRUBY_BI_CORE'])  : conf.gem(github:'bismite/mruby-bi-core')
   ENV['MRUBY_BI_EXT']   ? conf.gem(ENV['MRUBY_BI_EXT'])   : conf.gem(github:'bismite/mruby-bi-ext')
   ENV['MRUBY_BI_SOUND'] ? conf.gem(ENV['MRUBY_BI_SOUND']) : conf.gem(github:'bismite/mruby-bi-sound')
   ENV['MRUBY_BI_ARCHIVE'] ? conf.gem(ENV['MRUBY_BI_ARCHIVE']) : conf.gem(github:'bismite/mruby-bi-archive')
   ENV['MRUBY_BI_IMAGE'] ? conf.gem(ENV['MRUBY_BI_IMAGE']) : conf.gem(github:'bismite/mruby-bi-image')
-
-  ENV['MRUBY_BI_GEOMETRY'] ?  conf.gem(ENV['MRUBY_BI_GEOMETRY']) : conf.gem(github:'bismite/mruby-bi-geometry')
+  ENV['MRUBY_BI_MISC']  ? conf.gem(ENV['MRUBY_BI_MISC'])  : conf.gem(github:'bismite/mruby-bi-misc')
+  ENV['MRUBY_BI_GEOMETRY']? conf.gem(ENV['MRUBY_BI_GEOMETRY']): conf.gem(github:'bismite/mruby-bi-geometry')
 
   if conf.name == "emscripten"
     ENV['MRUBY_EMSCRIPTEN'] ?  conf.gem(ENV['MRUBY_EMSCRIPTEN']) : conf.gem(github:'bismite/mruby-emscripten')
