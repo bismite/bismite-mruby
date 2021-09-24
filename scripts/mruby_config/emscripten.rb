@@ -25,7 +25,7 @@ MRuby::CrossBuild.new('emscripten') do |conf|
   conf.linker do |linker|
     linker.command = 'emcc'
     linker.library_paths << "#{BUILD_DIR}/emscripten/lib"
-    linker.libraries += %w(biext bi msgpackc yaml)
+    linker.libraries += %w(msgpackc yaml bismite)
     linker.flags += emscripten_flags
   end
 

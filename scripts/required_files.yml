@@ -1,13 +1,5 @@
 common:
   -
-    - https://github.com/bismite/bismite-library-core/archive/refs/tags/0.13.0.tar.gz
-    - bismite-library-core.tar.gz
-  - 1b7b2f4fb3c3e0829242a81046a05f29
-  -
-    - https://github.com/bismite/bismite-library-ext/archive/refs/tags/0.7.0.tar.gz
-    - bismite-library-ext.tar.gz
-  - 076174ad49291c89426b53ea66fc29ec
-  -
     - https://github.com/mruby/mruby/archive/3.0.0.tar.gz
     - mruby-3.0.0.tar.gz
   - 381c36a37c722b3568a932306cc63e59
@@ -15,11 +7,15 @@ linux:
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-linux.tgz
   - 1c67c89de3855c62634b5129ce16fe9d
 emscripten:
+  - https://github.com/bismite/libbismite/releases/download/1.0.8/libbismite-emscripten.tgz
+  - 4a671ddd31a766cb6688c0e38a351317
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-emscripten.tgz
   - 5773a075a15f19495aaeea918ddba719
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-emscripten.tgz
   - 44e511220af2778e276ee50677bccf62
 macos:
+  - https://github.com/bismite/libbismite/releases/download/1.0.8/libbismite-macos.tgz
+  - bb1996cb0493886120320e6a4d8e98d1
   - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz
   - 435d5c21d71adcbce06e74e5c7c945eb
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-macos.tgz

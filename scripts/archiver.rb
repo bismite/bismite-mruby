@@ -11,7 +11,7 @@ target = ARGV.shift
 objs = ARGV.join(" ")
 
 BUILD_DIR = File.expand_path File.join __dir__,"..","build"
-COMMON_LIBS = %w(bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer msgpackc yaml)
+COMMON_LIBS = %w(SDL2 SDL2_image SDL2_mixer msgpackc yaml bismite)
 
 
 if arch=="macos-arm64" or arch=="macos-x86_64"

@@ -48,11 +48,15 @@ targets.each do |target|
     cp_r "build/macos/SDL-macOS-UniversalBinaries/lib", "build/macos", remove_destination:true
     cp_r "build/macos/SDL-macOS-UniversalBinaries/include", "build/macos", remove_destination:true
     cp_r "build/macos/SDL-macOS-UniversalBinaries/licenses", "build/macos", remove_destination:true
+    # install libbismite
+    run "tar zxf build/download/macos/libbismite-macos.tgz -C build/macos/"
   when /linux/
     cp "src/bismite-config.rb", "#{install_path(target)}/bin/bismite-config"
     # install msgpack-c
     run "tar zxf build/download/linux/msgpack-c-linux.tgz -C build/linux/"
     cp "build/linux/msgpack-c/lib/libmsgpackc.so", "build/linux/lib/libmsgpackc.so"
+    # install libbismite
+    run "tar zxf build/download/linux/libbismite-linux.tgz -C build/linux/"
   when /mingw/
     cp "src/bismite-config-mingw.rb", "#{install_path(target)}/bin/bismite-config-mingw"
     dldir = "build/download/x86_64-w64-mingw32"
@@ -99,10 +103,11 @@ targets.each do |target|
     run "tar zxf build/download/emscripten/libyaml-0.2.5-emscripten.tgz -C build/emscripten/"
     cp_r "build/emscripten/libyaml-0.2.5-emscripten/lib", "build/emscripten", remove_destination:true
     cp "build/emscripten/libyaml-0.2.5-emscripten/License", "build/emscripten/licenses/libyaml-License"
+    # install libbismite
+    run "tar zxf build/download/emscripten/libbismite-emscripten.tgz -C build/emscripten/"
   end
 
   %w(
-    ./scripts/build_bilibs.rb
     ./scripts/build_mruby.rb
     ./scripts/licenses.rb
   ).each{|script|

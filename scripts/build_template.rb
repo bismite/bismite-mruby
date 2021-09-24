@@ -66,10 +66,13 @@ when /mingw/
 when /emscripten/
   options = {
     "wasm" => "-s WASM=1",
+    "wasm-one" => "-s WASM=1 -s SINGLE_FILE=1",
     "js" => "-s WASM=0",
-    "wasm-dl" => "-s WASM=1 -s MAIN_MODULE=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0",
+    "js-one" => "-s WASM=0 -s SINGLE_FILE=1",
+    "wasm-dl" => "-s WASM=1 -s MAIN_MODULE=1",
+    "wasm-dl-one" => "-s WASM=1 -s MAIN_MODULE=1 -s SINGLE_FILE=1",
   }
-  %w(wasm js wasm-dl).each{|t|
+  %w(wasm wasm-one js js-one wasm-dl wasm-dl-one).each{|t|
     mkdir_p "#{DST_DIR}/#{t}"
     cp "build/main.mrb", "#{DST_DIR}/#{t}/main.mrb"
     flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{options[t]}"
