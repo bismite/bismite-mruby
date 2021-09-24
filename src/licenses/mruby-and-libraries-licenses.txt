@@ -1,12 +1,10 @@
 mruby-3.0.0 Copyright (c) 2010-2021 mruby developers
-mruby-cellular-automaton kbys(https://github.com/kabies)
 mruby-dir Copyright (c) 2012 Internet Initiative Japan Inc.
 mruby-env Copyright (c) 2012 Internet Initiative Japan Inc.
 mruby-errno Copyright (c) 2013 Internet Initiative Japan Inc.
 mruby-iijson Copyright (c) 2014 Internet Initiative Japan Inc.
 mruby-os © 2017 Sebastian Katzer, appPlant GmbH
 mruby-singleton Copyright (c) ksss <co000ri@gmail.com>
-mruby-stable-sort Copyright (c) kabies
 mruby-yaml Copyright (c) Andrew Belt
 
   Permission is hereby granted, free of charge, to any person obtaining a
@@ -29,16 +27,9 @@ mruby-yaml Copyright (c) Andrew Belt
 
 ----
 bismite-mruby Copyright (c) 2021 kbys
-bismite-library-core Copyright (c) 2018-2021 kbys <work4kbys@gmail.com>
-bismite-library-ext Copyright (c) 2018-2020 kbys <work4kbys@gmail.com>
-mruby-bi-archive Copyright 2019 kbys <work4kbys@gmail.com>
-mruby-bi-core Copyright 2018-2021 kbys <work4kbys@gmail.com>
-mruby-bi-dlopen Copyright 2020 kbys <work4kbys@gmail.com>
-mruby-bi-ext Copyright 2018 kbys <work4kbys@gmail.com>
-mruby-bi-geometry Copyright 2019 kbys <work4kbys@gmail.com>
-mruby-bi-image Copyright 2021 kbys <work4kbys@gmail.com>
-mruby-bi-sound Copyright 2018 kbys <work4kbys@gmail.com>
-mruby-stable-sort Copyright (c) kbys
+libbismite Copyright (c) 2018-2021 kbys <work4kbys@gmail.com>
+mruby-libbismite Copyright 2018-2021 kbys <work4kbys@gmail.com>
+mruby-bi-misc Copyright 2018-2021 kbys <work4kbys@gmail.com>
 mruby-simplemsgpack Copyright (c) Hendrik Beskow, Christopher Aue
 
                                  Apache License
