@@ -14,4 +14,4 @@
 
 ## mingw-w64
 1. install mingw-w64
-2. run `./make.rb x86_64-w64-mingw32`
+2. run `./make.rb mingw`
