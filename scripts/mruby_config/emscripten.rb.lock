@@ -39,50 +39,10 @@ builds:
       branch: master
       commit: '09faa4fc038737fe321c69a0341c0c9ca276c656'
       version: 0.0.0
-    https://github.com/bismite/mruby-bi-core.git:
-      url: https://github.com/bismite/mruby-bi-core.git
-      branch: master
-      commit: 51646b07fcdeb0f1e92a531653ce5d7e85d3d4ae
-      version: 0.14.2
-    https://github.com/bismite/mruby-bi-ext.git:
-      url: https://github.com/bismite/mruby-bi-ext.git
-      branch: master
-      commit: 8adf3cecc27f988688ddaea396574d943696318b
-      version: 0.5.0
-    https://github.com/bismite/mruby-bi-sound.git:
-      url: https://github.com/bismite/mruby-bi-sound.git
-      branch: master
-      commit: 8af59a855b41852a138fb45b6db45054d6357d36
-      version: 0.1.0
-    https://github.com/bismite/mruby-bi-archive.git:
-      url: https://github.com/bismite/mruby-bi-archive.git
-      branch: master
-      commit: 5a1600298e6beb0a713d7d2d5d56af1ea025edfc
-      version: 0.5.0
-    https://github.com/bismite/mruby-bi-image.git:
-      url: https://github.com/bismite/mruby-bi-image.git
-      branch: master
-      commit: 8fb6017b1c4db4361188e7515deb2c47c0c51b4a
-      version: 0.1.0
-    https://github.com/bismite/mruby-bi-misc.git:
-      url: https://github.com/bismite/mruby-bi-misc.git
-      branch: master
-      commit: eee437ad413aeb1afa6a2a832c6a1aa8d6eb6531
-      version: 0.3.0
-    https://github.com/bismite/mruby-bi-geometry.git:
-      url: https://github.com/bismite/mruby-bi-geometry.git
-      branch: master
-      commit: '085e6b9a5a8e1b19a5457caaa26b620e0f63206f'
-      version: 0.1.1
     https://github.com/bismite/mruby-emscripten.git:
       url: https://github.com/bismite/mruby-emscripten.git
       branch: master
       commit: 421b6b3989d458febdc99a4e14caa7a5b43be8a5
-      version: 0.2.0
-    https://github.com/bismite/mruby-bi-dlopen.git:
-      url: https://github.com/bismite/mruby-bi-dlopen.git
-      branch: master
-      commit: a8162fcd43ba9c2407ef1c1a77e863db8d4157fb
       version: 0.2.0
     https://github.com/iij/mruby-errno.git:
       url: https://github.com/iij/mruby-errno.git

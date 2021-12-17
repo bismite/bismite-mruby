@@ -2,8 +2,6 @@ require "fileutils"
 require "yaml"
 require 'digest'
 
-MRUBY = "mruby-3.0.0"
-
 include FileUtils
 
 begin
@@ -41,7 +39,7 @@ def install_path(target)
   case target
   when "macos"
     "#{root}/build/#{target}"
-  when "linux","x86_64-w64-mingw32","emscripten"
+  when "linux","mingw","emscripten"
     "#{root}/build/#{target}"
   else
     raise "target name invalid: #{target}"

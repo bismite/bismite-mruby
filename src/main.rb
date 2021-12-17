@@ -14,7 +14,7 @@ layer.root = root
   node.anchor = :center
   node.angle = rand(360)
   node.set_color rand(0xff), rand(0xff), rand(0xff), 128
-  node.on_update{|n,d| n.angle = n.angle+1 }
+  node.create_timer(0,-1){|n,d| n.angle += 0.001*d }
 end
 Bi::add_layer layer
 Bi::start_run_loop

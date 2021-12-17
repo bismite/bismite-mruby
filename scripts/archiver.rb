@@ -34,12 +34,11 @@ elsif arch=="linux"
   additional_command = nil
 elsif arch=="x86_64-w64-mingw32"
   command = "x86_64-w64-mingw32-gcc"
-  libpath = "-L#{BUILD_DIR}/x86_64-w64-mingw32/lib -L#{BUILD_DIR}/x86_64-w64-mingw32/bin"
+  libpath = "-L#{BUILD_DIR}/mingw/lib -L#{BUILD_DIR}/mingw/bin"
   libs = (COMMON_LIBS+["opengl32","ws2_32"]).map{|l| "-l#{l}" }.join(" ")
   flags = ""
   dylib = target.gsub ".a", ".dll"
   additional_command = nil
-  command = "x86_64-w64-mingw32-gcc"
 end
 
 if target.end_with? "libmruby.a"

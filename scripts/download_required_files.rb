@@ -25,7 +25,7 @@ def download(files,target)
       url = file
       filename = File.basename url
     end
-    filepath = "build/download/#{target}/#{filename}"
+    filepath = File.join "build/download",target,filename
     if check filepath,hash
       puts "already downloaded #{filepath}"
     else

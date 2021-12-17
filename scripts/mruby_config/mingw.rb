@@ -2,17 +2,17 @@ require 'rbconfig'
 require_relative "common.rb"
 
 SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
-INSTALL_PREFIX = "#{BUILD_DIR}/x86_64-w64-mingw32"
+INSTALL_PREFIX = "#{BUILD_DIR}/mingw"
 
 MRuby::Build.new do |conf|
   toolchain :clang
 end
 
-MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
+MRuby::CrossBuild.new('mingw') do |conf|
   toolchain :gcc
-  conf.host_target = "x86_64-w64-mingw32"
+  conf.host_target = "mingw"
 
-  include_gems(conf)
+  include_gems conf,"mingw"
 
   conf.cc do |cc|
     cc.command = 'x86_64-w64-mingw32-gcc'
@@ -28,8 +28,8 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
     linker.command = "#{SCRIPTS_DIR}/linker.rb x86_64-w64-mingw32-gcc"
     linker.library_paths << "#{INSTALL_PREFIX}/lib"
     linker.library_paths << "#{INSTALL_PREFIX}/bin"
-    linker.library_paths << "#{INSTALL_PREFIX}/mruby-3.0.0/build/x86_64-w64-mingw32/lib"
-    linker.libraries += %w(bismite-ext bismite-core opengl32 yaml msgpackc)
+    linker.library_paths << "#{INSTALL_PREFIX}/mruby/build/mingw/lib"
+    linker.libraries += %w(bismite opengl32 yaml msgpackc)
     linker.flags_after_libraries << "`#{INSTALL_PREFIX}/bin/sdl2-config --libs` -lSDL2_image -lSDL2_mixer -static-libgcc -mconsole"
   end
 
@@ -42,4 +42,3 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
     archiver.archive_options = 'x86_64-w64-mingw32 %{outfile} %{objs}'
   end
 end
-

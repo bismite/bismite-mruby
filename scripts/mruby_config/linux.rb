@@ -11,7 +11,7 @@ end
 MRuby::CrossBuild.new('linux') do |conf|
   toolchain :clang
 
-  include_gems conf
+  include_gems conf,"linux"
 
   conf.cc do |cc|
     cc.command = 'clang'
@@ -26,8 +26,8 @@ MRuby::CrossBuild.new('linux') do |conf|
 
   conf.linker do |linker|
     linker.command = "#{SCRIPTS_DIR}/linker.rb clang"
-    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/linux/mruby-3.0.0/build/linux/lib"]
-    linker.libraries += %W( bismite-core bismite-ext SDL2 SDL2_image SDL2_mixer GL msgpackc )
+    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/linux/mruby/build/linux/lib"]
+    linker.libraries += %W( bismite SDL2 SDL2_image SDL2_mixer GL msgpackc )
     linker.flags_after_libraries << "-Wl,-rpath,'$ORIGIN/../lib'"
   end
 

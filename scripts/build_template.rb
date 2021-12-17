@@ -8,7 +8,7 @@ HOST = (/linux/ === RUBY_PLATFORM ? "linux" : "macos")
 TARGET = ARGV[0] || HOST
 DST_DIR = ARGV[1] || "build/#{TARGET}/share/bismite/templates"
 
-run "./build/#{TARGET}/mruby-3.0.0/build/host/mrbc/bin/mrbc -o build/main.mrb src/main.rb"
+run "./build/#{TARGET}/mruby/build/host/mrbc/bin/mrbc -o build/main.mrb src/main.rb"
 
 def copy_license_files(target,dir)
   mkdir_p dir
@@ -52,16 +52,16 @@ when /macos/
   copy_license_files "macos", "#{DST_DIR}/macos/"
 
 when /mingw/
-  mkdir_p "#{DST_DIR}/x86_64-w64-mingw32/system"
-  cp "build/main.mrb", "#{DST_DIR}/x86_64-w64-mingw32/system/main.mrb"
+  mkdir_p "#{DST_DIR}/mingw/system"
+  cp "build/main.mrb", "#{DST_DIR}/mingw/system/main.mrb"
   # real main.exe
-  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/x86_64-w64-mingw32/system/main.exe `./build/x86_64-w64-mingw32/bin/bismite-config-mingw --cflags --libs`"
+  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/mingw/system/main.exe `./build/mingw/bin/bismite-config-mingw --cflags --libs`"
   # copy dlls
-  cp Dir.glob('build/x86_64-w64-mingw32/bin/*.dll'), "#{DST_DIR}/x86_64-w64-mingw32/system"
+  cp Dir.glob('build/mingw/bin/*.dll'), "#{DST_DIR}/mingw/system"
   # frontman
-  run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/x86_64-w64-mingw32/frontman-mingw.res"
-  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/x86_64-w64-mingw32/frontman-mingw.res -std=c11 -Os -mwindows -o #{DST_DIR}/x86_64-w64-mingw32/start.exe"
-  copy_license_files "x86_64-w64-mingw32", "#{DST_DIR}/x86_64-w64-mingw32/"
+  run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/mingw/frontman-mingw.res"
+  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/mingw/frontman-mingw.res -std=c11 -Os -mwindows -o #{DST_DIR}/mingw/start.exe"
+  copy_license_files "mingw", "#{DST_DIR}/mingw/"
 
 when /emscripten/
   options = {

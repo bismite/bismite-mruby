@@ -15,7 +15,7 @@ end
 MRuby::CrossBuild.new('macos-arm64') do |conf|
   toolchain :clang
 
-  include_gems conf
+  include_gems conf,"macos"
 
   conf.cc do |cc|
     cc.command = 'clang'
@@ -26,7 +26,7 @@ MRuby::CrossBuild.new('macos-arm64') do |conf|
 
   conf.linker do |linker|
     linker.command = "#{SCRIPTS_DIR}/linker.rb clang"
-    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby-3.0.0/build/macos-arm64/lib"]
+    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby/build/macos-arm64/lib"]
     linker.libraries += LIBS
     linker.flags << "-framework OpenGL -arch arm64"
   end
@@ -40,7 +40,7 @@ end
 MRuby::CrossBuild.new('macos-x86_64') do |conf|
   toolchain :clang
 
-  include_gems conf
+  include_gems conf,"macos"
 
   conf.cc do |cc|
     cc.command = 'clang'
@@ -51,7 +51,7 @@ MRuby::CrossBuild.new('macos-x86_64') do |conf|
 
   conf.linker do |linker|
     linker.command = "#{SCRIPTS_DIR}/linker.rb clang"
-    linker.library_paths += ["#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby-3.0.0/build/macos-x86_64/lib"]
+    linker.library_paths += ["#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby/build/macos-x86_64/lib"]
     linker.libraries += LIBS
     linker.flags << "-framework OpenGL -arch x86_64"
   end

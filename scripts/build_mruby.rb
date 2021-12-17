@@ -2,18 +2,23 @@
 require_relative "lib/utils"
 
 TARGET = ARGV[0]
-
-FileUtils.mkdir_p "build/#{TARGET}/#{MRUBY}"
-run "tar --strip-component 1 -zxf build/download/#{TARGET}/#{MRUBY}.tar.gz -C build/#{TARGET}/#{MRUBY}"
-cp "src/mruby.patch", "build/#{TARGET}/#{MRUBY}"
-
 ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{TARGET}.rb"
+MRUBY_DIR="build/#{TARGET}/mruby"
 
-MRUBY_DIR="build/#{TARGET}/#{MRUBY}"
+#
+# extract
+#
+Dir.chdir("build"){
+  %w(mruby mruby-libbismite mruby-bi-misc).each{|name|
+    FileUtils.mkdir_p "#{TARGET}/#{name}"
+    run "tar --strip-component 1 -xf download/#{TARGET}/#{name}.tgz -C #{TARGET}/#{name}"
+  }
+}
 
 #
 # build mruby
 #
+cp "src/mruby.patch", "build/#{TARGET}/mruby"
 Dir.chdir(MRUBY_DIR){
   run "patch -p0 < mruby.patch"
   run "rake MRUBY_YAML_USE_SYSTEM_LIBRARY=true"
@@ -36,7 +41,7 @@ if /macos/ === TARGET
 else
   if /linux/ === TARGET
     cp "#{MRUBY_DIR}/build/#{TARGET}/lib/libmruby.so", "#{prefix}/lib/libmruby.so"
-  elsif TARGET == "x86_64-w64-mingw32"
+  elsif TARGET == "mingw"
     cp "#{MRUBY_DIR}/build/#{TARGET}/lib/libmruby.dll", "#{prefix}/bin/libmruby.dll"
   else
     cp_r "#{MRUBY_DIR}/build/#{TARGET}/lib/.", "#{prefix}/lib/"

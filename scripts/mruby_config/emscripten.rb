@@ -8,7 +8,7 @@ end
 MRuby::CrossBuild.new('emscripten') do |conf|
   toolchain :clang
 
-  include_gems(conf)
+  include_gems(conf,"emscripten")
 
   emscripten_flags = %W(-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s MAIN_MODULE=1 -fPIC)
 
