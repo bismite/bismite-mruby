@@ -50,7 +50,7 @@ class CaveGeneratorExample < Bi::Node
       true
     end
 
-    self.on_update{|node,delta| f = nil if f and f.resume }
+    self.create_timer(0,-1){|node,delta| f = nil if f and f.resume }
 
   end
 
@@ -74,11 +74,7 @@ end
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer = Bi::Layer.new
-  node = CaveGeneratorExample.new(Bi.w,Bi.h)
-  root = Bi::Node.new
-  root.add node
-  node.x = Bi.w - node.w
-  layer.root = root
+  layer.root = CaveGeneratorExample.new(Bi.w,Bi.h)
   Bi::add_layer layer
 end
 Bi.start_run_loop

@@ -1,14 +1,14 @@
 Bi.init 480,320,title:__FILE__
 
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+  texture = assets.texture("assets/face01.png")
+
   # layer
   layer = Bi::Layer.new
-  layer.root = Bi::Node.new
-  layer.root.set_color 0x33,0x33,0x33,0xff
-  layer.root.set_size Bi.w,Bi.h
+  layer.root = assets.texture("assets/check.png").to_sprite
+  layer.set_texture 0, texture
+  layer.set_texture 1, layer.root.texture_mapping.texture
   Bi::add_layer layer
-
-  texture = assets.texture("assets/face01.png")
 
   # A: red
   face_a = texture.to_sprite
@@ -32,7 +32,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
     end
   }
 
-  layer.set_texture 0, texture
   layer.root.add face_a #
   layer.root.add face_b # B after A
 end

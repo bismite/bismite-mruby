@@ -12,7 +12,7 @@ class Particle < Bi::Sprite
       self.remove_from_parent
     else
       @life = life
-      self.set_alpha(0xff*@life/@life_max)
+      self.opacity = @life/@life_max.to_f
     end
   end
 end
@@ -22,20 +22,18 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   texture = assets.texture "assets/ball.png"
   texture_mapping = Bi::TextureMapping.new texture,0,0,texture.w,texture.h
 
-  root = Bi::Node.new
-  root.on_move_cursor {|n,x,y|
-    particle = Particle.new texture_mapping, x, y
-    particle.on_update {|n,delta|
-      n.life -= 1
-    }
-    root.add particle
-  }
-
   # layer
   layer = Bi::Layer.new
-  layer.root = root
+  layer.root = assets.texture("assets/sky.png").to_sprite
   layer.set_texture 0, texture
+  layer.set_texture 1, layer.root.texture_mapping.texture
   Bi::add_layer layer
+
+  layer.root.on_move_cursor {|n,x,y|
+    particle = Particle.new texture_mapping, x, y
+    particle.create_timer(0,-1) {|n,delta| n.life -= 1 }
+    n.add particle
+  }
 end
 
 Bi::start_run_loop

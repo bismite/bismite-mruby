@@ -8,38 +8,29 @@ end
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  root = Bi::Node.new
-  root.set_size Bi.w, Bi.h
-  root.set_color 0x33,0,0,0xff
-
-  # create sprite
-  texture = assets.texture "assets/face01.png"
-  face = texture.to_sprite
-  face.set_position Bi.w/2,Bi.h/2
-  face.anchor = :center
-  root.add face
+  # layer
+  layer = Bi::Layer.new
+  layer.root = assets.texture("assets/face01.png").to_sprite
+  layer.root.set_position Bi.w/2,Bi.h/2
+  layer.root.anchor = :center
+  layer.set_texture 0, layer.root.texture_mapping.texture
+  Bi::add_layer layer
 
   f = Fiber.new do
     360.times do
-      face.angle += 1
+      layer.root.angle += 0.1
       Fiber.sleep 0.01
     end
     true
   end
 
-  face.on_update{|node,delta|
+  layer.root.create_timer(0,-1){|node,delta|
     if f
       if f.resume
         f = nil
       end
     end
   }
-
-  # layer
-  layer = Bi::Layer.new
-  layer.root = root
-  layer.set_texture 0, texture
-  Bi::add_layer layer
 end
 
 Bi::start_run_loop

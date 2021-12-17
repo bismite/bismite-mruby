@@ -1,4 +1,14 @@
+
 class RectCollide < Bi::Node
+
+  def rect(x,y,w,h,r,g,b,opacity)
+    rect = Bi::Node.new
+    rect.set_color r,g,b,0xff
+    rect.opacity = opacity
+    rect.set_size w,h
+    rect.set_position x,y
+    rect
+  end
 
   def initialize(sky_texture,ball_texture)
     super
@@ -17,31 +27,18 @@ class RectCollide < Bi::Node
       @blocks << b
     end
 
-    @me = Bi::Node.new
-    @me.set_color 0xff,0xff,0xff,64
-    @me.set_size 20,20
-    @me.set_position Bi.w/2, Bi.h/2
+    @me = rect Bi.w/2, Bi.h/2, 20,20, 0xff,0xff,0xff, 0.5
     self.add @me
 
-    @ghost = Bi::Node.new
-    @ghost.set_color 0xff,0,0,64
-    @ghost.set_size @me.w, @me.h
-    @ghost.set_position @me.x, @me.y
+    @ghost = rect @me.x,@me.y, @me.w,@me.h, 0xff,0,0, 0.5
     self.add @ghost
 
-    @pushed = Bi::Node.new
-    @pushed.set_color 0xff,0xff,0,64
-    @pushed.set_size @me.w, @me.h
-    @pushed.set_position @me.x, @me.y
+    @pushed = rect @me.x, @me.y, @me.w, @me.h, 0xff,0xff,0, 0.5
     self.add @pushed
 
-    @line = Bi::Node.new
-    @line.set_color 0xff,0xff,0xff,0xff
-    @line.set_size 32,32
+    @line = rect Bi.w/2,Bi.h/2,32,32, 0xff,0xff,0xff, 1.0
     @line.anchor = :west
     @line.scale_y = 1.0 / @line.h
-    @line.x = Bi.w/2
-    @line.y = Bi.h/2
     self.add @line
 
     @ball = ball_texture.to_sprite
@@ -52,18 +49,14 @@ class RectCollide < Bi::Node
       @blocks.each{|b| b.set_position *random_block_position } unless pressed
     end
 
-    # self.on_move_cursor{|node,x,y| point x,y }
-
     @sight_angle = 0
-    self.on_update{|node,delta|
-      @sight_angle += 1
-      angle = @sight_angle * 0.01
+    self.create_timer(0,-1){|node,delta|
+      @sight_angle += 0.001*delta
       distance = Bi.h
-      x = Bi.w/2 + distance * Math::cos(angle)
-      y = Bi.h/2 + distance * Math::sin(angle)
+      x = Bi.w/2 + distance * Math::cos(@sight_angle)
+      y = Bi.h/2 + distance * Math::sin(@sight_angle)
       point(x,y)
     }
-
   end
 
   def random_block_position
@@ -77,7 +70,7 @@ class RectCollide < Bi::Node
 
     lx = x - @line.x
     ly = y - @line.y
-    @line.angle = Math.atan2(ly,lx) * 180 / Math::PI
+    @line.angle = Math.atan2(ly,lx)
     @line.scale_x = Math.sqrt( lx**2 + ly**2 ) / @line.w
 
     sx = @line.x
@@ -87,7 +80,8 @@ class RectCollide < Bi::Node
     collide_block = nil
 
     @blocks.each{|block|
-      block.set_color 0xff,0xff,0xff,128
+      block.set_color 0xff,0xff,0xff,0xff
+      block.opacity = 0.5
 
       # Minkowski addition
       rx = block.x - @me.w

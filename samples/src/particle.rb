@@ -16,14 +16,14 @@ class Particle < Bi::Sprite
       self.parent.remove self
     else
       @life = life
-      self.set_alpha(0xff*@life/@life_max)
+      self.opacity = @life / @life_max.to_f
     end
   end
-  def my_update(n)
-    n.life -= 1
-    n.xx += n.vx
-    n.yy += n.vy
-    n.set_position(n.xx, n.yy)
+  def move
+    self.life -= 1
+    @xx += @vx
+    @yy += @vy
+    set_position(@xx, @yy)
   end
 end
 
@@ -45,7 +45,7 @@ class ParticleLayer < Bi::Layer
     @texture_mapping = Bi::TextureMapping.new @texture,0,0,@texture.w,@texture.h
 
     @frame_count = 0
-    self.root.on_update{|node,delta|
+    self.root.create_timer(0,-1){|node,delta|
       if @frame_count < 30
         @frame_count += 1
       else
@@ -58,7 +58,7 @@ class ParticleLayer < Bi::Layer
   def add_particle(x,y,num)
     num.times{
       particle = Particle.new @texture_mapping, x, y
-      particle.on_update :my_update
+      particle.create_timer(0,-1){|n,delta| n.move }
       self.root.add particle
     }
   end
