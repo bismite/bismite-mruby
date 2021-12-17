@@ -14,10 +14,10 @@ emscripten:
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-emscripten.tgz
   - 44e511220af2778e276ee50677bccf62
 macos:
-  - https://github.com/bismite/libbismite/releases/download/1.0.8/libbismite-macos.tgz
-  - bb1996cb0493886120320e6a4d8e98d1
-  - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/main/SDL-macOS-UniversalBinaries.tgz
-  - 435d5c21d71adcbce06e74e5c7c945eb
+  - https://github.com/bismite/libbismite/releases/download/1.1.8/libbismite-macos.tgz
+  - 5ee1c133473fb7bacefcb6dfd837c871
+  - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/1.2/SDL-macOS-UniversalBinaries.tgz
+  - bd9ffdf08e908da2b88c3222205ca701
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.11/msgpack-c-macos.tgz
   - 69b4120696c1c53d08383f70507588ec
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.5/libyaml-0.2.5-macos.tgz

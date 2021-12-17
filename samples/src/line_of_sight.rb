@@ -73,12 +73,11 @@ class LineOfSight < Bi::Node
 
     # self.on_move_cursor{|node,x,y| point(x,y) }
     @sight_angle = 0
-    self.on_update{|node,delta|
-      @sight_angle += 1
-      angle = @sight_angle * 0.01
+    self.create_timer(0,-1){|node,delta|
+      @sight_angle += 0.0005*delta
       distance = Bi.h
-      x = Bi.w/2 + distance * Math::cos(angle)
-      y = Bi.h/2 + distance * Math::sin(angle)
+      x = Bi.w/2 + distance * Math::cos(@sight_angle)
+      y = Bi.h/2 + distance * Math::sin(@sight_angle)
       point(x,y)
     }
   end
@@ -102,7 +101,7 @@ class LineOfSight < Bi::Node
   def point(x,y)
     lx = x - @line.x
     ly = y - @line.y
-    @line.angle = Math.atan2(ly,lx) * 180 / Math::PI
+    @line.angle = Math.atan2(ly,lx)
     @line.scale_x = Math.sqrt( lx**2 + ly**2 ) / @line.w
 
     sx = @line.x

@@ -3,7 +3,7 @@ class Line < Bi::Node
   attr_reader :line
   def initialize(x,y,x2,y2)
     super
-    self.angle = Math.atan2(y2-y, x2-x) * 180 / Math::PI
+    self.angle = Math.atan2(y2-y, x2-x)
     self.set_size Math.sqrt( (x2-x)**2 + (y2-y)**2 ), 1
     self.set_position x,y
     @line = [x,y,x2,y2]
@@ -53,12 +53,11 @@ class LineIntersection < Bi::Node
     end
 
     @sight_angle = 0
-    self.on_update{|node,delta|
-      @sight_angle += 1
-      angle = @sight_angle * 0.01
+    self.create_timer(0,-1){|node,delta|
+      @sight_angle += 0.0005*delta
       distance = Bi.h
-      x = Bi.w/2 + distance * Math::cos(angle)
-      y = Bi.h/2 + distance * Math::sin(angle)
+      x = Bi.w/2 + distance * Math::cos(@sight_angle)
+      y = Bi.h/2 + distance * Math::sin(@sight_angle)
       point(x,y)
     }
   end
@@ -81,7 +80,7 @@ class LineIntersection < Bi::Node
   def point(x,y)
     lx = x - @line.x
     ly = y - @line.y
-    @line.angle = Math.atan2(ly,lx) * 180 / Math::PI
+    @line.angle = Math.atan2(ly,lx)
     @line.scale_x = Math.sqrt( lx**2 + ly**2 ) / @line.w
 
     sx = @line.x
