@@ -142,6 +142,7 @@ targets.each do |target|
   run "./scripts/build_mruby.rb #{target}"
   run "./scripts/licenses.rb #{target}"
   run "./scripts/build_template.rb #{target}"
+  run "./scripts/build_asset_tools.rb #{target}"
 
   #
   # archive

@@ -1,7 +1,11 @@
-#!/usr/bin/env mruby
-#
-# usage: biasset-pack path/to/assets destination/dir/path/ SECRET
-#
+
+if ARGV.size != 3
+  puts "usage: bismite-asset-pack path/to/assets destination/dir/path/ SECRET"
+  exit 1
+end
+SRC = ARGV[0]
+DST = ARGV[1]
+KEY = Bi::crc64 0,ARGV[2]
 
 class Assets
   attr_reader :files, :index, :key
@@ -28,35 +32,31 @@ class Assets
       end
     }
   end
+  def padding8(str)
+    str + ([0]*(8-str.bytesize%8)).pack("C*")
+  end
+  def encrypt(buf,len)
+    # pack "q" : 64bit signed int
+    padding8(buf).unpack("q*").map{|b| b^@key }.pack("q*").byteslice(0,len)
+  end
 end
-
-def padding8(str)
-  str + ([0]*(8-str.bytesize%8)).pack("C*")
-end
-
-SRC = ARGV[0]
-DST = ARGV[1]
-KEY = Bi::crc64 0,ARGV[2]
-
-assets = Assets.new KEY, SRC
 
 File.open(File.join(DST,"assets.dat"),'wb') do |out|
+  puts "#{out.path}"
+  assets = Assets.new KEY, SRC
   # header 4byte
   out.write [1].pack('V') # assets file v2
   # index
   index = assets.index.to_msgpack
   ilen = index.bytesize
   out.write [ilen].pack('V')
-  index = padding8 index
-  ibuf = index.unpack("q*").map{|b| b^assets.key }.pack("q*").byteslice(0,ilen)
-  out.write ibuf
+  out.write assets.encrypt(index,ilen)
+  puts "index #{ilen} Bytes"
   # files
   assets.files.each.with_index do |f,i|
-    puts "#{f} -> #{assets.index[i]}"
-    flen = assets.index[i][2]
+    puts "#{f} -> #{assets.index[i][0]} (#{assets.index[i][2]}Bytes)"
     File.open(f,"rb"){|f|
-      buf = padding8(f.read).unpack("q*").map{|b|b^assets.key}.pack("q*").byteslice(0,flen)
-      out.write buf
+      out.write assets.encrypt(f.read, assets.index[i][2])
     }
   end
 end
