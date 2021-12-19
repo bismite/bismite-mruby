@@ -1,10 +1,25 @@
 #!/usr/bin/env ruby
 
+begin
+  require "colorize"
+rescue LoadError
+  String.class_eval do
+    alias :yellow :to_s
+    alias :red :to_s
+    alias :green :to_s
+  end
+end
+
 def run(cmd)
   return unless cmd
-  puts cmd
-  `#{cmd}`
+  puts "#{cmd}".yellow
+  system cmd
+  unless $?.success?
+    puts "failed #{cmd}".red
+    exit 1
+  end
 end
+
 
 arch = ARGV.shift
 target = ARGV.shift
@@ -34,7 +49,7 @@ elsif arch=="linux"
   additional_command = nil
 elsif arch=="x86_64-w64-mingw32"
   command = "x86_64-w64-mingw32-gcc"
-  libpath = "-L#{BUILD_DIR}/mingw/lib -L#{BUILD_DIR}/mingw/bin"
+  libpath = "-L#{BUILD_DIR}/mingw/bin -L#{BUILD_DIR}/mingw/lib"
   libs = (COMMON_LIBS+["opengl32","ws2_32"]).map{|l| "-l#{l}" }.join(" ")
   flags = ""
   dylib = target.gsub ".a", ".dll"
@@ -44,10 +59,11 @@ end
 if target.end_with? "libmruby.a"
   run "#{command} -shared -o #{dylib} #{objs} #{libpath} #{libs} #{flags}"
   run additional_command
+  # create static file
+  static_name = target.gsub ".a", "-static.a"
+  run "ar rcs #{static_name} #{objs}"
   return
 elsif target.end_with? "libmruby_core.a"
   # nop
   return
 end
-
-run "ar rs #{target} #{objs}"

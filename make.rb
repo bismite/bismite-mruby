@@ -31,7 +31,8 @@ def setup_linux
   Dir.chdir("build"){
     # install msgpack-c
     run "tar xf download/linux/msgpack-c-linux.tgz -C linux/"
-    cp "linux/msgpack-c/lib/libmsgpackc.so", "linux/lib/libmsgpackc.so"
+    cp "linux/msgpack-c/lib/libmsgpackc.so", "linux/lib/"
+    cp "linux/msgpack-c/lib/libmsgpackc.a", "linux/lib/"
     # install libbismite
     run "tar xf download/linux/libbismite-linux.tgz -C linux/"
   }
@@ -71,9 +72,10 @@ class SetupMingw
       # install SDL
       srcdir="#{SDL2}/x86_64-w64-mingw32"
       cp_r "#{srcdir}/include/", "./"
+      cp "#{srcdir}/bin/sdl2-config", "bin/"
       cp "#{srcdir}/bin/SDL2.dll", "bin/"
       cp "#{srcdir}/lib/libSDL2main.a", "lib/"
-      cp "#{srcdir}/bin/sdl2-config", "bin/"
+      cp "#{srcdir}/lib/libSDL2.a", "lib/"
       File.write(
        "bin/sdl2-config",
         File.read("bin/sdl2-config").gsub("/opt/local/x86_64-w64-mingw32", "$(dirname $(dirname $(realpath $0)))")
@@ -82,18 +84,22 @@ class SetupMingw
       srcdir="#{SDL2_IMAGE}/x86_64-w64-mingw32"
       cp_r "#{srcdir}/include/", "./"
       %w(SDL2_image.dll libpng16-16.dll zlib1.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
+      %w(libSDL2_image.a).each{|lib| cp "#{srcdir}/lib/#{lib}", "lib/" }
       %w(LICENSE.zlib.txt LICENSE.png.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
       # install SDL_mixer
       srcdir="#{SDL2_MIXER}/x86_64-w64-mingw32"
       cp_r "#{srcdir}/include/", "./"
       %w(SDL2_mixer.dll libmpg123-0.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
+      %w(libSDL2_mixer.a).each{|lib| cp "#{srcdir}/lib/#{lib}", "lib/" }
       %w(LICENSE.mpg123.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
       # copy SDL licenses
       [SDL2,SDL2_IMAGE,SDL2_MIXER].each{|name| cp "#{name}/COPYING.txt", "licenses/#{name}-COPYING" }
       # install msgpack-c
       cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
+      cp "msgpack-c/lib/libmsgpackc.a", "lib/"
       # install libyaml
       cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
+      cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a", "lib/"
       cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-License"
     end
   end

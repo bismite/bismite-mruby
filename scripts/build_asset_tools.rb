@@ -29,7 +29,7 @@ when /mingw/
   Dir.chdir("build/#{TARGET}"){
     %w(bismite-asset-pack bismite-asset-unpack).each{|name|
       run "./mruby/build/host/mrbc/bin/mrbc -B tool -o tool/tool.h tool/#{name}.rb"
-      run "x86_64-w64-mingw32-gcc tool/bismite-asset-tool.c -o bin/#{name} `./bin/bismite-config-mingw --cflags --libs`"
+      run "x86_64-w64-mingw32-gcc -Wall -std=gnu11 -Os -DNDEBUG tool/bismite-asset-tool.c -o bin/#{name} `./bin/bismite-config-mingw --cflags --libs`"
     }
   }
 when /emscripten/

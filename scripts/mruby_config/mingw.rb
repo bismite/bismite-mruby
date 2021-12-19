@@ -26,8 +26,8 @@ MRuby::CrossBuild.new('mingw') do |conf|
 
   conf.linker do |linker|
     linker.command = "#{SCRIPTS_DIR}/linker.rb x86_64-w64-mingw32-gcc"
-    linker.library_paths << "#{INSTALL_PREFIX}/lib"
     linker.library_paths << "#{INSTALL_PREFIX}/bin"
+    linker.library_paths << "#{INSTALL_PREFIX}/lib"
     linker.library_paths << "#{INSTALL_PREFIX}/mruby/build/mingw/lib"
     linker.libraries += %w(bismite opengl32 yaml msgpackc)
     linker.flags_after_libraries << "`#{INSTALL_PREFIX}/bin/sdl2-config --libs` -lSDL2_image -lSDL2_mixer -static-libgcc -mconsole"
