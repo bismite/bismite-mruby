@@ -53,55 +53,23 @@ def setup_emscripten
   }
 end
 
-class SetupMingw
-  SDL2 = "SDL2-2.0.18"
-  SDL2_IMAGE = "SDL2_image-2.0.5"
-  SDL2_MIXER = "SDL2_mixer-2.0.4"
-  def self.setup
-    cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
-    Dir.chdir("build"){
-      # install libbismite
-      run "tar xf download/mingw/libbismite-x86_64-w64-mingw32.tgz -C mingw/"
-      # unarchive
-      Dir.glob("download/mingw/SDL2*gz"){|archive| run "tar xf #{archive} -C mingw/" }
-      Dir.glob("download/mingw/libyaml*gz"){|archive| run "tar xf #{archive} -C mingw/" }
-      Dir.glob("download/mingw/msgpack*gz"){|archive| run "tar xf #{archive} -C mingw/" }
-      Dir.glob("download/mingw/libbismite*gz"){|archive| run "tar xf #{archive} -C mingw/" }
-    }
-    Dir.chdir("build/mingw") do
-      # install SDL
-      srcdir="#{SDL2}/x86_64-w64-mingw32"
-      cp_r "#{srcdir}/include/", "./"
-      cp "#{srcdir}/bin/sdl2-config", "bin/"
-      cp "#{srcdir}/bin/SDL2.dll", "bin/"
-      cp "#{srcdir}/lib/libSDL2main.a", "lib/"
-      cp "#{srcdir}/lib/libSDL2.a", "lib/"
-      File.write(
-       "bin/sdl2-config",
-        File.read("bin/sdl2-config").gsub("/opt/local/x86_64-w64-mingw32", "$(dirname $(dirname $(realpath $0)))")
-      )
-      # install SDL_image
-      srcdir="#{SDL2_IMAGE}/x86_64-w64-mingw32"
-      cp_r "#{srcdir}/include/", "./"
-      %w(SDL2_image.dll libpng16-16.dll zlib1.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
-      %w(libSDL2_image.a).each{|lib| cp "#{srcdir}/lib/#{lib}", "lib/" }
-      %w(LICENSE.zlib.txt LICENSE.png.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
-      # install SDL_mixer
-      srcdir="#{SDL2_MIXER}/x86_64-w64-mingw32"
-      cp_r "#{srcdir}/include/", "./"
-      %w(SDL2_mixer.dll libmpg123-0.dll).each{|dll| cp "#{srcdir}/bin/#{dll}", "bin/" }
-      %w(libSDL2_mixer.a).each{|lib| cp "#{srcdir}/lib/#{lib}", "lib/" }
-      %w(LICENSE.mpg123.txt).each{|l| cp "#{srcdir}/bin/#{l}", "licenses/" }
-      # copy SDL licenses
-      [SDL2,SDL2_IMAGE,SDL2_MIXER].each{|name| cp "#{name}/COPYING.txt", "licenses/#{name}-COPYING" }
-      # install msgpack-c
-      cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
-      cp "msgpack-c/lib/libmsgpackc.a", "lib/"
-      # install libyaml
-      cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
-      cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a", "lib/"
-      cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-License"
-    end
+def setup_mingw
+  cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
+  Dir.chdir("build"){
+    run "tar xf download/mingw/libbismite-x86_64-w64-mingw32.tgz -C mingw/"
+    run "tar xf download/mingw/SDL-x86_64-w64-mingw32.tgz -C mingw/"
+    run "tar xf download/mingw/libyaml-0.2.5-x86_64-w64-mingw32.tgz -C mingw/"
+    run "tar xf download/mingw/msgpack-c-x86_64-w64-mingw32.tgz -C mingw/"
+    run "tar xf download/mingw/libbismite-x86_64-w64-mingw32.tgz -C mingw/"
+  }
+  Dir.chdir("build/mingw") do
+    # install msgpack-c
+    cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
+    cp "msgpack-c/lib/libmsgpackc.a", "lib/"
+    # install libyaml
+    cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
+    cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a", "lib/"
+    cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-License"
   end
 end
 
@@ -137,7 +105,7 @@ targets.each do |target|
   when /linux/
     setup_linux
   when /mingw/
-    SetupMingw.setup
+    setup_mingw
   when /emscripten/
     setup_emscripten
   end

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 root = File.absolute_path(File.join(File.expand_path(File.dirname($0)),".."))
-STATIC_LIBS = %w(mruby-static bismite SDL2main SDL2 SDL2_mixer SDL2_image yaml msgpackc).map{|l| "#{root}/lib/lib#{l}.a" }.join(" ")
+STATIC_LIBS = %w(mruby-static bismite SDL2main SDL2 SDL2_mixer SDL2_image-static png z yaml msgpackc).map{|l| "#{root}/lib/lib#{l}.a" }.join(" ")
 
 ARGV.each do |command|
   case command
