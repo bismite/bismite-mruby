@@ -15,7 +15,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   Bi::add_layer layer
 
   Bi::Sound.init 441000,2,1024
-  sound = assets.sound "assets/sin-1sec-mono.wav"
+  sound = assets.sound "assets/sin-1sec-mono.mp3"
   sound.play 1,-1
 
   @angle = 0

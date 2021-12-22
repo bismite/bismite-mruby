@@ -16,7 +16,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer2.root.anchor = :center
   layer2.root.set_position Bi.w/2, Bi.h/2
   layer2.set_texture 0, layer2.root.texture_mapping.texture
-  layer2.set_blend_factor Bi::Layer::GL_DST_COLOR, Bi::Layer::GL_ONE, Bi::Layer::GL_DST_COLOR, Bi::Layer::GL_ONE
+  layer2.set_blend_factor GL_DST_COLOR, GL_ONE, GL_DST_COLOR, GL_ONE
 
   # spin
   layer2.root.create_timer(0,-1){|n,delta| n.angle += 0.001*delta }
