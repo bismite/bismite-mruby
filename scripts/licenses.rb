@@ -31,3 +31,9 @@ end
 File.open("build/#{TARGET}/Licenses.md","w"){|f|
   concat f,Dir["build/#{TARGET}/licenses/*"].sort.reverse
 }
+
+File.open("build/#{TARGET}/Licenses-static.md","w"){|f|
+  list = Dir["build/#{TARGET}/licenses/*"].sort.reverse
+  list.reject!{|f| f.include? "mpg123" }
+  concat f,list
+}

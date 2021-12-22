@@ -129,6 +129,7 @@ targets.each do |target|
   cp_r "build/#{target}/include", "tmp/#{name}"
   cp_r "build/#{target}/share/bismite", "tmp/#{name}/share/"
   cp_r "build/#{target}/Licenses.md", "tmp/#{name}"
+  cp_r "build/#{target}/Licenses-static.md", "tmp/#{name}"
   Dir.chdir("tmp"){
     run "tar czf #{name}.tgz #{name}"
   }
