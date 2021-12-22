@@ -15,7 +15,7 @@ def setup_macos
     # install libyaml
     run "tar zxf download/macos/libyaml-0.2.5-macos.tgz -C macos/"
     cp_r "macos/libyaml-0.2.5-macos/lib", "macos", remove_destination:true
-    cp "macos/libyaml-0.2.5-macos/License", "macos/licenses/libyaml-License"
+    cp "macos/libyaml-0.2.5-macos/License", "macos/licenses/libyaml-0.2.5-License"
     # install SDL
     run "tar xf download/macos/SDL-macOS-UniversalBinaries.tgz -C macos/"
     cp_r "macos/SDL-macOS-UniversalBinaries/lib", "macos", remove_destination:true
@@ -47,7 +47,7 @@ def setup_emscripten
     # install libyaml
     run "tar xf download/emscripten/libyaml-0.2.5-emscripten.tgz -C emscripten/"
     cp_r "emscripten/libyaml-0.2.5-emscripten/lib", "emscripten", remove_destination:true
-    cp "emscripten/libyaml-0.2.5-emscripten/License", "emscripten/licenses/libyaml-License"
+    cp "emscripten/libyaml-0.2.5-emscripten/License", "emscripten/licenses/libyaml-0.2.5-License"
     # install libbismite
     run "tar zxf download/emscripten/libbismite-emscripten.tgz -C emscripten/"
   }
@@ -69,7 +69,7 @@ def setup_mingw
     # install libyaml
     cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
     cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a", "lib/"
-    cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-License"
+    cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-0.2.5-License"
   end
 end
 
