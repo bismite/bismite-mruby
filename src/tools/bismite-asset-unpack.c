@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "tool.h"
+#include "bismite-asset-unpack.h"
 
 int main(int argc, char* argv[])
 {
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
   }
   mrb_define_global_const(mrb, "ARGV", ARGV);
   // Run
-  mrb_value obj = mrb_load_irep(mrb,tool);
+  mrb_value obj = mrb_load_irep(mrb,irep_data);
   if (mrb->exc) {
     printf("exception:\n");
     if (mrb_undef_p(obj)) {
