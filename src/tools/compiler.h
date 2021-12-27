@@ -16,16 +16,12 @@
 #include <string.h>
 #include <unistd.h>
 
-//
-// innner functions
-//
-
 static void _define_argv(mrb_state *mrb, int argc, const char* argv[])
 {
   mrb_value ARGV;
-  if(argc>1){
-    ARGV = mrb_ary_new_capa(mrb, argc-1);
-    for (int i = 1; i < argc; i++) {
+  if(argc>0){
+    ARGV = mrb_ary_new_capa(mrb, argc);
+    for (int i = 0; i < argc; i++) {
       char* utf8 = mrb_utf8_from_locale(argv[i], -1);
       if (utf8) {
         mrb_ary_push(mrb, ARGV, mrb_str_new_cstr(mrb, utf8));
@@ -81,14 +77,6 @@ char* _load(mrb_state *mrb, struct mrb_parser_state **p, const char* filename, c
   mrbc_context_free(mrb, c);
 
   return error_text;
-}
-
-static char* _run(const char* filename, const char* source, int argc, const char* argv[])
-{
-  mrb_state *mrb = mrb_open();
-  _define_argv(mrb,argc,argv);
-  struct mrb_parser_state *p;
-  return _load(mrb,&p,filename,source,true,NULL);
 }
 
 static char* _check_syntax(const char* filename, const char* source)
@@ -185,7 +173,11 @@ static mrb_value bi_run(mrb_state* mrb, mrb_value self)
     argv[i] = mrb_string_cstr(mrb, mrb_ary_entry(_argv,i) );
   }
 
-  char* error_text = _run(filename, source, argc, argv);
+  // run
+  mrb_state *new_mrb = mrb_open();
+  _define_argv(new_mrb,argc,argv);
+  struct mrb_parser_state *p;
+  char* error_text = _load(new_mrb,&p,filename,source,true,NULL);
   if(error_text!=NULL) {
     mrb_value result = mrb_str_new(mrb,error_text,strlen(error_text));
     free(error_text);

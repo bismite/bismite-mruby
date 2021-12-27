@@ -5,7 +5,6 @@ class Bi::Compile
   def initialize(mainfile,load_path=[])
     @mainfile = File.basename(mainfile)
     @load_path = [ File.dirname(mainfile) ] + load_path
-    STDERR.puts "load path: #{@load_path.inspect}"
     @included_files = {}
     @index = []
     @line_count = 0
@@ -164,19 +163,39 @@ class Restorer
   end
 end
 
+def option_parse(argv)
+  loadpath=[]
+  stat = nil
+  args_start = nil
+  argv.each_with_index{|a,i|
+    if a == "-I"
+      stat = :loadpath
+    elsif a.start_with? "-I"
+      loadpath << a[2..-1]
+    elsif stat == :loadpath
+      loadpath << a
+      stat = nil
+    else
+      stat = nil
+      args_start = i
+      break
+    end
+  }
+  args = argv[args_start..-1]
+  return loadpath,args
+end
 
+#
+# Run script
+#
 def run
   if ARGV == ["-h"] or ARGV == ["--help"] or ARGV.size < 1
-    puts "Usage: birun [switches] source.rb [arguments]"
-    puts "switches: -I/load/path"
+    puts "Usage: bismite-run [-I /load/path] source.rb [arguments]"
     exit 1
   end
-  index = ARGV.index{|a| ! a.start_with?("-") }
-  args = ARGV[index..-1]
-  switches = ARGV[0...index]
-  load_path = switches.map{|s| s.start_with?("-I") ? s[2..-1] : nil }.compact
+  load_path,args = option_parse ARGV
+  infile = args.shift
 
-  infile = args.first
   compile = Bi::Compile.new infile, load_path
   begin
     compile.run
@@ -190,22 +209,23 @@ def run
   end
 end
 
+#
+# Compile script
+#
 def compile
+  usage = "Usage: bismite-compile [-I load/path] source.rb out.{mrb|rb}"
+
   if ARGV == ["-h"] or ARGV == ["--help"] or ARGV.size < 2
-    puts "Usage: bicompile [switches] source.rb out.mrb"
-    puts "switches: -I/load/path"
+    puts usage
     exit 1
   end
-  index = ARGV.index{|a| ! a.start_with?("-") }
-  args = ARGV[index..-1]
-  switches = ARGV[0...index]
-  load_path = switches.map{|s| s.start_with?("-I") ? s[2..-1] : nil }.compact
+  load_path,args = option_parse ARGV
+  infile = args.shift.to_s
+  outfile = args.shift.to_s
 
-  infile = args.first
-  outfile = args.last
-
-  if not infile.end_with? ".rb" or not (outfile.end_with? ".rb" or outfile.end_with? ".mrb")
-    puts "Usage: bicompile [switches] source.rb out.{mrb|rb}"
+  if not (outfile.end_with? ".rb" or outfile.end_with? ".mrb")
+    puts "invalid output file name: #{outfile}"
+    puts usage
     exit 1
   end
 

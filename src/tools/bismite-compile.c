@@ -5,7 +5,7 @@
 int main(int argc, char* argv[])
 {
   mrb_state *mrb = mrb_open();
-  _define_argv( mrb, argc, (const char**)argv );
+  _define_argv( mrb, argc-1, argc>=2 ? (const char**)&argv[1] : NULL );
   create_mruby_inner_methods(mrb);
   mrb_value obj = mrb_load_irep(mrb,irep_data);
 
