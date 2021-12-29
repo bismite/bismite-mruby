@@ -35,9 +35,3 @@ mingw:
   - fa27a75e956fd34f0c4436e2caf36aca
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-x86_64-w64-mingw32.tgz
   - 2d4142c22c3a2545c144df8dfa084bb9
-  - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt
-  - 3edacf7e64e1b7a634666ac043f6b13c
-  -
-    - https://raw.githubusercontent.com/mirror/mingw-w64/v7.0.0/mingw-w64-libraries/winpthreads/COPYING
-    - COPYING.winpthreads.txt
-  - 06a442d2c46dd1e90807932a0c544789

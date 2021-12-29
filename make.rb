@@ -124,7 +124,7 @@ targets.each do |target|
   cp "src/licenses/mruby-and-libraries-licenses.txt", "build/#{target}/licenses"
   case target
   when /mingw/
-    Dir["src/licenses/mingw/*"].each{|f| cp f,"build/#{target}/licenses" }
+    cp_r "src/licenses/mingw/licenses", "build/mingw/"
   when /emscripten/
     EMDIR = File.dirname which "emcc"
     cp "#{EMDIR}/LICENSE", "build/#{target}/licenses/emscripten-LICENSE"

@@ -1,4 +1,3 @@
-require 'rbconfig'
 require_relative "common.rb"
 
 MRuby::Build.new do |conf|
