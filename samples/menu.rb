@@ -51,8 +51,8 @@ end
 
 Bi::init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  font_texture = assets.texture "assets/mixed.png"
-  layout = assets.read("assets/large-bold.dat")
+  font_texture = assets.texture "assets/font.png"
+  layout = assets.read("assets/font14b.dat")
   font = Bi::Font.new font_texture, layout
 
   root = Bi::Node.new

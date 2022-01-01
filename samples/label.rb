@@ -7,17 +7,18 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer = Bi::Layer.new
   layer.root = Bi::Node.new
   Bi::layers.add_layer layer
-  texture = assets.texture "assets/mixed.png", false
+  texture = assets.texture "assets/font.png", false
   layer.set_texture 0, texture
 
   fonts = [
-    Bi::Font.new(texture,assets.read("assets/large.dat")),
-    Bi::Font.new(texture,assets.read("assets/large-bold.dat")),
-    Bi::Font.new(texture,assets.read("assets/small.dat")),
-    Bi::Font.new(texture,assets.read("assets/small-bold.dat")),
+    Bi::Font.new(texture,assets.read("assets/font14b.dat")),
+    Bi::Font.new(texture,assets.read("assets/font14.dat")),
+    Bi::Font.new(texture,assets.read("assets/font12b.dat")),
+    Bi::Font.new(texture,assets.read("assets/font12.dat")),
   ]
 
   texts = [
+    "0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
     "The quick brown fox jumps over the lazy dog",
     "いろはにほへと　ちりぬるを　わかよたれそ　つねならむ",
     "カタカナと、Alphabetと、ひらがな。",

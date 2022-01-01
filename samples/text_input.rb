@@ -5,8 +5,8 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   root.set_size Bi.w, Bi.h
   root.set_color 0x33,0,0,0xff
 
-  texture = assets.texture "assets/mixed.png"
-  font = Bi::Font.new texture, assets.read("assets/large-bold.dat")
+  texture = assets.texture "assets/font.png"
+  font = Bi::Font.new texture, assets.read("assets/font14.dat")
 
   labels = 15.times.map{|i|
     label = Bi::Label.new font
