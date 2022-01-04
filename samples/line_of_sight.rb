@@ -93,6 +93,7 @@ class LineOfSight < Bi::Node
       y = Bi.h/2 + distance * Math::sin(angle)
       b = Block.new x,y,rand(32..64), rand(32..64)
       b.set_color 0xff,0xff,0xff,32
+      b.opacity = 0.5
       self.add b
       b
     end
@@ -114,7 +115,6 @@ class LineOfSight < Bi::Node
 
     @blocks.each{|block|
       block.set_color 0xff,0xff,0xff,32
-
       nearest = Bi::Line::nearest_intersection @line.x, @line.y, x, y, block.sides+block.corners
 
       if nearest
