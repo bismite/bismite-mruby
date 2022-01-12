@@ -1,25 +1,25 @@
 common:
   - ["https://github.com/mruby/mruby/archive/3.0.0.tar.gz", "mruby.tgz"]
   - 381c36a37c722b3568a932306cc63e59
-  - [ "https://github.com/bismite/mruby-libbismite/archive/refs/tags/1.1.0.tar.gz", "mruby-libbismite.tgz" ]
-  - 616c7dd261d29c1a9d6bb1a6e21cbe78
+  - [ "https://github.com/bismite/mruby-libbismite/archive/refs/tags/1.1.1.tar.gz", "mruby-libbismite.tgz" ]
+  - 0ff6f696c06986068d37d23adf4337e0
   - [ "https://github.com/bismite/mruby-bi-misc/archive/refs/tags/0.5.1.tar.gz", "mruby-bi-misc.tgz" ]
   - eae27a8b6b664d622a65197f774156e0
 linux:
-  - https://github.com/bismite/libbismite/releases/download/2.0.1/libbismite-linux.tgz
-  - 6b35b7718893aec87cc7bcb5e59812b2
+  - https://github.com/bismite/libbismite/releases/download/2.0.2/libbismite-linux.tgz
+  - 5d1f538acd054aa360b0e6aced32ff41
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-linux.tgz
   - 36f44c77a3b4cd702063323d185e0b9e
 emscripten:
-  - https://github.com/bismite/libbismite/releases/download/2.0.1/libbismite-emscripten.tgz
-  - cbc5818d9fec51a5080efea406825396
+  - https://github.com/bismite/libbismite/releases/download/2.0.2/libbismite-emscripten.tgz
+  - 2cd0eab3c996e1a8f59380225dc56ce0
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-emscripten.tgz
   - 2f9fd6c42a57fb82047a745c0065c008
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-emscripten.tgz
   - fae5373e76f716a7451f2514f16a3b55
 macos:
-  - https://github.com/bismite/libbismite/releases/download/2.0.1/libbismite-macos.tgz
-  - 02a1c640219e7fe4026bd9f6a9968dff
+  - https://github.com/bismite/libbismite/releases/download/2.0.2/libbismite-macos.tgz
+  - 3c5de8905a09f850d1e34eadcafa6fa8
   - https://github.com/bismite/SDL-macOS-UniversalBinaries/releases/download/1.2/SDL-macOS-UniversalBinaries.tgz
   - bd9ffdf08e908da2b88c3222205ca701
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-macos.tgz
@@ -27,8 +27,8 @@ macos:
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-macos.tgz
   - faa1cc9e152bb46f41bce1e77fb0af65
 mingw:
-  - https://github.com/bismite/libbismite/releases/download/2.0.1/libbismite-x86_64-w64-mingw32.tgz
-  - 922af6a1172896fd029e9f3c299f9f5a
+  - https://github.com/bismite/libbismite/releases/download/2.0.2/libbismite-x86_64-w64-mingw32.tgz
+  - 22f5006112338a6174cdd2814e4a4b51
   - https://github.com/bismite/SDL-x86_64-w64-mingw32/releases/download/0.3.2/SDL-x86_64-w64-mingw32.tgz
   - a02f2ecc1e44b0bb4c01a4bdd9cf6d96
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-x86_64-w64-mingw32.tgz
