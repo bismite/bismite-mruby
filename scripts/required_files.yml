@@ -1,8 +1,8 @@
 common:
   - ["https://github.com/mruby/mruby/archive/3.0.0.tar.gz", "mruby.tgz"]
   - 381c36a37c722b3568a932306cc63e59
-  - [ "https://github.com/bismite/mruby-libbismite/archive/refs/tags/1.1.1.tar.gz", "mruby-libbismite.tgz" ]
-  - 0ff6f696c06986068d37d23adf4337e0
+  - [ "https://github.com/bismite/mruby-libbismite/archive/refs/tags/1.2.1.tar.gz", "mruby-libbismite.tgz" ]
+  - 048344f9670844c2b6989a19dd689538
   - [ "https://github.com/bismite/mruby-bi-misc/archive/refs/tags/0.5.1.tar.gz", "mruby-bi-misc.tgz" ]
   - eae27a8b6b664d622a65197f774156e0
 linux:
