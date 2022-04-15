@@ -9,8 +9,8 @@ class Menu < Bi::Node
     @callbacks = []
     self.on_move_cursor {|n,x,y| self.check_menu_select(x,y) }
     self.on_click {|n,x,y,button,press| self.check_menu_click(x,y,button,press) }
-    @selected_background_color = [0xff,0xff,0xff,128]
-    @unselected_background_color = [0,0,0,0]
+    @selected_background_color  = [0x99,0x99,0x99]
+    @unselected_background_color= [0x33,0x33,0x33]
     @vertical_margin = 20
   end
   def check_menu_select(x,y)
@@ -44,6 +44,8 @@ class Menu < Bi::Node
     label.anchor = :center
     self.add label
     label.set_position 0, -@items.size*(@font.size+@vertical_margin)
+    label.opacity = 0.5
+    label.set_background_color(*@unselected_background_color)
     @items << label
     @callbacks << block
   end
@@ -64,10 +66,10 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   root.add face
 
   menu = Menu.new(font)
-  menu.add_item("RED"){|item| face.set_color 0xff,0,0,0xff }
-  menu.add_item("GREEN"){|item| face.set_color 0,0xff,0,0xff }
-  menu.add_item("BLUE"){|item| face.set_color 0,0,0xff,0xff }
-  menu.add_item("WHITE"){|item| face.set_color 0xff,0xff,0xff,0xff }
+  menu.add_item("RED"){|item| face.set_color 0xff,0,0 }
+  menu.add_item("GREEN"){|item| face.set_color 0,0xff,0 }
+  menu.add_item("BLUE"){|item| face.set_color 0,0,0xff }
+  menu.add_item("WHITE"){|item| face.set_color 0xff,0xff,0xff }
   menu.set_position 240,160
   root.add menu
 

@@ -30,7 +30,7 @@ class LineIntersection < Bi::Node
     self.add @sky
 
     @line = Bi::Node.new
-    @line.set_color 0xff,0xff,0xff,0xff
+    @line.set_color 0xff,0xff,0xff
     @line.set_size 32,32
     @line.anchor = :west
     @line.scale_y = 1.0 / @line.h
@@ -71,7 +71,7 @@ class LineIntersection < Bi::Node
     n.times do
       x,y = *random_position(100,400)
       b = ::Line.new x, y, x+rand(-64..64), y+rand(-64..64)
-      b.set_color 0xff,0xff,0xff,0xff
+      b.set_color 0xff,0xff,0xff
       self.add b
       @lines << b
     end
@@ -90,9 +90,9 @@ class LineIntersection < Bi::Node
     collide_block = nil
 
     @lines.each{|line|
-      line.set_color 0xff,0xff,0xff,0xff
+      line.set_color 0xff,0xff,0xff
       if Bi::Line::intersection( @line.x, @line.y, x, y, *(line.line) )
-        line.set_color 0xff,0,0,128
+        line.set_color 0xff,0,0
       end
     }
   end

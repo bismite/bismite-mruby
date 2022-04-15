@@ -3,7 +3,7 @@ class RectCollide < Bi::Node
 
   def rect(x,y,w,h,r,g,b,opacity)
     rect = Bi::Node.new
-    rect.set_color r,g,b,0xff
+    rect.set_color r,g,b
     rect.opacity = opacity
     rect.set_size w,h
     rect.set_position x,y
@@ -21,7 +21,7 @@ class RectCollide < Bi::Node
     50.times do
       b = Bi::Node.new
       b.set_size rand(32..64), rand(32..64)
-      b.set_color 0xff,0xff,0xff,0xff
+      b.set_color 0xff,0xff,0xff
       b.set_position *random_block_position
       self.add b
       @blocks << b
@@ -80,7 +80,7 @@ class RectCollide < Bi::Node
     collide_block = nil
 
     @blocks.each{|block|
-      block.set_color 0xff,0xff,0xff,0xff
+      block.set_color 0xff,0xff,0xff
       block.opacity = 0.5
 
       # Minkowski addition
@@ -131,7 +131,7 @@ class RectCollide < Bi::Node
     }
 
     if intersection and collide_block
-      collide_block.set_color 0xff,0,0,0xff
+      collide_block.set_color 0xff,0,0
       @ball.set_position(*intersection)
       @ball.visible = true
       @pushed.set_position(*intersection)

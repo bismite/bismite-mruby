@@ -30,8 +30,9 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
       label = Bi::Label.new font
       label.set_text text
       label.set_position 10, y*20
-      label.set_color 0xff-rand(50), 0xff-rand(50), 0xff-rand(50), 0xff
-      label.set_background_color rand(100),rand(100),rand(100),0xff
+      label.set_color 0xff-rand(50), 0xff-rand(50), 0xff-rand(50)
+      label.set_text_color_with_range 3,6, 0xff,0,0
+      label.set_background_color rand(100),rand(100),rand(100)
       layer.root.add label
       y += 1
     }

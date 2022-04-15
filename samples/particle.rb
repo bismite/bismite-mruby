@@ -4,7 +4,7 @@ class Particle < Bi::Sprite
     super texture_mapping
     self.set_position x,y
     self.anchor = :center
-    self.set_color rand(0xFF),rand(0xFF),rand(0xFF),0xff
+    self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
     @life = @life_max = 100 + rand(100)
     @vx = (rand(nil)-0.5) * 3
     @vy = (rand(nil)-0.5) * 3

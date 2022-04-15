@@ -13,7 +13,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
     label.anchor = :south_east
     label.text = "Press any Key"
     label.set_position Bi.w - 10, 10 + i*20
-    label.set_color 0xff, 0xff, 0xff, 0xff - i*10
+    label.set_color 0xff, 0xff, 0xff, 0xff, 1.0-i*0.05
     root.add label
     label
   }
@@ -26,14 +26,17 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
       mod = Bi::KeyMod.parse(mod).map{|k| Bi::KeyMod.name(k) }.join(",")
     end
     scancode_name = Bi::ScanCode.name scancode
-    keycode_name =Bi::KeyCode.name keycode
+    keycode_name  = Bi::KeyCode.name keycode
     new_text = "Mod:#{mod} #{pressed} ScanCode:#{scancode_name}(#{scancode}) KeyCode:#{keycode_name}(#{keycode})"
 
     texts = labels.map{|l| l.text }
     texts.pop
     texts.unshift new_text
 
-    labels.each.with_index{|l,i| l.text = texts[i] }
+    labels.each.with_index{|l,i|
+      l.text = texts[i]
+      l.set_color 0xff, 0xff, 0xff, 0xff, 1.0-i*0.05
+    }
   }
 
   # layer

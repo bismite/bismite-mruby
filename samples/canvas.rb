@@ -13,7 +13,7 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
 
   # canvas
   canvas = Bi::Canvas.new 128,128
-  canvas.clear 0xff,0,0,0xff
+  canvas.clear 0xff,0,0
   canvas.shader = Bi.default_shader
   canvas.set_texture 0, face.texture_mapping.texture
   canvas.draw face

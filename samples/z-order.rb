@@ -14,14 +14,14 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   face_a = texture.to_sprite
   face_a.set_position Bi.w/2,Bi.h/2
   face_a.anchor = :center
-  face_a.set_color 0xFF,0,0,0xFF
+  face_a.set_color 0xFF,0,0
   face_a.z = 1 # High order
 
   # B: blue
   face_b = texture.to_sprite
   face_b.set_position Bi.w/2+50,Bi.h/2+50
   face_b.anchor = :center
-  face_b.set_color 0,0,0xFF,0xFF
+  face_b.set_color 0,0,0xFF
   face_b.z = 0 # Low order
 
   layer.root.on_click{|n,x,y,button,pressed|

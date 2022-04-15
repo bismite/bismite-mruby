@@ -15,7 +15,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   Bi::add_layer layer
 
   Bi.layers.create_timer(0,-1){|node,dt| face.angle += dt*0.01 }
-  face.create_timer(500,3){|node,dt| node.set_color rand(0xff),rand(0xff),rand(0xff),0xaa }
+  face.create_timer(500,3){|node,dt| node.set_color rand(0xff),rand(0xff),rand(0xff) }
 end
 
 Bi::start_run_loop

@@ -4,7 +4,7 @@ class Particle < Bi::Sprite
     super tex
     self.set_position x,y
     self.anchor = :center
-    self.set_color rand(0xFF),rand(0xFF),rand(0xFF),0xff
+    self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
     @life = @life_max = 20 + rand(20)
   end
   def life=(life)

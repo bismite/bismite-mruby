@@ -51,7 +51,7 @@ class LineOfSight < Bi::Node
     self.add @sky
 
     @line = Bi::Node.new
-    @line.set_color 0xff,0xff,0xff,0xff
+    @line.set_color 0xff,0xff,0xff
     @line.set_size 32,32
     @line.anchor = :west
     @line.scale_y = 1.0 / @line.h
@@ -61,7 +61,7 @@ class LineOfSight < Bi::Node
 
     @ball = ball_texture.to_sprite
     @ball.anchor = :center
-    @ball.set_color 0,0xff,0,0xff
+    @ball.set_color 0,0xff,0
     self.add @ball
 
     reset_blocks
@@ -92,7 +92,7 @@ class LineOfSight < Bi::Node
       x = Bi.w/2 + distance * Math::cos(angle)
       y = Bi.h/2 + distance * Math::sin(angle)
       b = Block.new x,y,rand(32..64), rand(32..64)
-      b.set_color 0xff,0xff,0xff,32
+      b.set_color 0xff,0xff,0xff
       b.opacity = 0.5
       self.add b
       b
@@ -114,11 +114,11 @@ class LineOfSight < Bi::Node
     collide_block = nil
 
     @blocks.each{|block|
-      block.set_color 0xff,0xff,0xff,32
+      block.set_color 0xff,0xff,0xff
       nearest = Bi::Line::nearest_intersection @line.x, @line.y, x, y, block.sides+block.corners
 
       if nearest
-        block.set_color 0xff,0xff,0,32
+        block.set_color 0xff,0xff,0
         if intersection
           if Bi::Line::compare_length(@line.x,@line.y, intersection[0], intersection[1], @line.x, @line.y, nearest[0], nearest[1] ) > 0
             intersection = nearest
@@ -132,7 +132,7 @@ class LineOfSight < Bi::Node
     }
 
     if intersection and collide_block
-      collide_block.set_color 0xff,0,0,32
+      collide_block.set_color 0xff,0,0
       @ball.set_position(*intersection)
       @ball.visible = true
     end

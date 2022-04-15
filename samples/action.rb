@@ -4,7 +4,7 @@ class ActionSample < Bi::Node
     super
     self.set_position 0,0
     self.set_size Bi.w,Bi.h
-    self.set_color 0x33,0,0,0xff
+    self.set_color 0x33,0,0
 
     face = texture.to_sprite
     face.anchor = :center
