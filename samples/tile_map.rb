@@ -11,13 +11,14 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.set_texture 0, wall
   layer.set_texture 1, floor
 
-  @tiles = 3.times.map{|i| Bi::TextureMapping.new(wall,i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE) }
-  @tiles+= 3.times.map{|i| Bi::TextureMapping.new(floor,i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE) }
+  @tiles = 3.times.map{|i| [wall, [i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE] ] }
+  @tiles+= 3.times.map{|i| [floor, [i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE] ] }
 
   w = (Bi.w/TILE_SIZE).to_i
   h = (Bi.h/TILE_SIZE).to_i
   w.times{|x| h.times{|y|
-    tile = @tiles.sample.to_sprite
+    tile = @tiles.sample
+    tile = tile.first.to_sprite(*tile.last)
     layer.root.add tile
     tile.x = x*TILE_SIZE
     tile.y = y*TILE_SIZE

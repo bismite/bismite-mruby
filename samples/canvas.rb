@@ -15,7 +15,7 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   canvas = Bi::Canvas.new 128,128
   canvas.clear 0xff,0,0
   canvas.shader = Bi.default_shader
-  canvas.set_texture 0, face.texture_mapping.texture
+  canvas.set_texture 0, face.texture
   canvas.draw face
   canvas.save_png "canvas.png"
   new_texture = canvas.to_texture
@@ -25,9 +25,9 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   layer.root.add face
   layer.root.add new_sprite
 
-  layer.set_texture 0, layer.root.texture_mapping.texture
-  layer.set_texture 1, face.texture_mapping.texture
-  layer.set_texture 2, new_sprite.texture_mapping.texture
+  layer.set_texture 0, layer.root.texture
+  layer.set_texture 1, face.texture
+  layer.set_texture 2, new_sprite.texture
 end
 
 Bi::start_run_loop

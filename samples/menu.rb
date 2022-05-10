@@ -9,8 +9,8 @@ class Menu < Bi::Node
     @callbacks = []
     self.on_move_cursor {|n,x,y| self.check_menu_select(x,y) }
     self.on_click {|n,x,y,button,press| self.check_menu_click(x,y,button,press) }
-    @selected_background_color  = [0x99,0x99,0x99]
-    @unselected_background_color= [0x33,0x33,0x33]
+    @selected_background_color  = [0,0,0x99]
+    @unselected_background_color= [0,0,0x33]
     @vertical_margin = 20
   end
   def check_menu_select(x,y)
@@ -39,12 +39,12 @@ class Menu < Bi::Node
   end
   def add_item(title,&block)
     label = Bi::Label.new @font
+    label.set_scale 2,2
     label.set_text title
-    label.scale_x = label.scale_y = 2.0
     label.anchor = :center
+
     self.add label
     label.set_position 0, -@items.size*(@font.size+@vertical_margin)
-    label.opacity = 0.5
     label.set_background_color(*@unselected_background_color)
     @items << label
     @callbacks << block
@@ -57,11 +57,12 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layout = assets.read("assets/font14b.dat")
   font = Bi::Font.new font_texture, layout
 
-  root = Bi::Node.new
+  root = assets.texture("assets/check.png").to_sprite
 
   face_texture = assets.texture "assets/face01.png"
   face = face_texture.to_sprite
   face.anchor = :center
+  face.set_scale 2,2
   face.set_position 240,160
   root.add face
 
@@ -78,6 +79,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.root = root
   layer.set_texture 0, font_texture
   layer.set_texture 1, face_texture
+  layer.set_texture 2, root.texture
   Bi::add_layer layer
 
 end

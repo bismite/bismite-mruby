@@ -34,12 +34,12 @@ def scene_b
   # texture
   face = $assets.texture("assets/face01.png").to_sprite
   face.set_position Bi.w/2,Bi.h/2
-  face.scale_x = face.scale_y = 2.0
+  face.set_scale 2,2
   face.anchor = :center
   layer.root.add face
 
-  layer.set_texture 0, layer.root.texture_mapping.texture
-  layer.set_texture 1, face.texture_mapping.texture
+  layer.set_texture 0, layer.root.texture
+  layer.set_texture 1, face.texture
 
   layer.root.on_click {|n,x,y,button,press|
     next if press
@@ -60,12 +60,12 @@ def scene_a
   # texture
   face = $assets.texture("assets/face01.png").to_sprite
   face.set_position Bi.w/2,Bi.h/2
-  face.scale_x = face.scale_y = 2.0
+  face.set_scale 2,2
   face.anchor = :center
   layer.root.add face
 
-  layer.set_texture 0, layer.root.texture_mapping.texture
-  layer.set_texture 1, face.texture_mapping.texture
+  layer.set_texture 0, layer.root.texture
+  layer.set_texture 1, face.texture
 
   layer.root.on_click {|n,x,y,button,press|
     next if press

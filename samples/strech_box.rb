@@ -3,18 +3,15 @@ Bi.init 480,320,title:__FILE__,highdpi:false
 
 class StrechBox < Bi::Node
   attr_reader :texture
-  def initialize(texture_mapping,w,h,corner_size)
+  def initialize(tex,x,y,sw,sh, w,h,corner_size)
     super
-    @texture = texture_mapping.texture
-    x = texture_mapping.x
-    y = texture_mapping.y
-    sw = texture_mapping.w # sprite w
-    sh = texture_mapping.h # sprite h
+    self.set_size w,h
+    @texture = tex
     cw = ch = corner_size # corner w,h
-    lb = Bi::TextureMapping.new(@texture,x,y+sh-ch,cw,ch).to_sprite
-    lt = Bi::TextureMapping.new(@texture,x,y,cw,ch).to_sprite
-    rb = Bi::TextureMapping.new(@texture,x+sw-cw,y+sh-ch,cw,ch).to_sprite
-    rt = Bi::TextureMapping.new(@texture,x+sw-cw,y,cw,ch).to_sprite
+    lb = @texture.to_sprite x,y+sh-ch,cw,ch
+    lt = @texture.to_sprite x,y,cw,ch
+    rb = @texture.to_sprite x+sw-cw,y+sh-ch,cw,ch
+    rt = @texture.to_sprite x+sw-cw,y,cw,ch
     self.add lt
     self.add lb
     self.add rt
@@ -28,38 +25,30 @@ class StrechBox < Bi::Node
     mh = (sh-corner_size*2) # mid h
     row = (w-corner_size*2) / mw
     col = (h-corner_size*2) / mh
-    center = Bi::TextureMapping.new(@texture,x+cw,y+ch,mw,mh)
-    row.times{|x|
-      col.times{|y|
-        c = center.to_sprite
+    row.times{|xx|
+      col.times{|yy|
+        c = @texture.to_sprite x+cw,y+ch,mw,mh
         self.add c
-        c.set_position cw+x*mw,ch+y*mh
+        c.set_position cw+xx*mw,ch+yy*mh
       }
     }
-
-    top = Bi::TextureMapping.new(@texture,x+cw,y,mw,ch)
-    bottom = Bi::TextureMapping.new(@texture,x+cw,y+sh-cw,mw,ch)
-    row.times{|x|
-      # top
-      t = top.to_sprite
+    # Top and Bottom
+    row.times{|xx|
+      t = @texture.to_sprite x+cw,y,mw,ch
       self.add t
-      t.set_position cw+x*mw,h-ch
-      # bottom
-      b = bottom.to_sprite
+      t.set_position cw+xx*mw,h-ch
+      b = @texture.to_sprite x+cw,y+sh-cw,mw,ch
       self.add b
-      b.set_position cw+x*mw,0
+      b.set_position cw+xx*mw,0
     }
-    left = Bi::TextureMapping.new(@texture,x,y+ch,cw,mh)
-    right = Bi::TextureMapping.new(@texture,x+sw-cw,y+ch,cw,mh)
-    col.times{|y|
-      # left
-      l = left.to_sprite
+    # Left and Right
+    col.times{|yy|
+      l = @texture.to_sprite x,y+ch,cw,mh
       self.add l
-      l.set_position 0,y*mh+ch
-      # right
-      r = right.to_sprite
+      l.set_position 0,yy*mh+ch
+      r = @texture.to_sprite x+sw-cw,y+ch,cw,mh
       self.add r
-      r.set_position w-cw,y*mh+ch
+      r.set_position w-cw,yy*mh+ch
     }
   end
 end
@@ -69,14 +58,16 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   # layer
   layer = Bi::Layer.new
   layer.root = Bi::Node.new
+  layer.root.set_color 0x33,0,0
+  layer.root.set_size Bi.w,Bi.h
   Bi::add_layer layer
 
   # texture
   tex = assets.texture("assets/frame.png")
-  mapping = Bi::TextureMapping.new(tex,0,0,32,32)
-  box = StrechBox.new mapping,104,80,4
+  box = StrechBox.new tex,0,0,32,32, 104,80,4
 
-  box.scale_x = box.scale_y = 4.0
+  box.set_scale 3,3
+  box.set_position 60,20
   layer.root.add box
   layer.set_texture 0, box.texture
 end

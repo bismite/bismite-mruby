@@ -10,8 +10,8 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer = Bi::Layer.new
   layer.root = assets.texture("assets/check.png").to_sprite
   layer.root.add face
-  layer.set_texture 0, face.texture_mapping.texture
-  layer.set_texture 1, layer.root.texture_mapping.texture
+  layer.set_texture 0, face.texture
+  layer.set_texture 1, layer.root.texture
   Bi::add_layer layer
 
   Bi::Sound.init 441000,2,1024

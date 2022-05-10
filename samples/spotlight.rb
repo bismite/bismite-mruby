@@ -4,7 +4,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   # 1st layer (shadowed sky)
   layer1 = Bi::Layer.new
   layer1.root = assets.texture("assets/sky.png").to_sprite
-  layer1.set_texture 0, layer1.root.texture_mapping.texture
+  layer1.set_texture 0, layer1.root.texture
   shadow = Bi::Node.new
   shadow.set_size Bi.w,Bi.h
   shadow.set_color 0,0,0,128
@@ -15,7 +15,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer2.root = assets.texture("assets/circle256.png").to_sprite
   layer2.root.anchor = :center
   layer2.root.set_position Bi.w/2, Bi.h/2
-  layer2.set_texture 0, layer2.root.texture_mapping.texture
+  layer2.set_texture 0, layer2.root.texture
   layer2.set_blend_factor GL_DST_COLOR, GL_ONE, GL_DST_COLOR, GL_ONE
 
   # spin

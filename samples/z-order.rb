@@ -7,7 +7,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer = Bi::Layer.new
   layer.root = assets.texture("assets/check.png").to_sprite
   layer.set_texture 0, texture
-  layer.set_texture 1, layer.root.texture_mapping.texture
+  layer.set_texture 1, layer.root.texture
   Bi::add_layer layer
 
   # A: red

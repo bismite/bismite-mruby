@@ -32,8 +32,8 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   face.anchor = :center
   layer.root.add face
 
-  layer.set_texture 0, layer.root.texture_mapping.texture
-  layer.set_texture 1, face.texture_mapping.texture
+  layer.set_texture 0, layer.root.texture
+  layer.set_texture 1, face.texture
 end
 
 Bi::start_run_loop

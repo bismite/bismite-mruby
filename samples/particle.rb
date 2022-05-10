@@ -1,7 +1,9 @@
-class Particle < Bi::Sprite
+class Particle < Bi::Node
   attr_accessor :life, :life_max, :xx, :yy, :vx, :vy
-  def initialize(texture_mapping,x,y)
-    super texture_mapping
+  def initialize(tex,x,y)
+    super
+    self.set_texture tex,0,0,tex.w,tex.h
+    self.set_size tex.w,tex.h
     self.set_position x,y
     self.anchor = :center
     self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
@@ -31,18 +33,12 @@ class ParticleLayer < Bi::Layer
   def initialize(assets)
     super
 
-    sky_texture = assets.texture "assets/sky.png"
-    ball_texture = assets.texture "assets/ball.png", false
+    self.root = assets.texture("assets/sky.png").to_sprite
+    @ball_texture = assets.texture "assets/ball.png"
 
-    self.set_texture 0, sky_texture
-    self.set_texture 1, ball_texture
+    self.set_texture 0, self.root.texture
+    self.set_texture 1, @ball_texture
     self.set_blend_factor Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE,Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE
-
-    self.root = Bi::Node.new
-    self.root.add sky_texture.to_sprite
-
-    @texture = ball_texture
-    @texture_mapping = Bi::TextureMapping.new @texture,0,0,@texture.w,@texture.h
 
     @frame_count = 0
     self.root.create_timer(0,-1){|node,delta|
@@ -57,7 +53,7 @@ class ParticleLayer < Bi::Layer
   end
   def add_particle(x,y,num)
     num.times{
-      particle = Particle.new @texture_mapping, x, y
+      particle = Particle.new @ball_texture, x, y
       particle.create_timer(0,-1){|n,delta| n.move }
       self.root.add particle
     }

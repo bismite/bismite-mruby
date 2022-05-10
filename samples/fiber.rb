@@ -13,7 +13,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.root = assets.texture("assets/face01.png").to_sprite
   layer.root.set_position Bi.w/2,Bi.h/2
   layer.root.anchor = :center
-  layer.set_texture 0, layer.root.texture_mapping.texture
+  layer.set_texture 0, layer.root.texture
   Bi::add_layer layer
 
   f = Fiber.new do
