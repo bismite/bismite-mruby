@@ -1,7 +1,7 @@
 ---
 mruby:
-  version: 3.0.0
-  release_no: 30000
+  version: 3.1.0
+  release_no: 30100
 builds:
   emscripten:
     https://github.com/katzer/mruby-os.git:
@@ -32,7 +32,7 @@ builds:
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
       branch: master
-      commit: 9f4408d4d46ffc8668ea07cc9c6249f33114d3a9
+      commit: a7345b3124bac6084e58c236882f3e27918f5126
       version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
@@ -42,8 +42,8 @@ builds:
     https://github.com/bismite/mruby-emscripten.git:
       url: https://github.com/bismite/mruby-emscripten.git
       branch: master
-      commit: 421b6b3989d458febdc99a4e14caa7a5b43be8a5
-      version: 0.2.0
+      commit: bb531a48e027a78ca770469129884de1d1d90a65
+      version: 0.2.1
     https://github.com/iij/mruby-errno.git:
       url: https://github.com/iij/mruby-errno.git
       branch: master

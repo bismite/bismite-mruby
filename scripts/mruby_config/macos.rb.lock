@@ -1,7 +1,7 @@
 ---
 mruby:
-  version: 3.0.0
-  release_no: 30000
+  version: 3.1.0
+  release_no: 30100
 builds:
   macos-arm64:
     https://github.com/katzer/mruby-os.git:
@@ -32,7 +32,7 @@ builds:
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
       branch: master
-      commit: 9f4408d4d46ffc8668ea07cc9c6249f33114d3a9
+      commit: a7345b3124bac6084e58c236882f3e27918f5126
       version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
@@ -73,7 +73,7 @@ builds:
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
       branch: master
-      commit: 9f4408d4d46ffc8668ea07cc9c6249f33114d3a9
+      commit: a7345b3124bac6084e58c236882f3e27918f5126
       version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
