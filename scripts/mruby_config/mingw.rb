@@ -15,12 +15,12 @@ MRuby::CrossBuild.new('mingw') do |conf|
 
   conf.cc do |cc|
     cc.command = 'x86_64-w64-mingw32-gcc'
-    cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
+    cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING DISABLE_CLOCK_GETTIME)
     cc.include_paths << "#{INSTALL_PREFIX}/include"
     cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
     cc.include_paths << "#{INSTALL_PREFIX}/libyaml-0.2.5-x86_64-w64-mingw32/include/"
     cc.include_paths << "#{INSTALL_PREFIX}/msgpack-c/include/"
-    cc.flags = %W(-O3 -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
+    cc.flags = %W(-O3 -std=c11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags << "-Dmain=SDL_main"
   end
 
