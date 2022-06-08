@@ -14,7 +14,9 @@ Dir.chdir("build"){
 }
 
 # build mruby
+cp "src/mruby.patch", "build/#{TARGET}/mruby"
 Dir.chdir("build/#{TARGET}/mruby"){
+  run "patch -p1 < mruby.patch"
   run "rake MRUBY_YAML_USE_SYSTEM_LIBRARY=true"
 }
 
