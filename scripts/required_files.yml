@@ -29,8 +29,8 @@ macos:
 mingw:
   - https://github.com/bismite/libbismite/releases/download/4.0.0/libbismite-x86_64-w64-mingw32.tgz
   - a46c7e1dd9cd782f925cb8d7d6b9788d
-  - https://github.com/bismite/SDL-x86_64-w64-mingw32/releases/download/0.3.2/SDL-x86_64-w64-mingw32.tgz
-  - a02f2ecc1e44b0bb4c01a4bdd9cf6d96
+  - https://github.com/bismite/SDL-x86_64-w64-mingw32/releases/download/1.1.1/SDL-x86_64-w64-mingw32.tgz
+  - 9d4f107c123ee8a05e697e3dae453f99
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-x86_64-w64-mingw32.tgz
   - fa27a75e956fd34f0c4436e2caf36aca
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-x86_64-w64-mingw32.tgz

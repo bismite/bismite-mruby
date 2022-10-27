@@ -7,7 +7,7 @@ builds:
     https://github.com/katzer/mruby-os.git:
       url: https://github.com/katzer/mruby-os.git
       branch: master
-      commit: 8e6e1dca8284f142bea681bfe032ebe7bae3851a
+      commit: da1491c020b8f575108e15de40f3ccf7671e9a70
       version: 0.0.0
     https://github.com/ksss/mruby-singleton.git:
       url: https://github.com/ksss/mruby-singleton.git
@@ -32,7 +32,7 @@ builds:
     https://github.com/mrbgems/mruby-yaml.git:
       url: https://github.com/mrbgems/mruby-yaml.git
       branch: master
-      commit: a7345b3124bac6084e58c236882f3e27918f5126
+      commit: 123010195bf621e784ee9d4ff9144a4b8e9cbb6a
       version: 0.1.0
     https://github.com/bismite/mruby-simplemsgpack.git:
       url: https://github.com/bismite/mruby-simplemsgpack.git
