@@ -8,8 +8,8 @@ class Particle < Bi::Node
     self.anchor = :center
     self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
     @life = @life_max = 100 + rand(100)
-    @vx = (rand(nil)-0.5) * 3
-    @vy = (rand(nil)-0.5) * 3
+    @vx = (rand()-0.5) * 3
+    @vy = (rand()-0.5) * 3
     @xx = x.to_f
     @yy = y.to_f
   end

@@ -42,7 +42,6 @@ when /macos/
     libSDL2-2.0.0.dylib
     libSDL2_image-2.0.0.dylib
     libSDL2_mixer-2.0.0.dylib
-    libmpg123.0.dylib
     libmsgpackc.2.0.0.dylib
     libyaml-0.2.dylib
   )
