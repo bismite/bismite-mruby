@@ -24,22 +24,6 @@ end
 
 def setup_mingw
   cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
-  Dir.chdir("build"){
-    run "tar xf download/mingw/libbismite-x86_64-w64-mingw32.tgz -C mingw/"
-    run "tar xf download/mingw/SDL-x86_64-w64-mingw32.tgz -C mingw/"
-    run "tar xf download/mingw/libyaml-0.2.5-x86_64-w64-mingw32.tgz -C mingw/"
-    run "tar xf download/mingw/msgpack-c-x86_64-w64-mingw32.tgz -C mingw/"
-    run "tar xf download/mingw/libbismite-x86_64-w64-mingw32.tgz -C mingw/"
-  }
-  Dir.chdir("build/mingw") do
-    # install msgpack-c
-    cp "msgpack-c/lib/libmsgpackc.dll", "bin/"
-    cp "msgpack-c/lib/libmsgpackc.a", "lib/"
-    # install libyaml
-    cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll", "bin/"
-    cp "libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a", "lib/"
-    cp "libyaml-0.2.5-x86_64-w64-mingw32/License", "licenses/libyaml-0.2.5-License"
-  end
 end
 
 targets = ARGV.reject{|a| not %w(clean macos linux emscripten emscripten-nosimd mingw).include? a }

@@ -37,14 +37,17 @@ macos:
   - ["cp -R libyaml-0.2.5-macos/lib ./", "cp libyaml-0.2.5-macos/License licenses/libyaml-0.2.5-License"]
 mingw:
   - https://github.com/bismite/libbismite/releases/download/5.0.0/libbismite-x86_64-w64-mingw32.tgz
-  - libbismite-x86_64-w64-mingw32.tgz
+  - libbismite-5.0.0-x86_64-w64-mingw32.tgz
   - []
   - https://github.com/bismite/SDL-x86_64-w64-mingw32/releases/download/1.1.1/SDL-x86_64-w64-mingw32.tgz
   - SDL-x86_64-w64-mingw32.tgz
   - []
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-x86_64-w64-mingw32.tgz
   - msgpack-c-x86_64-w64-mingw32.tgz
-  - ["cp -R msgpack-c/lib ./"]
+  - ["cp -R msgpack-c/lib/libmsgpackc.a ./lib/", "cp -R msgpack-c/lib/libmsgpackc.dll ./bin/"]
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-x86_64-w64-mingw32.tgz
   - libyaml-0.2.5-x86_64-w64-mingw32.tgz
-  - ["cp -R libyaml-0.2.5-x86_64-w64-mingw32/lib ./", "cp libyaml-0.2.5-x86_64-w64-mingw32/License licenses/libyaml-0.2.5-License"]
+  -
+    - cp -R libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.a ./lib/
+    - cp -R libyaml-0.2.5-x86_64-w64-mingw32/lib/libyaml.dll ./bin/
+    - cp libyaml-0.2.5-x86_64-w64-mingw32/License licenses/libyaml-0.2.5-License
