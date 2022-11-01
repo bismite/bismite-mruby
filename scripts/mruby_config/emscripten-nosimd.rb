@@ -27,7 +27,7 @@ def __setting__(conf,libbismite)
   conf.archiver.command = 'emar'
 end
 
-MRuby::CrossBuild.new('emscripten') do |conf|
+MRuby::CrossBuild.new('emscripten-nosimd') do |conf|
   toolchain :clang
-  __setting__(conf,"bismite")
+  __setting__(conf,"bismite-nosimd")
 end

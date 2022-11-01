@@ -14,18 +14,21 @@ linux:
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-linux.tgz
   - 36f44c77a3b4cd702063323d185e0b9e
 emscripten:
-  - https://github.com/bismite/libbismite/releases/download/4.0.0/libbismite-emscripten.tgz
-  - 21c736ae6321f71e4fde88624348677d
+  - https://github.com/bismite/libbismite/releases/download/5.0.0/libbismite-emscripten.tgz
+  - libbismite-5.0.0-emscripten.tgz
+  - []
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-emscripten.tgz
-  - 2f9fd6c42a57fb82047a745c0065c008
+  - libyaml-0.2.5-emscripten.tgz
+  - ["cp -R libyaml-0.2.5-emscripten/lib ./", "cp libyaml-0.2.5-emscripten/License licenses/libyaml-0.2.5-License"]
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-emscripten.tgz
-  - fae5373e76f716a7451f2514f16a3b55
+  - msgpack-c-emscripten.tgz
+  - ["cp -R msgpack-c/lib ./"]
 macos:
   - https://github.com/bismite/libbismite/releases/download/5.0.0/libbismite-macos.tgz
   - libbismite-5.0.0-macos.tgz
   - []
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-macos.tgz
-  - msgpack-c-0.1.12-macos.tgz
+  - msgpack-c-macos.tgz
   - ["cp -R msgpack-c/lib ./"]
   - https://github.com/bismite/libyaml-binary/releases/download/0.1.7/libyaml-0.2.5-macos.tgz
   - libyaml-0.2.5-macos.tgz

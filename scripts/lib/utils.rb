@@ -36,10 +36,7 @@ end
 
 def install_path(target)
   root = File.absolute_path(File.join( File.dirname(File.expand_path(__FILE__)), "../.." ))
-  case target
-  when "macos"
-    "#{root}/build/#{target}"
-  when "linux","mingw","emscripten"
+  if %w(macos linux mingw emscripten emscripten-nosimd).include? target
     "#{root}/build/#{target}"
   else
     raise "target name invalid: #{target}"

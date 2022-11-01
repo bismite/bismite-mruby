@@ -5,7 +5,7 @@ root = File.absolute_path(File.join(File.expand_path(File.dirname($0)),".."))
 ARGV.each do |command|
   case command
   when "--libs"
-    puts "-L#{root}/lib -lmruby -lbismite -lmsgpackc -lyaml -sMAX_WEBGL_VERSION=2"
+    puts "-L#{root}/lib -lmruby -lbismite-nosimd -lmsgpackc -lyaml -sMAX_WEBGL_VERSION=2"
   when "--cflags"
     puts "-DMRB_INT64 -DMRB_UTF8_STRING -DMRB_NO_BOXING -I#{root}/include"
   end

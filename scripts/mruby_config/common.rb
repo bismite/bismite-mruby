@@ -1,10 +1,10 @@
 
 BUILD_DIR = File.expand_path File.join __dir__, "..", "..", "build"
 
-def include_gems(conf,target)
+def include_gems(conf,target,without_bin=false)
 
   Dir.glob("#{root}/mrbgems/mruby-*/mrbgem.rake") do |x|
-    next if conf.name == "emscripten" and x.include? "mruby-bin-"
+    next if without_bin and x.include? "mruby-bin-"
     g = File.basename File.dirname x
     conf.gem :core => g unless g =~ /^mruby-(bin-debugger|test)$/
   end

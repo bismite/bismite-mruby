@@ -15,8 +15,46 @@ def copy_license_files(target,dir)
   cp_r "build/#{target}/licenses", dir
 end
 
+def emscripten(simd=:simd)
+  if simd==:nosimd
+    build_dir = "build/emscripten-nosimd"
+    config_script = "#{build_dir}/bin/bismite-config-emscripten-nosimd"
+  else
+    build_dir = "build/emscripten"
+    config_script = "#{build_dir}/bin/bismite-config-emscripten"
+  end
+  [nil,"dl"].each{|dynamic_linking| [nil,"single"].each{|single_file|
+    name = "wasm"
+    opt = "-sWASM=1"
+    config = "`#{config_script} --cflags --libs`"
+    if dynamic_linking
+      name += "-dl"
+      opt += " -sMAIN_MODULE=1"
+    end
+    if single_file
+      name += "-single"
+      opt += " -sSINGLE_FILE=1"
+    end
+    puts "build template #{name}"
+    dir = File.join DST_DIR,name
+    mkdir_p dir
+    cp "build/main.mrb", "#{dir}/main.mrb"
+    flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{opt}"
+    shell="--shell-file src/shell/shell_bisdk.html"
+    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{dir}/index.html #{flags} #{config} #{shell}"
+    copy_license_files "emscripten", dir
+    # Remove unexpected file path contained in SDL.
+    empath = File.dirname which "emcc"
+    secret = "*" * empath.size
+    Dir.chdir(dir){
+      # for portability reason, sed's -i option is not appropriate...
+      Dir["*"].each{|f| run "LC_ALL=C sed -e 's@#{empath}@#{secret}@' #{f} > #{f}.tmp && mv #{f}.tmp #{f}" if File.file? f }
+    }
+  }}
+end
+
 case TARGET
-when /linux/
+when "linux"
   mkdir_p "#{DST_DIR}/linux/lib"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
   run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
@@ -27,7 +65,7 @@ when /linux/
 
   copy_license_files "linux", "#{DST_DIR}/linux"
 
-when /macos/
+when "macos"
   mkdir_p "#{DST_DIR}/macos"
   cp_r "src/template.app", "#{DST_DIR}/macos/"
   resource_dir = "#{DST_DIR}/macos/template.app/Contents/Resources"
@@ -50,7 +88,7 @@ when /macos/
 
   copy_license_files "macos", "#{DST_DIR}/macos/"
 
-when /mingw/
+when "mingw"
   mkdir_p "#{DST_DIR}/mingw/system"
   cp "build/main.mrb", "#{DST_DIR}/mingw/system/main.mrb"
   # real main.exe
@@ -62,28 +100,8 @@ when /mingw/
   run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/mingw/frontman-mingw.res -std=c11 -Os -mwindows -o #{DST_DIR}/mingw/start.exe"
   copy_license_files "mingw", "#{DST_DIR}/mingw/"
 
-when /emscripten/
-  options = {
-    "wasm" => "-s WASM=1",
-    "wasm-one" => "-s WASM=1 -s SINGLE_FILE=1",
-    "js" => "-s WASM=0",
-    "js-one" => "-s WASM=0 -s SINGLE_FILE=1",
-    "wasm-dl" => "-s WASM=1 -s MAIN_MODULE=1",
-    "wasm-dl-one" => "-s WASM=1 -s MAIN_MODULE=1 -s SINGLE_FILE=1",
-  }
-  %w(wasm wasm-one js js-one wasm-dl wasm-dl-one).each{|t|
-    mkdir_p "#{DST_DIR}/#{t}"
-    cp "build/main.mrb", "#{DST_DIR}/#{t}/main.mrb"
-    flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{options[t]}"
-    shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{DST_DIR}/#{t}/index.html #{flags} `build/emscripten/bin/bismite-config-emscripten --cflags --libs` #{shell}"
-    copy_license_files "emscripten", "#{DST_DIR}/#{t}/"
-    # Remove unexpected file path contained in SDL.
-    empath = File.dirname which "emcc"
-    secret = "*" * empath.size
-    Dir.chdir("#{DST_DIR}/#{t}"){
-      # for portability reason, sed's -i option is not appropriate...
-      Dir["*"].each{|f| run "LC_ALL=C sed -e 's@#{empath}@#{secret}@' #{f} > #{f}.tmp && mv #{f}.tmp #{f}" if File.file? f }
-    }
-  }
+when "emscripten"
+  emscripten :simd
+when "emscripten-nosimd"
+  emscripten :nosimd
 end

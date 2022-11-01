@@ -24,17 +24,10 @@ end
 
 def setup_emscripten
   cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
-  Dir.chdir("build"){
-    # install msgpack-c
-    run "tar xf download/emscripten/msgpack-c-emscripten.tgz -C emscripten/"
-    cp_r "emscripten/msgpack-c/lib", "emscripten", remove_destination:true
-    # install libyaml
-    run "tar xf download/emscripten/libyaml-0.2.5-emscripten.tgz -C emscripten/"
-    cp_r "emscripten/libyaml-0.2.5-emscripten/lib", "emscripten", remove_destination:true
-    cp "emscripten/libyaml-0.2.5-emscripten/License", "emscripten/licenses/libyaml-0.2.5-License"
-    # install libbismite
-    run "tar zxf download/emscripten/libbismite-emscripten.tgz -C emscripten/"
-  }
+end
+
+def setup_emscripten_nosimd
+  cp "src/bismite-config-emscripten-nosimd.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten-nosimd"
 end
 
 def setup_mingw
@@ -57,7 +50,8 @@ def setup_mingw
   end
 end
 
-targets = ARGV.reject{|a| not ["clean","macos","linux","emscripten","mingw"].include? a }
+targets = ARGV.reject{|a| not %w(clean macos linux emscripten emscripten-nosimd mingw).include? a }
+clean = targets.delete("clean")
 if targets.empty?
   if RUBY_PLATFORM.include?("darwin")
     targets << "macos"
@@ -65,16 +59,15 @@ if targets.empty?
     targets << "linux"
   end
 end
+
 targets.each do |target|
-
-  if target == "clean"
-    run "rm -rf build/macos build/linux build/mingw build/emscripten"
-    run "rm -f scripts/mruby_config/*.lock"
-    next
-  end
-
   puts "TARGET: #{target}"
   puts install_path target
+
+  if clean
+    run "rm -rf build/#{target}"
+    run "rm -f scripts/mruby_config/#{target}.rb.lock"
+  end
 
   mkdir_p install_path(target)
   Dir.chdir(install_path(target)){
@@ -84,14 +77,16 @@ targets.each do |target|
   run "./scripts/download_required_files.rb #{target}"
 
   case target
-  when /macos/
+  when "macos"
     setup_macos
-  when /linux/
+  when "linux"
     setup_linux
-  when /mingw/
+  when "mingw"
     setup_mingw
-  when /emscripten/
+  when "emscripten"
     setup_emscripten
+  when "emscripten-nosimd"
+    setup_emscripten_nosimd
   end
 
   #

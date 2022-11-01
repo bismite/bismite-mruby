@@ -20,11 +20,15 @@ end
 
 files = YAML.load File.read("scripts/required_files.yml")
 mkdir_p "build"
-Dir.chdir("build"){
-  ARGV.each{|target|
+ARGV.each{|target|
+  Dir.chdir("build"){
     download_dir = "download/#{target}"
     common_list = files["common"]
-    target_list = files[target]
+    if target == "emscripten-nosimd"
+      target_list = files["emscripten"]
+    else
+      target_list = files[target]
+    end
     mkdir_p download_dir
     mkdir_p target
     (common_list+target_list).each_slice(3) do |url,filename,commands|
@@ -46,5 +50,10 @@ Dir.chdir("build"){
         commands.each{|command| run command }
       }
     end
+  }
+  # Patch to mruby
+  cp "src/mruby.patch", "build/#{target}/mruby"
+  Dir.chdir("build/#{target}/mruby"){
+    run "patch -p1 -i mruby.patch"
   }
 }
