@@ -1,36 +1,33 @@
 
 uniform mat4 camera;
-attribute vec2 vertex;
-attribute vec4 texture_uv;
-attribute vec4 transform_a;
-attribute vec4 transform_b;
-attribute vec4 transform_c;
-attribute vec4 transform_d;
-attribute float vertex_index;
-attribute float texture_z;
-attribute float opacity;
-attribute vec4 tint_color;
-varying vec3 uv;
-varying vec4 _tint_color;
-varying float _opacity;
-
+in vec2 vertex;
+in vec4 texture_uv;
+in vec4 transform_a;
+in vec4 transform_b;
+in vec4 transform_c;
+in vec4 transform_d;
+in int texture_index;
+in float opacity;
+in vec4 tint_color;
+out vec2 uv;
+flat out int _texture_index;
+out vec4 _tint_color;
+out float _opacity;
 void main()
 {
   gl_Position = camera * mat4(transform_a,transform_b,transform_c,transform_d) * vec4(vertex,0.0,1.0);
-
   // vertex = [ left-top, left-bottom, right-top, right-bottom ]
   // texture_uv = [ x:left, y:top, z:right, w:bottom ]
-  int vertexid = int(vertex_index);
-  if( vertexid == 0 ){
-    uv = vec3(texture_uv.x,texture_uv.y,texture_z); // left-top
-  }else if( vertexid == 1 ){
-    uv = vec3(texture_uv.x,texture_uv.w,texture_z); // left-bottom
-  }else if( vertexid == 2 ){
-    uv = vec3(texture_uv.z,texture_uv.y,texture_z); // right-top
-  }else if( vertexid == 3 ){
-    uv = vec3(texture_uv.z,texture_uv.w,texture_z); // right-bottom
+  if( gl_VertexID == 0 ){
+    uv = vec2(texture_uv.x,texture_uv.y); // left-top
+  }else if( gl_VertexID == 1 ){
+    uv = vec2(texture_uv.x,texture_uv.w); // left-bottom
+  }else if( gl_VertexID == 2 ){
+    uv = vec2(texture_uv.z,texture_uv.y); // right-top
+  }else if( gl_VertexID == 3 ){
+    uv = vec2(texture_uv.z,texture_uv.w); // right-bottom
   }
-
+  _texture_index = texture_index;
   _tint_color = tint_color;
   _opacity = opacity;
 }

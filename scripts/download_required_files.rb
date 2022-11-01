@@ -1,49 +1,50 @@
 #!/usr/bin/env ruby
 require_relative "lib/utils"
 
-def check(path,hash)
-  if File.exists?(path) and File.file?(path)
-    hash == Digest::MD5.hexdigest(File.read(path))
+def download(url,filepath)
+  if File.exists? filepath
+    puts "already downloaded #{filepath}"
   else
-    false
-  end
-end
-
-def check!(path,hash)
-  unless check(path,hash)
-    puts "#{path} download failed MD5 mismatch #{hash}".red
-    exit 1
-  end
-end
-
-def download(files,target)
-  return unless files
-  files.each_slice(2) do |file,hash|
-    if file.is_a? Array
-      url,filename = file
+    if which "curl"
+      run "curl -JL#S -o #{filepath} #{url}"
+    elsif which "wget"
+      run "wget -O #{filepath} #{url}"
     else
-      url = file
-      filename = File.basename url
+      raise "require curl or wget"
     end
-    filepath = File.join "build/download",target,filename
-    if check filepath,hash
-      puts "already downloaded #{filepath}"
-    else
-      if which "curl"
-        run "curl -JL#S -o #{filepath} #{url}"
-      elsif which "wget"
-        run "wget -O #{filepath} #{url}"
-      else
-        raise "require curl or wget"
-      end
-      check! filepath,hash
-    end
+  end
+  unless File.exists? filepath
+    raise "download failed: #{url}"
   end
 end
 
 files = YAML.load File.read("scripts/required_files.yml")
-ARGV.each{|target|
-  mkdir_p "build/download/#{target}"
-  download files["common"], target
-  download files[target], target
+mkdir_p "build"
+Dir.chdir("build"){
+  ARGV.each{|target|
+    download_dir = "download/#{target}"
+    common_list = files["common"]
+    target_list = files[target]
+    mkdir_p download_dir
+    mkdir_p target
+    (common_list+target_list).each_slice(3) do |url,filename,commands|
+      if filename.is_a? Array
+        extract_name = filename.last
+        filename = filename.first
+      else
+        extract_name = nil
+      end
+      filepath = File.join "download",target,filename
+      download url,filepath
+      if extract_name
+        mkdir_p File.join(target,extract_name)
+        run "tar xf #{filepath} -C #{target}/#{extract_name} --strip-component 1"
+      else
+        run "tar xf #{filepath} -C #{target}"
+      end
+      Dir.chdir(target){
+        commands.each{|command| run command }
+      }
+    end
+  }
 }

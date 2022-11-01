@@ -8,22 +8,6 @@ require_relative "scripts/lib/utils"
 
 def setup_macos
   cp "src/bismite-config.rb", "#{install_path('macos')}/bin/bismite-config"
-  Dir.chdir("build"){
-    # install msgpack-c
-    run "tar xf download/macos/msgpack-c-macos.tgz -C macos/"
-    cp_r "macos/msgpack-c/lib", "macos", remove_destination:true
-    # install libyaml
-    run "tar zxf download/macos/libyaml-0.2.5-macos.tgz -C macos/"
-    cp_r "macos/libyaml-0.2.5-macos/lib", "macos", remove_destination:true
-    cp "macos/libyaml-0.2.5-macos/License", "macos/licenses/libyaml-0.2.5-License"
-    # install SDL
-    run "tar xf download/macos/SDL-macOS-UniversalBinaries.tgz -C macos/"
-    cp_r "macos/SDL-macOS-UniversalBinaries/lib", "macos", remove_destination:true
-    cp_r "macos/SDL-macOS-UniversalBinaries/include", "macos", remove_destination:true
-    cp_r "macos/SDL-macOS-UniversalBinaries/licenses", "macos", remove_destination:true
-    # install libbismite
-    run "tar xf download/macos/libbismite-macos.tgz -C macos/"
-  }
 end
 
 def setup_linux

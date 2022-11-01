@@ -5,14 +5,6 @@ TARGET = ARGV[0]
 ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{TARGET}.rb"
 PREFIX = install_path(TARGET)
 
-# extract
-Dir.chdir("build"){
-  %w(mruby mruby-libbismite mruby-bi-misc).each{|name|
-    FileUtils.mkdir_p "#{TARGET}/#{name}"
-    run "tar --strip-component 1 -xf download/#{TARGET}/#{name}.tgz -C #{TARGET}/#{name}"
-  }
-}
-
 # build mruby
 cp "src/mruby.patch", "build/#{TARGET}/mruby"
 Dir.chdir("build/#{TARGET}/mruby"){

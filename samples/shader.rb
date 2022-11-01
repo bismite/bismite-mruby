@@ -1,8 +1,8 @@
 
 if Bi::Version.emscripten
-  SHADER_HEADER="#version 100\nprecision highp float;\n"
+  SHADER_HEADER="#version 300 es\nprecision highp float;\n"
 else
-  SHADER_HEADER="#version 120\n"
+  SHADER_HEADER="#version 410\n"
 end
 
 Bi.init 480,320,title:__FILE__,hidpi:true
