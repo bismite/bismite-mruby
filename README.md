@@ -17,7 +17,7 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 3.1.2
+## 4.0.0
 - libbismite 5.0.0 (include SDL2 2.24.1, SDL2_image 2.6.2, SDL2_mixer 2.6.2)
 - update shaders in sample
 - mruby-bi-misc 0.6.1
