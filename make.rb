@@ -12,14 +12,6 @@ end
 
 def setup_linux
   cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
-  Dir.chdir("build"){
-    # install msgpack-c
-    run "tar xf download/linux/msgpack-c-linux.tgz -C linux/"
-    cp "linux/msgpack-c/lib/libmsgpackc.so", "linux/lib/"
-    cp "linux/msgpack-c/lib/libmsgpackc.a", "linux/lib/"
-    # install libbismite
-    run "tar xf download/linux/libbismite-linux.tgz -C linux/"
-  }
 end
 
 def setup_emscripten
