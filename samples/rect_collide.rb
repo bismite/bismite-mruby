@@ -123,7 +123,7 @@ class RectCollide < Bi::Node
             intersection = nearest
             collide_block = block
           end
-        elsif
+        else
           intersection = nearest
           collide_block = block
         end

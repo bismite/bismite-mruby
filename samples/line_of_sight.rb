@@ -115,7 +115,7 @@ class LineOfSight < Bi::Node
 
     @blocks.each{|block|
       block.set_color 0xff,0xff,0xff
-      nearest = Bi::Line::nearest_intersection @line.x, @line.y, x, y, block.sides+block.corners
+      nearest = Bi::Line::nearest_intersection(@line.x, @line.y, x, y, block.sides+block.corners)
 
       if nearest
         block.set_color 0xff,0xff,0
@@ -124,7 +124,7 @@ class LineOfSight < Bi::Node
             intersection = nearest
             collide_block = block
           end
-        elsif
+        else
           intersection = nearest
           collide_block = block
         end
