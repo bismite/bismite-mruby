@@ -20,6 +20,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: tmp/bismite-mruby-emscripten.tgz
-          asset_name: bismite-mruby-emscripten-${{github.ref}}.tgz
+          asset_name: bismite-mruby-emscripten-${{github.ref_name}}.tgz
           tag: ${{ github.ref }}
           overwrite: true

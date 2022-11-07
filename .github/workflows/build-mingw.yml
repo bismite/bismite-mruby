@@ -17,6 +17,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: tmp/bismite-mruby-mingw.tgz
-          asset_name: bismite-mruby-mingw-${{github.ref}}.tgz
+          asset_name: bismite-mruby-mingw-${{github.ref_name}}.tgz
           tag: ${{ github.ref }}
           overwrite: true
