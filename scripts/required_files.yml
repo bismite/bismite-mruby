@@ -26,8 +26,8 @@ emscripten:
   - msgpack-c-emscripten.tgz
   - ["cp -R msgpack-c/lib ./"]
 macos:
-  - https://github.com/bismite/libbismite/releases/download/5.0.0/libbismite-macos.tgz
-  - libbismite-5.0.0-macos.tgz
+  - https://github.com/bismite/libbismite/releases/download/6.0.0/libbismite-macos.tgz
+  - libbismite-6.0.0-macos.tgz
   - []
   - https://github.com/bismite/msgpack-c-binary/releases/download/0.1.12/msgpack-c-macos.tgz
   - msgpack-c-macos.tgz

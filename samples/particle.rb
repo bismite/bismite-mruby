@@ -41,7 +41,7 @@ class ParticleLayer < Bi::Layer
     self.set_blend_factor Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE,Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE
 
     @frame_count = 0
-    self.root.create_timer(0,-1){|node,delta|
+    self.root.create_timer(0,-1){|t,delta|
       if @frame_count < 30
         @frame_count += 1
       else
@@ -54,7 +54,7 @@ class ParticleLayer < Bi::Layer
   def add_particle(x,y,num)
     num.times{
       particle = Particle.new @ball_texture, x, y
-      particle.create_timer(0,-1){|n,delta| n.move }
+      particle.create_timer(0,-1){|t,delta| particle.move }
       self.root.add particle
     }
   end

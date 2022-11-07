@@ -19,7 +19,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   shader_frag_blur = SHADER_HEADER + assets.read("assets/shaders/blur.frag")
   layer.shader = Bi::Shader.new shader_vert,shader_frag_distortion
   layer.set_post_process_shader Bi::Shader.new shader_vert,shader_frag_blur
-  layer.create_timer(500,-1) {|n,dt|
+  layer.create_timer(500,-1) {|timer,dt|
     layer.set_shader_attribute 0, rand
     layer.set_shader_attribute 1, rand
     layer.set_shader_attribute 2, rand

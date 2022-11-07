@@ -50,7 +50,7 @@ class CaveGeneratorExample < Bi::Node
       true
     end
 
-    self.create_timer(0,-1){|node,delta| f = nil if f and f.resume }
+    self.create_timer(0,-1){|t,delta| f = nil if f and f.resume }
 
   end
 

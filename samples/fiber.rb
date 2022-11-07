@@ -24,7 +24,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
     true
   end
 
-  layer.root.create_timer(0,-1){|node,delta|
+  layer.root.create_timer(0,-1){|t,delta|
     if f
       if f.resume
         f = nil

@@ -14,8 +14,13 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.set_texture 1, layer.root.texture
   Bi::add_layer layer
 
-  Bi.layers.create_timer(0,-1){|node,dt| face.angle += dt*0.01 }
-  face.create_timer(500,3){|node,dt| node.set_color rand(0xff),rand(0xff),rand(0xff) }
+  timer_rotate = Bi.layers.create_timer(0,-1){|timer,dt| face.angle += dt*0.01 }
+  face.create_timer(500,5){|timer,dt| face.set_color rand(0xff),rand(0xff),rand(0xff) }
+
+  layer.root.on_click {|n,x,y,button,press|
+    Bi.layers.remove_timer timer_rotate if timer_rotate
+    timer_rotate = nil
+  }
 end
 
 Bi::start_run_loop

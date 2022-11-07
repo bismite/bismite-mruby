@@ -12,15 +12,14 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
 
   # 2nd layer (spotlight)
   layer2 = Bi::Layer.new
-  layer2.root = assets.texture("assets/circle256.png").to_sprite
-  layer2.root.anchor = :center
-  layer2.root.set_position Bi.w/2, Bi.h/2
-  layer2.set_texture 0, layer2.root.texture
+  spotlight = assets.texture("assets/circle256.png").to_sprite
+  spotlight.anchor = :center
+  spotlight.set_position Bi.w/2, Bi.h/2
+  spotlight.create_timer(0,-1){|t,delta| spotlight.angle += 0.001*delta }
+
+  layer2.root = spotlight
+  layer2.set_texture 0, spotlight.texture
   layer2.set_blend_factor GL_DST_COLOR, GL_ONE, GL_DST_COLOR, GL_ONE
-
-  # spin
-  layer2.root.create_timer(0,-1){|n,delta| n.angle += 0.001*delta }
-
   Bi::add_layer layer1
   Bi::add_layer layer2
 end

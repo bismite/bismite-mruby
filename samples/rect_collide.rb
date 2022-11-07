@@ -22,7 +22,7 @@ class RectCollide < Bi::Node
       b = Bi::Node.new
       b.set_size rand(32..64), rand(32..64)
       b.set_color 0xff,0xff,0xff
-      b.set_position *random_block_position
+      b.set_position(*random_block_position)
       self.add b
       @blocks << b
     end
@@ -46,11 +46,11 @@ class RectCollide < Bi::Node
     self.add @ball
 
     self.on_key_input do |node,key,code,mod,pressed|
-      @blocks.each{|b| b.set_position *random_block_position } unless pressed
+      @blocks.each{|b| b.set_position(*random_block_position) } unless pressed
     end
 
     @sight_angle = 0
-    self.create_timer(0,-1){|node,delta|
+    self.create_timer(0,-1){|t,delta|
       @sight_angle += 0.001*delta
       distance = Bi.h
       x = Bi.w/2 + distance * Math::cos(@sight_angle)

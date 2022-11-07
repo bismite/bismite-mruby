@@ -32,7 +32,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
 
   layer.root.on_move_cursor {|n,x,y|
     particle = Particle.new texture, x, y
-    particle.create_timer(0,-1) {|n,delta| n.life -= 1 }
+    particle.create_timer(0,-1) {|t,delta| particle.life -= 1 }
     n.add particle
   }
 end

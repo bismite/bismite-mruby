@@ -19,7 +19,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   sound.play 1,-1
 
   @angle = 0
-  face.create_timer(0,-1){|node,delta|
+  face.create_timer(0,-1){|t,delta|
     @angle += 0.001*delta
     x = Math::sin(@angle) * Bi.w/2 + Bi.w/2
     face.x = x

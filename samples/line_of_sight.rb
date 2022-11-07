@@ -73,7 +73,7 @@ class LineOfSight < Bi::Node
 
     # self.on_move_cursor{|node,x,y| point(x,y) }
     @sight_angle = 0
-    self.create_timer(0,-1){|node,delta|
+    self.create_timer(0,-1){|t,delta|
       @sight_angle += 0.0005*delta
       distance = Bi.h
       x = Bi.w/2 + distance * Math::cos(@sight_angle)
