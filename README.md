@@ -17,8 +17,9 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 5.0.0
+## 5.0.0 - 2022/11/7
 - libbismite 6.0.0
+- mruby-libbismite 4.0.0
 - update samples
 ## 4.0.0
 - libbismite 5.0.0 (include SDL2 2.24.1, SDL2_image 2.6.2, SDL2_mixer 2.6.2)
