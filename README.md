@@ -21,6 +21,7 @@
 - libbismite 6.0.0
 - mruby-libbismite 4.0.0
 - update samples
+- fix samples/line_of_sight.rb and samples/rect_collide.rb
 ## 4.0.0
 - libbismite 5.0.0 (include SDL2 2.24.1, SDL2_image 2.6.2, SDL2_mixer 2.6.2)
 - update shaders in sample
