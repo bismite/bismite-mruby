@@ -31,17 +31,20 @@ ARGV.each{|target|
     end
     mkdir_p download_dir
     mkdir_p target
-    (common_list+target_list).each_slice(3) do |url,filename,commands|
-      if filename.is_a? Array
-        extract_name = filename.last
-        filename = filename.first
+    (common_list+target_list).each_slice(2) do |url,commands|
+      if url.is_a? Array
+        extract_name = url[2]
+        filename = url[1]
+        url = url[0]
       else
+        filename = File.basename(url)
         extract_name = nil
       end
+      p [url,filename,extract_name,commands]
       filepath = File.join "download",target,filename
       download url,filepath
       if extract_name
-        mkdir_p File.join(target,extract_name)
+        mkdir_p File.join(target,extract_name) rescue nil
         run "tar xf #{filepath} -C #{target}/#{extract_name} --strip-component 1"
       else
         run "tar xf #{filepath} -C #{target}"
