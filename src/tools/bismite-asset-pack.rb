@@ -47,7 +47,7 @@ File.open(File.join(DST,"assets.dat"),'wb') do |out|
   # header 4byte
   out.write [1].pack('V') # assets file v2
   # index
-  index = assets.index.to_msgpack
+  index = assets.index.to_json
   ilen = index.bytesize
   out.write [ilen].pack('V')
   out.write assets.encrypt(index,ilen)

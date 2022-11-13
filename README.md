@@ -5,7 +5,7 @@
 2. run `./make.rb macos`
 
 ## build on Linux
-1. install libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, libyaml-dev, clang, and ruby
+1. install libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, clang, and ruby
 2. run `./make.rb linux`
 
 ## Emscripten
@@ -17,6 +17,9 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 6.0.0 - 2022/11/14
+- add autoremove flag to actions
+- remove yaml and msgpack support
 ## 5.0.0 - 2022/11/7
 - libbismite 6.0.0
 - mruby-libbismite 4.0.0

@@ -2,7 +2,7 @@ require_relative "common.rb"
 
 SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
 INSTALL_PREFIX = "#{BUILD_DIR}/macos"
-LIBS = %w(SDL2 SDL2_image SDL2_mixer msgpackc bismite)
+LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 INCLUDES = %w(include include/SDL2 msgpack-c/include libyaml-0.2.5-macos/include).map{|i| "#{INSTALL_PREFIX}/#{i}" }
 COMMON_CFLAGS = %w(-g0 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings -std=gnu11 -O3)
 COMMON_DEFINES = %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)

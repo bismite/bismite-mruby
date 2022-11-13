@@ -31,7 +31,7 @@ end
 def decrypt2(dst,f,key)
   ilen = f.read(4).unpack("V").first
   puts "index length: #{ilen}"
-  index = MessagePack.unpack decrypt(f.read,ilen,KEY)
+  index = JSON::load decrypt(f.read,ilen,KEY)
   # files
   file_section_start = 4 + 4 + ilen
   index.each{|fname,foffset,flen|
