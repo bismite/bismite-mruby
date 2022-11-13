@@ -59,7 +59,7 @@ when "linux"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
   run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
 
-  %w(libmruby.so libmsgpackc.so).each{|l|
+  %w(libmruby.so).each{|l|
     copy_entry "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/#{l}",false,false,true
   }
 
