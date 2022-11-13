@@ -1,11 +1,9 @@
 mruby-3.0.0 Copyright (c) 2010-2021 mruby developers
 mruby-dir Copyright (c) 2012 Internet Initiative Japan Inc.
 mruby-env Copyright (c) 2012 Internet Initiative Japan Inc.
-mruby-errno Copyright (c) 2013 Internet Initiative Japan Inc.
 mruby-iijson Copyright (c) 2014 Internet Initiative Japan Inc.
 mruby-os © 2017 Sebastian Katzer, appPlant GmbH
 mruby-singleton Copyright (c) ksss <co000ri@gmail.com>
-mruby-yaml Copyright (c) Andrew Belt
 
   Permission is hereby granted, free of charge, to any person obtaining a
   copy of this software and associated documentation files (the "Software"),
@@ -30,7 +28,6 @@ bismite-mruby Copyright (c) 2021 kbys
 libbismite Copyright (c) 2018-2021 kbys <work4kbys@gmail.com>
 mruby-libbismite Copyright 2018-2021 kbys <work4kbys@gmail.com>
 mruby-bi-misc Copyright 2018-2021 kbys <work4kbys@gmail.com>
-mruby-simplemsgpack Copyright (c) Hendrik Beskow, Christopher Aue
 
                                  Apache License
                            Version 2.0, January 2004

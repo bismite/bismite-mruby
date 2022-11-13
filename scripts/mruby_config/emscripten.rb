@@ -11,7 +11,6 @@ def __setting__(conf,libbismite)
     cc.command = 'emcc'
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
     cc.include_paths << "#{BUILD_DIR}/emscripten/include"
-    cc.include_paths << "#{BUILD_DIR}/emscripten/msgpack-c/include"
     cc.include_paths << "#{BUILD_DIR}/emscripten/libyaml-0.2.5-emscripten/include"
     cc.flags = %w(-Oz -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags += emscripten_flags
@@ -19,7 +18,6 @@ def __setting__(conf,libbismite)
   conf.linker do |linker|
     linker.command = 'emcc'
     linker.library_paths << "#{BUILD_DIR}/emscripten/lib"
-    linker.libraries += %w(msgpackc yaml)
     linker.libraries << libbismite
     linker.flags += emscripten_flags
     linker.flags << "-sMAX_WEBGL_VERSION=2"

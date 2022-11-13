@@ -18,8 +18,6 @@ MRuby::CrossBuild.new('mingw') do |conf|
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING DISABLE_CLOCK_GETTIME)
     cc.include_paths << "#{INSTALL_PREFIX}/include"
     cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
-    cc.include_paths << "#{INSTALL_PREFIX}/libyaml-0.2.5-x86_64-w64-mingw32/include/"
-    cc.include_paths << "#{INSTALL_PREFIX}/msgpack-c/include/"
     cc.flags = %W(-O3 -std=c11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags << "-Dmain=SDL_main"
   end
@@ -29,7 +27,7 @@ MRuby::CrossBuild.new('mingw') do |conf|
     linker.library_paths << "#{INSTALL_PREFIX}/bin"
     linker.library_paths << "#{INSTALL_PREFIX}/lib"
     linker.library_paths << "#{INSTALL_PREFIX}/mruby/build/mingw/lib"
-    linker.libraries += %w(bismite opengl32 yaml msgpackc mingw32 SDL2main SDL2 SDL2_image SDL2_mixer)
+    linker.libraries += %w(bismite opengl32 mingw32 SDL2main SDL2 SDL2_image SDL2_mixer)
     linker.flags_after_libraries << "-static-libgcc -mconsole"
   end
 
