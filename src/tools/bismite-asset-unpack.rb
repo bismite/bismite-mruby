@@ -50,6 +50,8 @@ File.open(SRC) do |f|
   when 0
     raise "v1 assets not supported."
   when 1
+    raise "v2 assets not supported."
+  when 2
     decrypt2 DST,f,KEY
   else
     raise "invalid assets file."

@@ -45,7 +45,7 @@ File.open(File.join(DST,"assets.dat"),'wb') do |out|
   puts "#{out.path}"
   assets = Assets.new KEY, SRC
   # header 4byte
-  out.write [1].pack('V') # assets file v2
+  out.write [2].pack('V') # assets file v3
   # index
   index = assets.index.to_json
   ilen = index.bytesize
