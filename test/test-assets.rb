@@ -3,13 +3,14 @@ require "fileutils"
 include FileUtils
 
 TARGET=ARGV.first
+BISMITE_RUN = File.absolute_path("build/#{TARGET}/bin/bismite-run")
 
 mkdir_p "build/test"
 system "./build/#{TARGET}/bin/bismite-asset-pack test/assets build/test/ abracadabra"
 puts "----"
 
 script=<<EOS
-Bi::Archive.load("build/test/assets.dat","abracadabra"){|a|
+Bi::Archive.load("assets.dat","abracadabra"){|a|
   p a.filenames
   txt = a.read("assets/test.txt")
   p txt
@@ -17,5 +18,7 @@ Bi::Archive.load("build/test/assets.dat","abracadabra"){|a|
 EOS
 
 File.write("build/test/unpack.rb",script)
-system "./build/#{TARGET}/bin/bismite-run build/test/unpack.rb"
+Dir.chdir("build/test"){
+  system "#{BISMITE_RUN} unpack.rb"
+}
 puts "----"
