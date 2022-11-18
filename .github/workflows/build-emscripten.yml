@@ -10,16 +10,14 @@ jobs:
       - name: Setup emsdk
         uses: mymindstorm/setup-emsdk@v11
         with:
-          version: 3.1.24
+          version: 3.1.26
           actions-cache-folder: 'emsdk-cache'
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - run: ./make.rb emscripten
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: tmp/bismite-mruby-emscripten.tgz
           asset_name: bismite-mruby-emscripten-${{github.ref_name}}.tgz
-          tag: ${{ github.ref }}
           overwrite: true
