@@ -6,14 +6,14 @@ common:
   - ["https://github.com/bismite/mruby-bi-misc/archive/refs/tags/2.0.0.tar.gz", "mruby-bi-misc-2.0.0.tgz","mruby-bi-misc"]
   - []
 linux:
-  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-linux-6.0.0.tgz
+  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-linux-6.0.1.tgz
   - []
 emscripten:
-  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-emscripten-6.0.0.tgz
+  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-emscripten-6.0.1.tgz
   - []
 macos:
-  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-macos-6.0.0.tgz
+  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-macos-6.0.1.tgz
   - []
 mingw:
-  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-x86_64-w64-mingw32-6.0.0.tgz
+  - https://github.com/bismite/libbismite/releases/download/6.0.1/libbismite-x86_64-w64-mingw32-6.0.1.tgz
   - []

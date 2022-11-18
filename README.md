@@ -17,7 +17,7 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 6.0.1 - 2022/11/19
+## 6.0.2 - 2022/11/19
 - add autoremove flag to actions
 - remove yaml and msgpack support
 - update mruby-bi-misc 2.0.0
