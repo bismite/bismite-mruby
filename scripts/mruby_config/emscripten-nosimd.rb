@@ -12,7 +12,7 @@ def __setting__(conf,libbismite)
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
     cc.include_paths << "#{BUILD_DIR}/emscripten/include"
     cc.include_paths << "#{BUILD_DIR}/emscripten/libyaml-0.2.5-emscripten/include"
-    cc.flags = %w(-Oz -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
+    cc.flags = %w(-O3 -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags += emscripten_flags
   end
   conf.linker do |linker|

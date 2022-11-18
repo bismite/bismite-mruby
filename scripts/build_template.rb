@@ -7,6 +7,7 @@ require_relative "lib/utils"
 HOST = (/linux/ === RUBY_PLATFORM ? "linux" : "macos")
 TARGET = ARGV[0] || HOST
 DST_DIR = ARGV[1] || "build/#{TARGET}/share/bismite/templates"
+OPT="-std=gnu11 -O3 -Wall -DNDEBUG"
 
 run "./build/#{TARGET}/mruby/build/host/mrbc/bin/mrbc -o build/main.mrb src/main.rb"
 
@@ -25,7 +26,7 @@ def emscripten(simd=:simd)
   end
   [nil,"dl"].each{|dynamic_linking| [nil,"single"].each{|single_file|
     name = "wasm"
-    opt = "-sWASM=1"
+    opt = ""
     config = "`#{config_script} --cflags --libs`"
     if dynamic_linking
       name += "-dl"
@@ -39,9 +40,9 @@ def emscripten(simd=:simd)
     dir = File.join DST_DIR,name
     mkdir_p dir
     cp "build/main.mrb", "#{dir}/main.mrb"
-    flags = "-std=gnu11 -DNDEBUG -Oz -Wall -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB #{opt}"
+    flags = "#{OPT} -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB -sWASM=1 #{opt}"
     shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc -Wall src/main-emscripten.c src/support-emscripten.c -o #{dir}/index.html #{flags} #{config} #{shell}"
+    run "emcc src/main-emscripten.c src/support-emscripten.c -o #{dir}/index.html #{flags} #{config} #{shell}"
     copy_license_files "emscripten", dir
     # Remove unexpected file path contained in SDL.
     empath = File.dirname which "emcc"
@@ -57,7 +58,7 @@ case TARGET
 when "linux"
   mkdir_p "#{DST_DIR}/linux/lib"
   cp "build/main.mrb", "#{DST_DIR}/linux/main.mrb"
-  run "clang src/main.c -o #{DST_DIR}/linux/main -std=gnu11 -Os -Wall -DNDEBUG `./build/linux/bin/bismite-config --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
+  run "clang src/main.c -o #{DST_DIR}/linux/main #{OPT} `./build/linux/bin/bismite-config --cflags --libs` `sdl2-config --cflags --libs` -lSDL2_image -lSDL2_mixer -Wl,-rpath,'$ORIGIN/lib'"
 
   %w(libmruby.so).each{|l|
     copy_entry "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/#{l}",false,false,true
@@ -72,7 +73,7 @@ when "macos"
   mkdir_p "#{resource_dir}/bin"
   mkdir_p "#{resource_dir}/lib"
   cp "build/main.mrb", "#{resource_dir}/main.mrb"
-  run "clang src/main.c -o #{resource_dir}/main `./build/macos/bin/bismite-config --cflags --libs` -arch x86_64 -arch arm64"
+  run "clang src/main.c -o #{resource_dir}/main `./build/macos/bin/bismite-config --cflags --libs` -arch x86_64 -arch arm64 #{OPT}"
   run "install_name_tool -add_rpath @executable_path/lib #{resource_dir}/main"
 
   libs = %w(
@@ -90,12 +91,12 @@ when "mingw"
   mkdir_p "#{DST_DIR}/mingw/system"
   cp "build/main.mrb", "#{DST_DIR}/mingw/system/main.mrb"
   # real main.exe
-  run "x86_64-w64-mingw32-gcc src/main.c -Wall -std=c11 -Os -o #{DST_DIR}/mingw/system/main.exe `./build/mingw/bin/bismite-config-mingw --cflags --libs`"
+  run "x86_64-w64-mingw32-gcc src/main.c -o #{DST_DIR}/mingw/system/main.exe `./build/mingw/bin/bismite-config-mingw --cflags --libs` #{OPT}"
   # copy dlls
   cp Dir.glob('build/mingw/bin/*.dll'), "#{DST_DIR}/mingw/system"
   # frontman
   run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/mingw/frontman-mingw.res"
-  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/mingw/frontman-mingw.res -std=c11 -Os -mwindows -o #{DST_DIR}/mingw/start.exe"
+  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/mingw/frontman-mingw.res -std=c11 -O2 -mwindows -o #{DST_DIR}/mingw/start.exe"
   copy_license_files "mingw", "#{DST_DIR}/mingw/"
 
 when "emscripten"
