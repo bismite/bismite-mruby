@@ -2,7 +2,7 @@
 class Line < Bi::Node
   attr_reader :line
   def initialize(x,y,x2,y2)
-    super
+    super()
     self.angle = Math.atan2(y2-y, x2-x)
     self.set_size Math.sqrt( (x2-x)**2 + (y2-y)**2 ), 1
     self.set_position x,y
@@ -12,7 +12,7 @@ end
 
 class LineIntersectionLayer < Bi::Layer
   def initialize(assets)
-    super
+    super()
     texture = assets.texture("assets/sky.png")
     self.root = LineIntersection.new(texture.to_sprite)
     self.set_texture 0, texture
@@ -21,7 +21,7 @@ end
 
 class LineIntersection < Bi::Node
   def initialize(sky)
-    super
+    super()
     self.set_size Bi.w, Bi.h
 
     @sky = sky
@@ -108,8 +108,8 @@ class LineIntersection < Bi::Node
 end
 
 Bi.init 480,320, title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   Bi::add_layer LineIntersectionLayer.new(assets)
-end
+}
 
 Bi::start_run_loop

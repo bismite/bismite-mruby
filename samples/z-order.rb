@@ -1,6 +1,7 @@
 Bi.init 480,320,title:__FILE__
 
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
+
   texture = assets.texture("assets/face01.png")
 
   # layer
@@ -34,6 +35,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
 
   layer.root.add face_a #
   layer.root.add face_b # B after A
-end
+}
 
 Bi::start_run_loop

@@ -3,7 +3,8 @@ srand(Time.now.to_i)
 
 Bi::init 480,320, title:__FILE__
 
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
+
   layer = Bi::Layer.new
   layer.root = Bi::Node.new
   Bi::layers.add_layer layer
@@ -37,6 +38,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
       y += 1
     }
   }
-end
+}
 
 Bi::start_run_loop

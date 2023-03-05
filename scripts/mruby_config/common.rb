@@ -12,11 +12,10 @@ def include_gems(conf,target,without_bin=false)
   conf.gem github: 'katzer/mruby-os'
   conf.gem github: 'ksss/mruby-singleton'
   conf.gem github: 'iij/mruby-env'
-  conf.gem github: 'iij/mruby-dir'
   conf.gem github: 'iij/mruby-iijson'
   ENV['MRUBY_LIBBISMITE']? conf.gem(ENV['MRUBY_LIBBISMITE']): conf.gem("#{BUILD_DIR}/#{target}/mruby-libbismite")
   ENV['MRUBY_BI_MISC']   ? conf.gem(ENV['MRUBY_BI_MISC'])   : conf.gem("#{BUILD_DIR}/#{target}/mruby-bi-misc")
-  if conf.name == "emscripten"
+  if conf.name.include? "emscripten"
     ENV['MRUBY_EMSCRIPTEN'] ? conf.gem(ENV['MRUBY_EMSCRIPTEN']) : conf.gem(github:'bismite/mruby-emscripten')
   end
 end

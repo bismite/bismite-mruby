@@ -11,7 +11,7 @@ class RectCollide < Bi::Node
   end
 
   def initialize(sky_texture,ball_texture)
-    super
+    super()
 
     self.set_size Bi.w, Bi.h
 

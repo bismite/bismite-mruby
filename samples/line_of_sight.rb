@@ -2,7 +2,7 @@
 class Block < Bi::Node
   attr_reader :sides, :corners
   def initialize(x,y,w,h)
-    super
+    super()
     self.set_size w,h
     self.set_position x,y
 
@@ -29,7 +29,7 @@ end
 
 class LineOfSightLayer < Bi::Layer
   def initialize(assets)
-    super
+    super()
     sky_texture = assets.texture "assets/sky.png"
     ball_texture = assets.texture "assets/ball.png"
     self.set_texture 0, sky_texture
@@ -41,7 +41,7 @@ end
 class LineOfSight < Bi::Node
 
   def initialize(sky_texture,ball_texture)
-    super
+    super()
 
     self.set_size Bi.w, Bi.h
 
@@ -115,7 +115,8 @@ class LineOfSight < Bi::Node
 
     @blocks.each{|block|
       block.set_color 0xff,0xff,0xff
-      nearest = Bi::Line::nearest_intersection(@line.x, @line.y, x, y, block.sides+block.corners)
+      blocks = block.sides.to_a + block.corners.to_a
+      nearest = Bi::Line::nearest_intersection(@line.x, @line.y, x, y, blocks)
 
       if nearest
         block.set_color 0xff,0xff,0
@@ -143,10 +144,10 @@ end
 
 Bi.init 480,320, title:__FILE__
 
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
   layer = LineOfSightLayer.new assets
   Bi::add_layer layer
-end
+}
 
 Bi::start_run_loop
