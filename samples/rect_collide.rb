@@ -55,7 +55,7 @@ class RectCollide < Bi::Node
       distance = Bi.h
       x = Bi.w/2 + distance * Math::cos(@sight_angle)
       y = Bi.h/2 + distance * Math::sin(@sight_angle)
-      point(x,y)
+      self.point(x,y)
     }
   end
 
@@ -146,7 +146,7 @@ end
 
 
 Bi.init 480,320, title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
   sky = assets.texture "assets/sky.png"
   ball = assets.texture "assets/ball.png"
@@ -155,6 +155,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.set_texture 0, sky
   layer.set_texture 1,ball
   Bi::add_layer layer
-end
+}
 
 Bi::start_run_loop
