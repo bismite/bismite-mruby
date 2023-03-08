@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
   }
   mrb_define_global_const(mrb, "ARGV", ARGV);
   // Run
-  mrb_value obj = mrb_load_irep(mrb,irep_data);
+  mrb_value obj = mrb_load_irep(mrb,bismite_asset_pack);
   if (mrb->exc) {
     printf("exception:\n");
     if (mrb_undef_p(obj)) {
