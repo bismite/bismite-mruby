@@ -1,7 +1,7 @@
 class Particle < Bi::Node
   attr_accessor :life, :life_max, :xx, :yy, :vx, :vy
   def initialize(tex,x,y)
-    super
+    super()
     self.set_texture tex,0,0,tex.w,tex.h
     self.set_size tex.w,tex.h
     self.set_position x,y
@@ -31,14 +31,14 @@ end
 
 class ParticleLayer < Bi::Layer
   def initialize(assets)
-    super
+    super()
 
     self.root = assets.texture("assets/sky.png").to_sprite
     @ball_texture = assets.texture "assets/ball.png"
 
     self.set_texture 0, self.root.texture
     self.set_texture 1, @ball_texture
-    self.set_blend_factor Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE,Bi::Layer::GL_SRC_ALPHA,Bi::Layer::GL_ONE
+    self.set_blend_factor GL_SRC_ALPHA,GL_ONE,GL_SRC_ALPHA,GL_ONE
 
     @frame_count = 0
     self.root.create_timer(0,-1){|t,delta|

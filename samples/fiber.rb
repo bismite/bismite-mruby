@@ -7,7 +7,7 @@ class Fiber
 end
 
 Bi.init 480,320, title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra").{|assets|
   # layer
   layer = Bi::Layer.new
   layer.root = assets.texture("assets/face01.png").to_sprite
@@ -31,6 +31,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
       end
     end
   }
-end
+}
 
 Bi::start_run_loop

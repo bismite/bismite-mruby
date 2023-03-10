@@ -11,7 +11,7 @@ class CaveGeneratorExample < Bi::Node
   FLOOR=[0x64,0x4d,0x37]
 
   def initialize(w,h)
-    super
+    super()
     self.set_position 0,0
     self.set_size w,h
 
@@ -72,9 +72,9 @@ class CaveGeneratorExample < Bi::Node
 end
 
 Bi.init 480,320, title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   layer = Bi::Layer.new
   layer.root = CaveGeneratorExample.new(Bi.w,Bi.h)
   Bi::add_layer layer
-end
+}
 Bi.start_run_loop

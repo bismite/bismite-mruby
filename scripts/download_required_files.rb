@@ -55,8 +55,8 @@ ARGV.each{|target|
     end
   }
   # Patch to mruby
-  cp "src/mruby.patch", "build/#{target}/mruby"
+  cp "src/patch-mruby.diff", "build/#{target}/mruby"
   Dir.chdir("build/#{target}/mruby"){
-    run "patch -p1 -i mruby.patch"
+    run "patch -i patch-mruby.diff"
   }
 }

@@ -7,9 +7,7 @@ PREFIX = install_path(TARGET)
 
 # ---- Build ----
 
-Dir.chdir("build/#{TARGET}/mruby"){
-  run "rake MRUBY_YAML_USE_SYSTEM_LIBRARY=true"
-}
+Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 # ---- Install ----
 

@@ -44,7 +44,7 @@ elsif arch=="linux"
   command = "clang"
   libpath = "-L#{BUILD_DIR}/linux/lib"
   libs = (COMMON_LIBS+["GL"]).map{|l| "-l#{l}" }.join(" ")
-  flags = ""
+  flags = "-flto"
   dylib = target.gsub ".a", ".so"
   additional_command = nil
 elsif arch=="x86_64-w64-mingw32"

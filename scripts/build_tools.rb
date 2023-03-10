@@ -15,12 +15,14 @@ Dir.chdir("build/#{TARGET}"){
 }
 
 # compile c files
-CFLAGS = "-Wall -O2 -g0 -std=gnu11"
+CFLAGS = "-Wall -O3 -g0 -std=gnu11"
 C_FILES = %w(bismite-asset-pack bismite-asset-unpack bismite)
 Dir.chdir("build/#{TARGET}"){ C_FILES.each{|f|
   case TARGET
   when /linux/
-    run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --static-libs` `sdl2-config --libs --cflags` -Wl,-rpath,'$ORIGIN/../lib'"
+    sdl_flags = "-Iinclude -Iinclude/SDL2 -lSDL2 -lSDL2_image -lSDL2_mixer"
+    flags = "-Wl,-rpath,'$ORIGIN/../lib'"
+    run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --libs` #{sdl_flags} #{flags}"
     run "strip bin/#{f}"
   when /macos/
     run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --libs` -arch x86_64 -arch arm64"

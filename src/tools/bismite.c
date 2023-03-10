@@ -61,9 +61,9 @@ static bool check_syntax(mrb_state* mrb, const char* filename, const char* sourc
 
 static mrb_value mrb_check_syntax(mrb_state* mrb, mrb_value self)
 {
-  mrb_value filename, src;
-  mrb_get_args(mrb, "SS", &filename, &src );
-  if( check_syntax(mrb, RSTRING_CSTR(mrb,filename),RSTRING_CSTR(mrb,src)) ){
+  char *filename=NULL, *src=NULL;
+  mrb_get_args(mrb, "z!z!", &filename, &src );
+  if( filename!=NULL && src!=NULL && check_syntax(mrb, filename, src) ){
     return mrb_true_value();
   }
   return mrb_false_value();
@@ -158,7 +158,6 @@ static char* merge(int argc, char* argv[])
     if (mrb_undef_p(result)) {
       mrb_p(mrb, mrb_obj_value(mrb->exc));
     } else {
-      printf("- - - - - - - -\n");
       mrb_print_error(mrb);
     }
     return NULL;
@@ -195,7 +194,6 @@ static void run_irep(uint8_t* irep,int argc, char* argv[])
     if (mrb_undef_p(result)) {
       mrb_p(mrb, mrb_obj_value(mrb->exc));
     } else {
-      printf("- - - -\n");
       mrb_print_error(mrb);
     }
     return;
@@ -214,13 +212,10 @@ static void subcommand_run(int argc1, char* argv1[],int argc2, char* argv2[])
 {
   char *merged_script = merge(argc1,argv1);
   if(merged_script) {
-    // printf("%s\n",merged_script);
     char *filename = argv1[argc1-1];
     size_t irep_size = 0;
     uint8_t* irep_buf = compile_to_irep(filename, merged_script, &irep_size);
     run_irep(irep_buf,argc2,argv2);
-  }else{
-    printf("run failed.\n");
   }
 }
 
@@ -285,8 +280,6 @@ int main(int argc, char* argv[])
   char** argv1 = &argv[2];
   int argc2 = argc-2-filename_index;
   char** argv2 = &argv[2+filename_index];
-  // for(int i=0;i<argc1;i++){ printf("ARGV1[%d] = %s\n", i, argv1[i] ); }
-  // for(int i=0;i<argc2;i++){ printf("ARGV2[%d] = %s\n", i, argv2[i] ); }
 
   if( strcmp(argv[1],"run") == 0 ){
     subcommand_run(argc1,argv1,argc2,argv2);

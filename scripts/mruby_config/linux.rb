@@ -17,8 +17,7 @@ MRuby::CrossBuild.new('linux') do |conf|
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
     cc.include_paths << "#{INSTALL_PREFIX}/include"
     cc.include_paths << "#{INSTALL_PREFIX}/include/SDL2"
-    cc.flags = %W(-O3 -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
-    cc.flags << "`sdl2-config --cflags`"
+    cc.flags = %W(-O3 -g0 -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)
     cc.flags << "-fPIC"
   end
 

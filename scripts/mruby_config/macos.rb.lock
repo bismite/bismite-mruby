@@ -1,7 +1,7 @@
 ---
 mruby:
-  version: 3.1.0
-  release_no: 30100
+  version: 3.2.0
+  release_no: 30200
 builds:
   macos-arm64:
     https://github.com/katzer/mruby-os.git:
@@ -18,11 +18,6 @@ builds:
       url: https://github.com/iij/mruby-env.git
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
-    https://github.com/iij/mruby-dir.git:
-      url: https://github.com/iij/mruby-dir.git
-      branch: master
-      commit: 89dceefa1250fb1ae868d4cb52498e9e24293cd1
       version: 0.0.0
     https://github.com/iij/mruby-iijson.git:
       url: https://github.com/iij/mruby-iijson.git
@@ -44,11 +39,6 @@ builds:
       url: https://github.com/iij/mruby-env.git
       branch: master
       commit: 056ae324451ef16a50c7887e117f0ea30921b71b
-      version: 0.0.0
-    https://github.com/iij/mruby-dir.git:
-      url: https://github.com/iij/mruby-dir.git
-      branch: master
-      commit: 89dceefa1250fb1ae868d4cb52498e9e24293cd1
       version: 0.0.0
     https://github.com/iij/mruby-iijson.git:
       url: https://github.com/iij/mruby-iijson.git

@@ -77,12 +77,12 @@ def scene_a
   }
 end
 
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   $assets = assets
   shader_vert = SHADER_HEADER + $assets.read("assets/shaders/default.vert")
   shader_frag = SHADER_HEADER + $assets.read("assets/shaders/transition.frag")
   $shader = Bi::Shader.new shader_vert,shader_frag
   scene_a
-end
+}
 
 Bi::start_run_loop
