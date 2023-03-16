@@ -5,7 +5,7 @@ INSTALL_PREFIX = "#{BUILD_DIR}/macos"
 LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 INCLUDES = %w(include include/SDL2).map{|i| "#{INSTALL_PREFIX}/#{i}" }
 COMMON_CFLAGS = %w(-Wall -Werror-implicit-function-declaration -Wwrite-strings -std=gnu11 -O3 -g0)
-COMMON_DEFINES = %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
+COMMON_DEFINES = %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_USE_CUSTOM_RO_DATA_P MRB_LINK_TIME_RO_DATA_P)
 
 MRuby::Build.new do |conf|
   toolchain :clang
