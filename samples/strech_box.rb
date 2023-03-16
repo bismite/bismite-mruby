@@ -4,7 +4,7 @@ Bi.init 480,320,title:__FILE__,highdpi:false
 class StrechBox < Bi::Node
   attr_reader :texture
   def initialize(tex,x,y,sw,sh, w,h,corner_size)
-    super
+    super()
     self.set_size w,h
     @texture = tex
     cw = ch = corner_size # corner w,h
