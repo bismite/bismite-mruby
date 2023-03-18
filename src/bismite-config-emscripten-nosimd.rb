@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 
 root = File.absolute_path(File.join(File.expand_path(File.dirname($0)),".."))
+DEFINES = %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_NO_DEFAULT_RO_DATA_P).map{|d| "-D#{d}" }.join(" ")
 
 ARGV.each do |command|
   case command
   when "--libs"
     puts "-L#{root}/lib -lmruby -lbismite-nosimd -sMAX_WEBGL_VERSION=2"
   when "--cflags"
-    puts "-DMRB_INT64 -DMRB_UTF8_STRING -DMRB_NO_BOXING -I#{root}/include"
+    puts "#{DEFINES} -I#{root}/include"
   end
 end
 

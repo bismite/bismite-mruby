@@ -9,7 +9,7 @@ def __setting__(conf,libbismite)
   emscripten_flags = %W(-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s MAIN_MODULE=1 -fPIC)
   conf.cc do |cc|
     cc.command = 'emcc'
-    cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING)
+    cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_NO_DEFAULT_RO_DATA_P)
     cc.include_paths << "#{BUILD_DIR}/emscripten/include"
     cc.include_paths << "#{BUILD_DIR}/emscripten/libyaml-0.2.5-emscripten/include"
     cc.flags = %w(-O3 -g0 -std=gnu11 -DNDEBUG -Wall -Werror-implicit-function-declaration -Wwrite-strings)

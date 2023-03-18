@@ -54,6 +54,4 @@ ARGV.each{|target|
       }
     end
   }
-  # Patch to mruby
-  cp "src/mrb_ro_data_p.macos.c", "build/#{target}/mruby/src/"
 }
