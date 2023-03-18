@@ -5,7 +5,7 @@
 2. run `./make.rb macos`
 
 ## build on Linux
-1. install libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, clang, and ruby
+1. install libgl-dev, clang, and ruby (e.g. `sudo apt install libgl-dev clang ruby`)
 2. run `./make.rb linux`
 
 ## Emscripten
