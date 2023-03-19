@@ -3,7 +3,7 @@ common:
   - []
   - ["https://github.com/bismite/mruby-libbismite/archive/refs/tags/4.1.0.tar.gz", "mruby-libbismite-4.1.0.tgz","mruby-libbismite"]
   - []
-  - ["https://github.com/bismite/mruby-bi-misc/archive/refs/tags/2.1.0.tar.gz", "mruby-bi-misc-2.1.0.tgz","mruby-bi-misc"]
+  - ["https://github.com/bismite/mruby-bi-misc/archive/refs/tags/2.1.1.tar.gz", "mruby-bi-misc-2.1.1.tgz","mruby-bi-misc"]
   - []
 linux:
   - https://github.com/bismite/libbismite/releases/download/6.0.4/libbismite-linux-6.0.4.tgz
