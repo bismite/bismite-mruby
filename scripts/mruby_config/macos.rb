@@ -1,7 +1,8 @@
 require_relative "common.rb"
 
+ARCH = ENV['ARCH']
 SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
-INSTALL_PREFIX = "#{BUILD_DIR}/macos"
+INSTALL_PREFIX = "#{BUILD_DIR}/macos-#{ARCH}"
 LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 INCLUDES = %w(include include/SDL2).map{|i| "#{INSTALL_PREFIX}/#{i}" }
 COMMON_CFLAGS = %w(-Wall -Werror-implicit-function-declaration -Wwrite-strings -std=gnu11 -O3 -g0)
@@ -11,52 +12,27 @@ MRuby::Build.new do |conf|
   toolchain :clang
 end
 
-MRuby::CrossBuild.new('macos-arm64') do |conf|
+MRuby::CrossBuild.new("macos-#{ARCH}") do |conf|
   toolchain :clang
 
-  include_gems conf,"macos"
+  include_gems conf,"macos-#{ARCH}"
 
   conf.cc do |cc|
     cc.command = 'clang'
     cc.defines += COMMON_DEFINES
     cc.include_paths += INCLUDES
-    cc.flags = COMMON_CFLAGS + %w(-arch arm64)
+    cc.flags = COMMON_CFLAGS + ["-arch #{ARCH}"]
   end
 
   conf.linker do |linker|
     linker.command = "#{SCRIPTS_DIR}/linker.rb clang"
-    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby/build/macos-arm64/lib"]
+    linker.library_paths += [ "#{INSTALL_PREFIX}/lib", "#{INSTALL_PREFIX}/mruby/build/macos-#{ARCH}/lib"]
     linker.libraries += LIBS
-    linker.flags << "-framework OpenGL -arch arm64"
+    linker.flags << "-framework OpenGL -arch #{ARCH}"
   end
 
   conf.archiver do |archiver|
     archiver.command = "#{SCRIPTS_DIR}/archiver.rb"
-    archiver.archive_options = 'macos-arm64 %{outfile} %{objs}'
-  end
-end
-
-MRuby::CrossBuild.new('macos-x86_64') do |conf|
-  toolchain :clang
-
-  include_gems conf,"macos"
-
-  conf.cc do |cc|
-    cc.command = 'clang'
-    cc.defines += COMMON_DEFINES
-    cc.include_paths += INCLUDES
-    cc.flags = COMMON_CFLAGS + %w(-arch x86_64)
-  end
-
-  conf.linker do |linker|
-    linker.command = "#{SCRIPTS_DIR}/linker.rb clang"
-    linker.library_paths += ["#{INSTALL_PREFIX}/lib", "#{BUILD_DIR}/macos/mruby/build/macos-x86_64/lib"]
-    linker.libraries += LIBS
-    linker.flags << "-framework OpenGL -arch x86_64"
-  end
-
-  conf.archiver do |archiver|
-    archiver.command = "#{SCRIPTS_DIR}/archiver.rb"
-    archiver.archive_options = 'macos-x86_64 %{outfile} %{objs}'
+    archiver.archive_options = "macos-#{ARCH} %{outfile} %{objs}"
   end
 end
