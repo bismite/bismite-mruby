@@ -1,33 +1,20 @@
 
-class Fiber
-  def self.sleep(sec)
-    t = Time.now
-    self.yield while Time.now - t < sec
-  end
-end
-
 class CaveGeneratorExample < Bi::Node
-  WALL=[0x18,0x01,0x0d]
-  FLOOR=[0x64,0x4d,0x37]
+  WALL_COLOR  = [0x18,0x01,0x0d]
+  FLOOR_COLOR = [0x64,0x4d,0x37]
+  GRID_SIZE = 4
+  STEP_MAX = 10
+  BIRTH = [5,6,7,8]
+  DEATH = [0,1,2,3]
 
   def initialize(w,h)
     super()
-    self.set_position 0,0
     self.set_size w,h
-
-    srand(Time.now.to_i)
-
-    birth = [5,6,7,8]
-    death = [0,1,2,3]
-    grid_width = (w/4).to_i
-    grid_height = (h/4).to_i
-    # step = rand(6..14)
-    step = 10
-    p [:step, step, :w, grid_width, :h, grid_height ]
-
+    grid_width = (w/GRID_SIZE).to_i
+    grid_height = (h/GRID_SIZE).to_i
+    @step = 0
     @grid = (grid_width*grid_height).times.map{ rand(100)<50?0:1 }
-    border grid_width, grid_height
-
+    self.border grid_width, grid_height
     @nodes = grid_height.times.map{|y| grid_width.times.map{|x|
       n = Bi::Node.new
       n.set_position x*4,y*4
@@ -35,23 +22,15 @@ class CaveGeneratorExample < Bi::Node
       add n
       n
     }}.flatten
-
-    update_grids
-
-    f = Fiber.new do
-      Fiber.sleep 2.0
-      step.times do |i|
-        p [Time.now, :step, i]
-        @grid = CellularAutomaton.step(@grid,grid_width,birth,death,true)
+    self.update_grids
+    self.create_timer(500,-1){|t,delta|
+      if @step < STEP_MAX
+        @step += 1
+        @grid = CellularAutomaton.step(@grid,grid_width,BIRTH,DEATH,true)
         border grid_width, grid_height
         self.update_grids
-        Fiber.sleep 0.5
       end
-      true
-    end
-
-    self.create_timer(0,-1){|t,delta| f = nil if f and f.resume }
-
+    }
   end
 
   def border(w,h)
@@ -61,18 +40,15 @@ class CaveGeneratorExample < Bi::Node
 
   def update_grids
     @grid.each.with_index{|g,i|
-      if g == 0
-        @nodes[i].set_color(*WALL)
-      else
-        @nodes[i].set_color(*FLOOR)
-      end
+      color = g==0 ? WALL_COLOR : FLOOR_COLOR
+      @nodes[i].set_color(*color)
     }
   end
-
 end
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
+  srand(Time.now.to_i)
   layer = Bi::Layer.new
   layer.root = CaveGeneratorExample.new(Bi.w,Bi.h)
   Bi::add_layer layer
