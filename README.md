@@ -17,6 +17,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 7.0.0 - 2023/03/20
+- update mruby-3.2.0
+- update libbismite 6.0.5
+- update mruby-bi-misc 2.1.1
 ## 6.0.5 - 2022/11/19
 - add autoremove flag to actions
 - remove yaml and msgpack support
