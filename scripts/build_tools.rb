@@ -25,7 +25,8 @@ Dir.chdir("build/#{TARGET}"){ C_FILES.each{|f|
     run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --libs` #{sdl_flags} #{flags}"
     run "strip bin/#{f}"
   when /macos/
-    run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --libs` -arch x86_64 -arch arm64"
+    arch = TARGET.split("-").last
+    run "clang #{CFLAGS} tools/#{f}.c -o bin/#{f} `./bin/bismite-config --cflags --libs` -arch #{arch}"
     run "strip bin/#{f}"
     run "install_name_tool -add_rpath @executable_path/../lib bin/#{f}"
   when /mingw/

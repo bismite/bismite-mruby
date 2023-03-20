@@ -6,8 +6,8 @@ rescue LoadError
 end
 require_relative "scripts/lib/utils"
 
-def setup_macos
-  cp "src/bismite-config.rb", "#{install_path('macos')}/bin/bismite-config"
+def setup_macos(arch)
+  cp "src/bismite-config.rb", "#{install_path("macos-#{arch}")}/bin/bismite-config"
 end
 
 def setup_linux
@@ -26,7 +26,7 @@ def setup_mingw
   cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
 end
 
-targets = ARGV.reject{|a| not %w(clean macos linux emscripten emscripten-nosimd mingw).include? a }
+targets = ARGV.reject{|a| not %w(clean macos-arm64 macos-x86_64 linux emscripten emscripten-nosimd mingw).include? a }
 clean = targets.delete("clean")
 if targets.empty?
   if RUBY_PLATFORM.include?("darwin")
@@ -43,6 +43,9 @@ targets.each do |target|
   if clean
     run "rm -rf build/#{target}"
     run "rm -f scripts/mruby_config/#{target}.rb.lock"
+    if /macos/ === target
+      run "rm -f scripts/mruby_config/macos.rb.lock"
+    end
   end
 
   mkdir_p install_path(target)
@@ -53,8 +56,10 @@ targets.each do |target|
   run "./scripts/download_required_files.rb #{target}"
 
   case target
-  when "macos"
-    setup_macos
+  when "macos-arm64"
+    setup_macos "arm64"
+  when "macos-x86_64"
+    setup_macos "x86_64"
   when "linux"
     setup_linux
   when "mingw"

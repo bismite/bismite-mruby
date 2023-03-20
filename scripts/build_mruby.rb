@@ -2,7 +2,17 @@
 require_relative "lib/utils"
 
 TARGET = ARGV[0]
-ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{TARGET}.rb"
+
+if /macos/ === TARGET
+  MRUBY_CONFIG = "macos"
+  ENV["ARCH"] = TARGET.match(/macos-(.*)/)[1]
+elsif /emscripten/ === TARGET
+  MRUBY_CONFIG = "emscripten"
+else
+  MRUBY_CONFIG = TARGET
+end
+
+ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{MRUBY_CONFIG}.rb"
 PREFIX = install_path(TARGET)
 
 # ---- Build ----
@@ -12,13 +22,14 @@ Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 # ---- Install ----
 
 def macos
-  run "lipo -create mruby/build/macos-x86_64/lib/libmruby.dylib mruby/build/macos-arm64/lib/libmruby.dylib -output #{PREFIX}/lib/libmruby.dylib"
-  run "lipo -create mruby/build/macos-x86_64/lib/libmruby-static.a mruby/build/macos-arm64/lib/libmruby-static.a -output #{PREFIX}/lib/libmruby-static.a"
+  cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil
+  cp_r "mruby/build/#{TARGET}/include/.", "#{PREFIX}/include/" rescue nil
+  cp "mruby/build/#{TARGET}/lib/libmruby.dylib", "#{PREFIX}/lib/libmruby.dylib"
+  cp "mruby/build/#{TARGET}/lib/libmruby-static.a", "#{PREFIX}/lib/libmruby-static.a"
   %w(mirb mrbc mruby mruby-strip).each{|bin|
-    run "lipo -create mruby/build/macos-x86_64/bin/#{bin} mruby/build/macos-arm64/bin/#{bin} -output #{PREFIX}/bin/#{bin}"
+    cp "mruby/build/#{TARGET}/bin/#{bin}", "#{PREFIX}/bin/#{bin}"
     run "install_name_tool -add_rpath @executable_path/../lib #{PREFIX}/bin/#{bin}"
   }
-  cp_r "mruby/build/macos-x86_64/include/.", "#{PREFIX}/include/" rescue nil # presym headers
 end
 
 def emscripten
