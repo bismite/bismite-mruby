@@ -32,10 +32,11 @@ def build_linux
   cp "build/main.mrb", "#{PREFIX}/main.mrb"
   sdl_flags = "-I build/#{TARGET}/include/SDL2 -lSDL2 -lSDL2_image -lSDL2_mixer"
   bismite_config = `./build/linux/bin/bismite-config --cflags --libs`.gsub("\n"," ")
+  mkdir_p "#{DST_DIR}/linux/"
   run "clang src/main.c -o #{DST_DIR}/linux/main #{OPT} #{bismite_config} #{sdl_flags} -Wl,-rpath,'$ORIGIN/lib'"
-
-  %w(libmruby.so).each{|l|
-    copy_entry "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/#{l}",false,false,true
+  mkdir_p "#{DST_DIR}/linux/lib"
+  %w(libmruby.so libSDL2_image.so libSDL2_mixer.so libSDL2.so).each{|l|
+    cp "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/"
   }
   copy_license_files "linux", "#{DST_DIR}/linux"
 end
