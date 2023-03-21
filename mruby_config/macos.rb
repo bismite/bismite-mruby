@@ -1,7 +1,8 @@
 require_relative "common.rb"
 
 ARCH = ENV['ARCH']
-SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
+raise "invalid ENV['ARCH']" unless %w(arm64 x86_64).include?(ARCH)
+
 INSTALL_PREFIX = "#{BUILD_DIR}/macos-#{ARCH}"
 LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 INCLUDES = %w(include include/SDL2).map{|i| "#{INSTALL_PREFIX}/#{i}" }

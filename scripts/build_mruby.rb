@@ -2,21 +2,21 @@
 require_relative "lib/utils"
 
 TARGET = ARGV[0]
+PREFIX = install_path(TARGET)
 
+# Build mruby
 if /macos/ === TARGET
   MRUBY_CONFIG = "macos"
-  ENV["ARCH"] = TARGET.match(/macos-(.*)/)[1]
+  ENV["ARCH"] = "arm64"  if TARGET.end_with?("-arm64")
+  ENV["ARCH"] = "x86_64" if TARGET.end_with?("-x86_64")
+  raise "invalid target name" unless %w(arm64 x86_64).include?(ENV["ARCH"])
 elsif /emscripten/ === TARGET
   MRUBY_CONFIG = "emscripten"
+  ENV["SIMD"] = "nosimd" if TARGET.end_with?("-nosimd")
 else
   MRUBY_CONFIG = TARGET
 end
-
-ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/scripts/mruby_config/#{MRUBY_CONFIG}.rb"
-PREFIX = install_path(TARGET)
-
-# ---- Build ----
-
+ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/mruby_config/#{MRUBY_CONFIG}.rb"
 Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 # ---- Install ----

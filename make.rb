@@ -6,26 +6,6 @@ rescue LoadError
 end
 require_relative "scripts/lib/utils"
 
-def setup_macos(arch)
-  cp "src/bismite-config.rb", "#{install_path("macos-#{arch}")}/bin/bismite-config"
-end
-
-def setup_linux
-  cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
-end
-
-def setup_emscripten
-  cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
-end
-
-def setup_emscripten_nosimd
-  cp "src/bismite-config-emscripten-nosimd.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten-nosimd"
-end
-
-def setup_mingw
-  cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
-end
-
 targets = ARGV.reject{|a| not %w(clean macos-arm64 macos-x86_64 linux emscripten emscripten-nosimd mingw).include? a }
 clean = targets.delete("clean")
 if targets.empty?
@@ -42,32 +22,32 @@ targets.each do |target|
 
   if clean
     run "rm -rf build/#{target}"
-    run "rm -f scripts/mruby_config/#{target}.rb.lock"
-    if /macos/ === target
-      run "rm -f scripts/mruby_config/macos.rb.lock"
-    end
+    run "rm -f mruby_config/#{target}.rb.lock"
+    run "rm -f mruby_config/emscripten.rb.lock" if /emscripten/ === target
+    run "rm -f mruby_config/macos.rb.lock" if /macos/ === target
   end
 
   mkdir_p install_path(target)
-  Dir.chdir(install_path(target)){
-    mkdir_p %w(bin lib include licenses)
-  }
+  Dir.chdir(install_path(target)){ mkdir_p %w(bin lib include licenses) }
 
   run "./scripts/download_required_files.rb #{target}"
 
+  #
+  # Install bismite-config
+  #
   case target
   when "macos-arm64"
-    setup_macos "arm64"
+    cp "src/bismite-config.rb", "#{install_path("macos-arm64")}/bin/bismite-config"
   when "macos-x86_64"
-    setup_macos "x86_64"
+    cp "src/bismite-config.rb", "#{install_path("macos-x86_64")}/bin/bismite-config"
   when "linux"
-    setup_linux
+    cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
   when "mingw"
-    setup_mingw
+    cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
   when "emscripten"
-    setup_emscripten
+    cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
   when "emscripten-nosimd"
-    setup_emscripten_nosimd
+    cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten"
   end
 
   #

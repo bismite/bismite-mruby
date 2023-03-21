@@ -1,5 +1,6 @@
 
-BUILD_DIR = File.expand_path File.join __dir__, "..", "..", "build"
+BUILD_DIR = File.expand_path File.join __dir__, "..", "build"
+SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "scripts"
 
 def include_gems(conf,target,without_bin=false)
 
@@ -15,7 +16,4 @@ def include_gems(conf,target,without_bin=false)
   conf.gem github: 'iij/mruby-iijson'
   ENV['MRUBY_LIBBISMITE']? conf.gem(ENV['MRUBY_LIBBISMITE']): conf.gem("#{BUILD_DIR}/#{target}/mruby-libbismite")
   ENV['MRUBY_BI_MISC']   ? conf.gem(ENV['MRUBY_BI_MISC'])   : conf.gem("#{BUILD_DIR}/#{target}/mruby-bi-misc")
-  if conf.name.include? "emscripten"
-    ENV['MRUBY_EMSCRIPTEN'] ? conf.gem(ENV['MRUBY_EMSCRIPTEN']) : conf.gem(github:'bismite/mruby-emscripten')
-  end
 end

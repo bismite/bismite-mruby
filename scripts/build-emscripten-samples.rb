@@ -2,21 +2,24 @@
 require "FileUtils"
 include FileUtils
 
-HOST = RUBY_PLATFORM.include?("darwin") ? "macos" : "linux"
+HOST = RUBY_PLATFORM.include?("darwin") ? "macos-arm64" : "linux"
 COMPILER = "build/#{HOST}/bin/bismite"
 PACKER = "build/#{HOST}/bin/bismite-asset-pack"
 KEY = "abracadabra"
-TEMPLATE = "build/emscripten/share/bismite/templates/wasm"
-SAMPLES_DIR = "build/emscripten/samples"
-mkdir_p SAMPLES_DIR
 
-p `#{PACKER} samples/assets #{SAMPLES_DIR} #{KEY}`
-Dir["samples/*.rb"].each{|file|
-  name = File.basename(file,File.extname(file))
-  dir = "build/emscripten/samples/#{name}/"
-  p name
-  rm_rf dir
-  cp_r TEMPLATE, dir, verbose:true
-  cp "#{SAMPLES_DIR}/assets.dat", dir
-  `#{COMPILER} dump #{file} #{dir}/main.mrb`
+["emscripten","emscripten-nosimd"].each{|target|
+  template = "build/#{target}/share/bismite/templates/wasm"
+  samples_dir = "build/#{target}/samples"
+  mkdir_p samples_dir
+
+  p `#{PACKER} samples/assets #{samples_dir} #{KEY}`
+  Dir["samples/*.rb"].each{|file|
+    name = File.basename(file,File.extname(file))
+    dir = "#{samples_dir}/#{name}/"
+    p name
+    rm_rf dir
+    cp_r template, dir, verbose:true
+    cp "#{samples_dir}/assets.dat", dir
+    `#{COMPILER} dump #{file} #{dir}/main.mrb`
+  }
 }

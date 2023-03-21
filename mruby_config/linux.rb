@@ -1,6 +1,5 @@
 require_relative "common.rb"
 
-SCRIPTS_DIR = File.expand_path File.join __dir__, "..", "..", "scripts"
 INSTALL_PREFIX = "#{BUILD_DIR}/linux"
 
 MRuby::Build.new do |conf|

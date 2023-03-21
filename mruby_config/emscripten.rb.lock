@@ -3,7 +3,7 @@ mruby:
   version: 3.2.0
   release_no: 30200
 builds:
-  macos-x86_64:
+  emscripten-nosimd:
     https://github.com/katzer/mruby-os.git:
       url: https://github.com/katzer/mruby-os.git
       branch: HEAD
@@ -24,7 +24,12 @@ builds:
       branch: HEAD
       commit: c5e730c30090d3cddae258f57ab9508edb3e9fce
       version: 0.0.0
-  macos-arm64:
+    https://github.com/bismite/mruby-emscripten.git:
+      url: https://github.com/bismite/mruby-emscripten.git
+      branch: HEAD
+      commit: db1cbfba937d8781477f2b280a19a89ab5470666
+      version: 1.0.1
+  emscripten:
     https://github.com/katzer/mruby-os.git:
       url: https://github.com/katzer/mruby-os.git
       branch: HEAD
@@ -45,3 +50,8 @@ builds:
       branch: HEAD
       commit: c5e730c30090d3cddae258f57ab9508edb3e9fce
       version: 0.0.0
+    https://github.com/bismite/mruby-emscripten.git:
+      url: https://github.com/bismite/mruby-emscripten.git
+      branch: HEAD
+      commit: db1cbfba937d8781477f2b280a19a89ab5470666
+      version: 1.0.1

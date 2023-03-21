@@ -3,15 +3,15 @@
 root = File.absolute_path(File.join(File.expand_path(File.dirname($0)),".."))
 DEFINES = %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_NO_DEFAULT_RO_DATA_P).map{|d| "-D#{d}" }.join(" ")
 
+sdl = "#{root}/lib/libSDL2_image.a #{root}/lib/libSDL2_mixer.a #{root}/lib/libSDL2.a "
+
 ARGV.each do |command|
   case command
   when "--libs"
-    puts "-L#{root}/lib -lmruby -lbismite -sMAX_WEBGL_VERSION=2"
+    puts "-s USE_SDL=0 -L#{root}/lib -lmruby -lbismite #{sdl} -sMAX_WEBGL_VERSION=2"
+  when "--libs-nosimd"
+    puts "-s USE_SDL=0 -L#{root}/lib -lmruby -lbismite-nosimd #{sdl} -sMAX_WEBGL_VERSION=2"
   when "--cflags"
-    puts "#{DEFINES} -I#{root}/include"
+    puts "-s USE_SDL=0 #{DEFINES} -I#{root}/include -I#{root}/include/SDL2"
   end
-end
-
-if ARGV.include?("--libs") or ARGV.include?("--cflags")
-  puts "-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS=[png]"
 end
