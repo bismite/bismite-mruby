@@ -18,7 +18,6 @@ end
 MRuby::CrossBuild.new(TARGET) do |conf|
   toolchain :clang
   include_gems(conf,"emscripten",true)
-  ENV['MRUBY_EMSCRIPTEN'] ? conf.gem(ENV['MRUBY_EMSCRIPTEN']) : conf.gem(github:'bismite/mruby-emscripten')
   conf.cc do |cc|
     cc.command = 'emcc'
     cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_NO_DEFAULT_RO_DATA_P)
@@ -31,7 +30,6 @@ MRuby::CrossBuild.new(TARGET) do |conf|
     linker.command = 'emcc'
     linker.library_paths << "#{BUILD_DIR}/#{TARGET}/lib"
     linker.libraries << LIBBISMITE
-    # linker.libraries << %w(SDL2 SDL2_image SDL2_mixer)
     linker.flags += EMSCRIPTEN_FLAGS
     linker.flags << "-sMAX_WEBGL_VERSION=2"
     linker.flags << "#{BUILD_DIR}/#{TARGET}/lib/libSDL2.a"

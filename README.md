@@ -17,7 +17,8 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 7.0.0 - 2023/03/22
+## 7.0.0 - 2023/03/23
+- license changed : MIT license
 - update mruby-3.2.0
 - update libbismite 6.0.5 (SDL-2.26.4, SDL_image-2.6.3, SDL_mixer-2.6.3)
 - update mruby-bi-misc 2.1.1
