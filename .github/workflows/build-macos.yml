@@ -1,4 +1,4 @@
-name: Build macOS arm64
+name: Build macOS
 on:
   push:
     tags:
@@ -9,10 +9,17 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: ./make.rb macos-arm64
+      - run: ./make.rb macos-arm64 clean
+      - run: ./make.rb macos-x86_64 clean
       - name: Upload binaries to release arm64
         uses: svenstaro/upload-release-action@v2
         with:
           file: tmp/bismite-mruby-macos-arm64.tgz
           asset_name: bismite-mruby-macos-arm64-${{github.ref_name}}.tgz
+          overwrite: true
+      - name: Upload binaries to release x86_64
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: tmp/bismite-mruby-macos-x86_64.tgz
+          asset_name: bismite-mruby-macos-x86_64-${{github.ref_name}}.tgz
           overwrite: true

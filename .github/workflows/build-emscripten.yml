@@ -14,10 +14,17 @@ jobs:
           actions-cache-folder: 'emsdk-cache'
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: ./make.rb emscripten
+      - run: ./make.rb emscripten clean
+      - run: ./make.rb emscripten-nosimd clean
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           file: tmp/bismite-mruby-emscripten.tgz
           asset_name: bismite-mruby-emscripten-${{github.ref_name}}.tgz
+          overwrite: true
+      - name: Upload binaries to release (nosimd)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: tmp/bismite-mruby-emscripten-nosimd.tgz
+          asset_name: bismite-mruby-emscripten-nosimd-${{github.ref_name}}.tgz
           overwrite: true
