@@ -1,51 +1,38 @@
 #!/usr/bin/env ruby
 #
-# usage: build_template.rb {linux|macos-arm64|macos-x86_&4|emscripten|emscripten-nosimd|mingw} [path/to/output]
+# usage: build_template.rb {linux|macos-arm64|macos-x86_64|emscripten|emscripten-nosimd|mingw}
 #
 require_relative "lib/utils"
 
-host = nil
-host = "linux" if /linux/ === RUBY_PLATFORM
-if /darwin/ === RUBY_PLATFORM
-  if /arm64/ === RUBY_PLATFORM
-    host = "macos-arm64"
-  else
-    host = "macos-x86_64"
-  end
-end
-
-TARGET = ARGV[0] || host
-DST_DIR = ARGV[1] || "build/#{TARGET}/share/bismite/templates"
+TARGET = ARGV[0]
+raise "unknown target #{TARGET}" unless %w(linux macos-arm64 macos-x86_64 emscripten emscripten-nosimd mingw).include?(TARGET)
+TEMPLATE_DIR = "build/#{TARGET}/share/bismite/templates"
 PREFIX="build/#{TARGET}"
 OPT="-std=gnu11 -O3 -g0 -Wall -DNDEBUG"
 
 run "./#{PREFIX}/mruby/build/host/mrbc/bin/mrbc -o build/main.mrb src/main.rb"
 
-def copy_license_files(target,dir)
-  mkdir_p dir
-  cp_r "#{PREFIX}/licenses", dir
-end
-
-
 def build_linux
+  dst = "#{TEMPLATE_DIR}/linux"
+  mkdir_p dst
   mkdir_p "#{PREFIX}/lib"
   cp "build/main.mrb", "#{PREFIX}/main.mrb"
   sdl_flags = "-I build/#{TARGET}/include/SDL2 -lSDL2 -lSDL2_image -lSDL2_mixer"
   bismite_config = `./build/linux/bin/bismite-config --cflags --libs`.gsub("\n"," ")
-  mkdir_p "#{DST_DIR}/linux/"
-  run "clang src/main.c -o #{DST_DIR}/linux/main #{OPT} #{bismite_config} #{sdl_flags} -Wl,-rpath,'$ORIGIN/lib'"
-  mkdir_p "#{DST_DIR}/linux/lib"
+  run "clang src/main.c -o #{dst}/main #{OPT} #{bismite_config} #{sdl_flags} -Wl,-rpath,'$ORIGIN/lib'"
+  mkdir_p "#{dst}/lib"
   %w(libmruby.so libSDL2_image.so libSDL2_mixer.so libSDL2.so).each{|l|
-    cp "build/linux/lib/#{l}", "#{DST_DIR}/linux/lib/"
+    cp "build/linux/lib/#{l}", "#{dst}/lib/"
   }
-  copy_license_files "linux", "#{DST_DIR}/linux"
+  cp_r "#{PREFIX}/licenses", dst
 end
 
 def build_macos
   arch = TARGET.split("-").last
-  mkdir_p "#{DST_DIR}/macos-#{arch}"
-  cp_r "src/template.app", "#{DST_DIR}/macos-#{arch}/"
-  resource_dir = "#{DST_DIR}/macos-#{arch}/template.app/Contents/Resources"
+  dst = "#{TEMPLATE_DIR}/macos-#{arch}"
+  resource_dir = "#{dst}/template.app/Contents/Resources"
+  mkdir_p dst
+  cp_r "src/template.app", dst
   mkdir_p "#{resource_dir}/bin"
   mkdir_p "#{resource_dir}/lib"
   cp "build/main.mrb", "#{resource_dir}/main.mrb"
@@ -57,29 +44,26 @@ def build_macos
     File.join( "#{PREFIX}/lib", File.readlink("#{PREFIX}/lib/#{l}") )
   }
   cp libs, "#{resource_dir}/lib"
-  copy_license_files "macos", "#{DST_DIR}/macos/"
+  cp_r "#{PREFIX}/licenses", dst
 end
 
 def build_mingw
-  mkdir_p "#{DST_DIR}/mingw/system"
-  cp "build/main.mrb", "#{DST_DIR}/mingw/system/main.mrb"
-  # real main.exe
+  dst = "#{TEMPLATE_DIR}/mingw"
+  mkdir_p "#{dst}/system"
+  cp "build/main.mrb", "#{dst}/system/main.mrb"
+  cc = "x86_64-w64-mingw32-gcc"
+  windres = "x86_64-w64-mingw32-windres"
   bismite_config = `./build/mingw/bin/bismite-config-mingw --cflags --libs`.gsub("\n"," ")
-  run "x86_64-w64-mingw32-gcc src/main.c -o #{DST_DIR}/mingw/system/main.exe #{bismite_config} #{OPT}"
-  # copy dlls
-  cp Dir.glob('build/mingw/bin/*.dll'), "#{DST_DIR}/mingw/system"
-  # frontman
-  run "x86_64-w64-mingw32-windres src/frontman-mingw.rc -O coff -o build/mingw/frontman-mingw.res"
-  run "x86_64-w64-mingw32-gcc src/frontman-mingw.c build/mingw/frontman-mingw.res -std=c11 -O2 -mwindows -o #{DST_DIR}/mingw/start.exe"
-  copy_license_files "mingw", "#{DST_DIR}/mingw/"
+  run "#{cc} src/main.c -o #{dst}/system/main.exe #{bismite_config} #{OPT}"
+  cp Dir.glob('build/mingw/bin/*.dll'), "#{dst}/system"
+  run "#{windres} src/frontman-mingw.rc -O coff -o #{PREFIX}/frontman-mingw.res"
+  run "#{cc} src/frontman-mingw.c #{PREFIX}/frontman-mingw.res -std=c11 -O2 -mwindows -o #{dst}/start.exe"
+  cp_r "#{PREFIX}/licenses", dst
 end
 
-def build_emscripten(simd_enable:true)
-  if simd_enable
-    bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags --libs`.gsub("\n"," ")
-  else
-    bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags --libs-nosimd`.gsub("\n"," ")
-  end
+def build_emscripten
+  libs_flag = TARGET.end_with?("-nosimd") ? "--libs-nosimd" : "--libs"
+  bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags #{libs_flag}`.gsub("\n"," ")
   # wasm, wasm-dl, wasm-single, wasm-dl-single
   [nil,"dl"].each{|dynamic_linking| [nil,"single"].each{|single_file|
     name = "wasm"
@@ -93,17 +77,17 @@ def build_emscripten(simd_enable:true)
       opt += " -sSINGLE_FILE=1"
     end
     puts "build template #{name}"
-    dir = File.join DST_DIR,name
-    mkdir_p dir
-    cp "build/main.mrb", "#{dir}/main.mrb"
+    dst = File.join DST_DIR,name
+    mkdir_p dst
+    cp "build/main.mrb", "#{dst}/main.mrb"
     flags = "#{OPT} -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB -sWASM=1 #{opt}"
     shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc src/main-emscripten.c src/support-emscripten.c -o #{dir}/index.html #{flags} #{bismite_config} #{shell}"
-    copy_license_files "emscripten", dir
+    run "emcc src/main-emscripten.c src/support-emscripten.c -o #{dst}/index.html #{flags} #{bismite_config} #{shell}"
+    cp_r "#{PREFIX}/licenses", dst
     # Remove unexpected file path contained in SDL.
     empath = File.dirname which "emcc"
     secret = "*" * empath.size
-    Dir.chdir(dir){
+    Dir.chdir(dst){
       # for portability reason, sed's -i option is not appropriate...
       Dir["*"].each{|f| run "LC_ALL=C sed -e 's@#{empath}@#{secret}@' #{f} > #{f}.tmp && mv #{f}.tmp #{f}" if File.file? f }
     }
@@ -117,8 +101,6 @@ when /macos/
   build_macos
 when "mingw"
   build_mingw
-when "emscripten"
-  build_emscripten simd_enable:true
-when "emscripten-nosimd"
-  build_emscripten simd_enable:false
+when /emscripten/
+  build_emscripten
 end
