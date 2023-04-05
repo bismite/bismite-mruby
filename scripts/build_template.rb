@@ -65,19 +65,15 @@ def build_emscripten
   libs_flag = TARGET.end_with?("-nosimd") ? "--libs-nosimd" : "--libs"
   bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags #{libs_flag}`.gsub("\n"," ")
   # wasm, wasm-dl, wasm-single, wasm-dl-single
-  [nil,"dl"].each{|dynamic_linking| [nil,"single"].each{|single_file|
+  [nil,"-dl"].each{|dynamic_link| [nil,"-single"].each{|single_file|
     name = "wasm"
     opt = ""
-    if dynamic_linking
-      name += "-dl"
-      opt += " -sMAIN_MODULE=1"
-    end
-    if single_file
-      name += "-single"
-      opt += " -sSINGLE_FILE=1"
-    end
+    name += dynamic_link if dynamic_link
+    opt += " -sMAIN_MODULE=1" if dynamic_link
+    name += single_file if single_file
+    opt += " -sSINGLE_FILE=1" if single_file
     puts "build template #{name}"
-    dst = File.join DST_DIR,name
+    dst = File.join TEMPLATE_DIR,name
     mkdir_p dst
     cp "build/main.mrb", "#{dst}/main.mrb"
     flags = "#{OPT} -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB -sWASM=1 #{opt}"

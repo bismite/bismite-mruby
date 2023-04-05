@@ -1,9 +1,13 @@
 common:
-  - [ "https://github.com/mruby/mruby/archive/3.2.0.tar.gz", "mruby-3.2.0.tgz", "mruby"]
+  - ["https://github.com/mruby/mruby/archive/3.2.0.tar.gz", "mruby-3.2.0.tgz", "mruby"]
   - []
   - ["https://github.com/bismite/mruby-libbismite/archive/refs/tags/4.1.0.tar.gz", "mruby-libbismite-4.1.0.tgz","mruby-libbismite"]
   - []
   - ["https://github.com/bismite/mruby-bi-misc/archive/refs/tags/2.1.1.tar.gz", "mruby-bi-misc-2.1.1.tgz","mruby-bi-misc"]
+  - []
+  - ["https://github.com/bismite/mruby-sdl-mixer/archive/refs/tags/0.1.0.tar.gz", "mruby-sdl-mixer-0.1.0.tgz","mruby-sdl-mixer"]
+  - []
+  - ["https://github.com/bismite/mruby-emscripten/archive/refs/tags/2.0.0.tar.gz", "mruby-emscripten-2.0.0.tgz","mruby-emscripten"]
   - []
 linux:
   - https://github.com/bismite/libbismite/releases/download/7.0.0/libbismite-linux-7.0.0.tgz

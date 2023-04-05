@@ -21,6 +21,8 @@ Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 # ---- Install ----
 
+puts "mruby install to build/#{TARGET}".yellow
+
 def macos
   cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil
   cp_r "mruby/build/#{TARGET}/include/.", "#{PREFIX}/include/" rescue nil
@@ -45,11 +47,9 @@ Dir.chdir("build/#{TARGET}"){
   %w(bin include lib).each{|d| mkdir_p d }
   cp_r "mruby/include/.", "#{PREFIX}/include/"
   case TARGET
-  when 'macos'
+  when "macos-arm64", "macos-x86_64"
     macos
-  when 'emscripten'
-    emscripten
-  when 'emscripten-nosimd'
+  when 'emscripten', 'emscripten-nosimd'
     emscripten
   else
     cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil

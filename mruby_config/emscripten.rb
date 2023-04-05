@@ -20,10 +20,10 @@ MRuby::CrossBuild.new(TARGET) do |conf|
   include_gems(conf,"emscripten",true)
   conf.cc do |cc|
     cc.command = 'emcc'
-    cc.defines += %w(MRB_INT64 MRB_UTF8_STRING MRB_NO_BOXING MRB_NO_DEFAULT_RO_DATA_P)
+    cc.defines += COMMON_DEFINES
     cc.include_paths << "#{BUILD_DIR}/#{TARGET}/include"
     cc.include_paths << "#{BUILD_DIR}/#{TARGET}/include/SDL2"
-    cc.flags = %w(-O3 -std=gnu11 -Wall -Werror-implicit-function-declaration -Wwrite-strings)
+    cc.flags = COMMON_CFLAGS
     cc.flags += EMSCRIPTEN_FLAGS
   end
   conf.linker do |linker|

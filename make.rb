@@ -6,84 +6,82 @@ rescue LoadError
 end
 require_relative "scripts/lib/utils"
 
-targets = ARGV.reject{|a| not %w(clean macos-arm64 macos-x86_64 linux emscripten emscripten-nosimd mingw).include? a }
-clean = targets.delete("clean")
-if targets.empty?
-  if RUBY_PLATFORM.include?("darwin")
-    targets << "macos"
-  elsif RUBY_PLATFORM.include?("linux")
-    targets << "linux"
-  end
+VALID_TARGET = %w(macos-arm64 macos-x86_64 linux emscripten emscripten-nosimd mingw)
+
+clean = ARGV.delete("clean")
+target = ARGV.shift
+unless VALID_TARGET.include? target
+  puts "invalid target specified.".red
+  puts "allowed targets are: " + VALID_TARGET.join(" ")
+  exit 1
 end
 
-targets.each do |target|
-  puts "TARGET: #{target}"
-  puts install_path target
+puts "TARGET: #{target}"
+puts install_path target
 
-  if clean
-    run "rm -rf build/#{target}"
-    run "rm -f mruby_config/#{target}.rb.lock"
-    run "rm -f mruby_config/emscripten.rb.lock" if /emscripten/ === target
-    run "rm -f mruby_config/macos.rb.lock" if /macos/ === target
-  end
-
-  mkdir_p install_path(target)
-  Dir.chdir(install_path(target)){ mkdir_p %w(bin lib include licenses) }
-
-  run "./scripts/download_required_files.rb #{target}"
-
-  #
-  # Install bismite-config
-  #
-  case target
-  when "macos-arm64"
-    cp "src/bismite-config.rb", "#{install_path("macos-arm64")}/bin/bismite-config"
-  when "macos-x86_64"
-    cp "src/bismite-config.rb", "#{install_path("macos-x86_64")}/bin/bismite-config"
-  when "linux"
-    cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
-  when "mingw"
-    cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
-  when "emscripten"
-    cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
-  when "emscripten-nosimd"
-    cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten"
-  end
-
-  #
-  # build mruby, build template
-  #
-  run "./scripts/build_mruby.rb #{target}"
-  run "./scripts/build_template.rb #{target}"
-  run "./scripts/build_tools.rb #{target}"
-
-  #
-  # license files
-  #
-  mkdir_p "build/#{target}/licenses"
-  cp "src/licenses/mruby-and-libraries-licenses.txt", "build/#{target}/licenses"
-  case target
-  when /mingw/
-    cp_r "src/licenses/mingw/licenses", "build/mingw/"
-  when /emscripten/
-    EMDIR = File.dirname which "emcc"
-    cp "#{EMDIR}/LICENSE", "build/#{target}/licenses/emscripten-LICENSE"
-    cp "#{EMDIR}/AUTHORS", "build/#{target}/licenses/emscripten-AUTHORS"
-    cp "#{EMDIR}/system/lib/libc/musl/COPYRIGHT", "build/#{target}/licenses/musl-COPYRIGHT"
-  end
-
-  #
-  # archive
-  #
-  name = "bismite-mruby-#{target}"
-  rm_rf "tmp/#{name}"
-  mkdir_p "tmp/#{name}/share"
-  cp_r "build/#{target}/bin", "tmp/#{name}"
-  cp_r "build/#{target}/lib", "tmp/#{name}"
-  cp_r "build/#{target}/include", "tmp/#{name}"
-  cp_r "build/#{target}/share/bismite", "tmp/#{name}/share/"
-  cp_r "build/#{target}/licenses", "tmp/#{name}"
-  Dir.chdir("tmp"){
-    run "tar czf #{name}.tgz #{name}"
-  }
+if clean
+  run "rm -rf build/#{target}"
+  run "rm -f mruby_config/#{target}.rb.lock"
+  run "rm -f mruby_config/emscripten.rb.lock" if /emscripten/ === target
+  run "rm -f mruby_config/macos.rb.lock" if /macos/ === target
 end
+
+mkdir_p install_path(target)
+Dir.chdir(install_path(target)){ mkdir_p %w(bin lib include licenses) }
+
+run "./scripts/download_required_files.rb #{target}"
+
+#
+# Install bismite-config
+#
+case target
+when "macos-arm64"
+  cp "src/bismite-config.rb", "#{install_path("macos-arm64")}/bin/bismite-config"
+when "macos-x86_64"
+  cp "src/bismite-config.rb", "#{install_path("macos-x86_64")}/bin/bismite-config"
+when "linux"
+  cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
+when "mingw"
+  cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
+when "emscripten"
+  cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
+when "emscripten-nosimd"
+  cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten"
+end
+
+#
+# build mruby, build template
+#
+run "./scripts/build_mruby.rb #{target}"
+run "./scripts/build_template.rb #{target}"
+run "./scripts/build_tools.rb #{target}"
+
+#
+# license files
+#
+mkdir_p "build/#{target}/licenses"
+cp "src/licenses/mruby-and-libraries-licenses.txt", "build/#{target}/licenses"
+case target
+when /mingw/
+  cp_r "src/licenses/mingw/licenses", "build/mingw/"
+when /emscripten/
+  EMDIR = File.dirname which "emcc"
+  cp "#{EMDIR}/LICENSE", "build/#{target}/licenses/emscripten-LICENSE"
+  cp "#{EMDIR}/AUTHORS", "build/#{target}/licenses/emscripten-AUTHORS"
+  cp "#{EMDIR}/system/lib/libc/musl/COPYRIGHT", "build/#{target}/licenses/musl-COPYRIGHT"
+end
+
+#
+# archive
+#
+name = "bismite-mruby-#{target}"
+rm_rf "tmp/#{name}"
+mkdir_p "tmp/#{name}/share"
+cp_r "build/#{target}/bin", "tmp/#{name}"
+cp_r "build/#{target}/lib", "tmp/#{name}"
+cp_r "build/#{target}/include", "tmp/#{name}"
+cp_r "build/#{target}/share/bismite", "tmp/#{name}/share/"
+cp_r "build/#{target}/licenses", "tmp/#{name}"
+Dir.chdir("tmp"){
+  run "tar czf #{name}.tgz #{name}"
+}
