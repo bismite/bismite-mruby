@@ -18,7 +18,7 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
 
   SDL::Mixer::open_audio 441000, SDL::AUDIO_S16LSB, 2, 1024
 
-  music = SDL::Mixer::Music.new assets.read("assets/lopptag.ogg")
+  music = SDL::Mixer::Music.new assets.read("assets/loop_tag.ogg")
   p music
   p [:get_music_interface_tag, music.get_music_interface_tag]
   p [:get_music_type, SDL::Mixer::mucis_type_to_name(music.get_music_type) ]

@@ -17,6 +17,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 7.1.0 - 2023/0406
+- update mruby-bi-misc 4.0.0
+- update mruby-libbismite 5.0.0
+- add mruby-sdl-mixer (and update samples/sound.rb)
 ## 7.0.0 - 2023/03/23
 - license changed : MIT license
 - update mruby-3.2.0
