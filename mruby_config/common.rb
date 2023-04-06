@@ -12,8 +12,6 @@ def include_gems(conf,target,without_bin=false)
     conf.gem :core => g unless g =~ /^mruby-(bin-debugger|test)$/
   end
 
-  conf.gem github: 'katzer/mruby-os'
-  conf.gem github: 'ksss/mruby-singleton'
   conf.gem github: 'iij/mruby-env'
   conf.gem github: 'iij/mruby-iijson'
   conf.gem( ENV['MRUBY_LIBBISMITE'] || "#{BUILD_DIR}/#{target}/mruby-libbismite" )

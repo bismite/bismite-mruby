@@ -2,7 +2,7 @@
 
 ## build on macOS
 1. install Xcode
-2. run `./make.rb macos`
+2. run `./make.rb macos-arm64` or `./make.rb macos-x86_64`
 
 ## build on Linux
 1. install libgl-dev, clang, and ruby (e.g. `sudo apt install libgl-dev clang ruby`)
@@ -10,17 +10,19 @@
 
 ## Emscripten
 1. install [emsdk](https://github.com/emscripten-core/emsdk) and enable emscripten
-2. run `./make.rb emscripten`
+2. run `./make.rb emscripten` or `./make.rb emscripten-nosimd`
 
 ## mingw-w64
 1. install mingw-w64
 2. run `./make.rb mingw`
 
 # Changelog
-## 8.0.0 - 2023/04/06
-- update mruby-bi-misc 4.0.0
+## 8.0.0 - 2023/04/07
+- update mruby-bi-misc 4.0.1
 - update mruby-libbismite 5.0.0
-- add mruby-sdl-mixer (and update samples/sound.rb)
+- add mruby-sdl-mixer 1.0.0 (and update samples/sound.rb)
+- update libbismite 7.0.2 (SDL 2.26.5)
+- mruby_config : gem removed (mruby-os and mruby-singleton)
 ## 7.0.0 - 2023/03/23
 - license changed : MIT license
 - update mruby-3.2.0
