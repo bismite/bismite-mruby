@@ -31,16 +31,15 @@ ARGV.each{|target|
     end
     mkdir_p download_dir
     mkdir_p target
-    (common_list+target_list).each_slice(2) do |url,commands|
-      if url.is_a? Array
-        extract_name = url[2]
-        filename = url[1]
-        url = url[0]
-      else
+    (common_list+target_list).each_slice(2) do |url,extract_to|
+      if extract_to.empty?
         filename = File.basename(url)
         extract_name = nil
+      else
+        filename = extract_to[0]
+        extract_name = extract_to[1]
       end
-      p [url,filename,extract_name,commands]
+      puts "Download #{url} to #{filename}"
       filepath = File.join "download",target,filename
       download url,filepath
       if extract_name
@@ -49,9 +48,6 @@ ARGV.each{|target|
       else
         run "tar xf #{filepath} -C #{target}"
       end
-      Dir.chdir(target){
-        commands.each{|command| run command }
-      }
     end
   }
   # Patch to mruby
