@@ -5,7 +5,7 @@ common:
   - []
   - ["https://github.com/bismite/mruby-bi-misc/archive/refs/tags/4.0.0.tar.gz", "mruby-bi-misc-4.0.0.tgz","mruby-bi-misc"]
   - []
-  - ["https://github.com/bismite/mruby-sdl-mixer/archive/refs/tags/0.1.0.tar.gz", "mruby-sdl-mixer-0.1.0.tgz","mruby-sdl-mixer"]
+  - ["https://github.com/bismite/mruby-sdl-mixer/archive/refs/tags/0.2.0.tar.gz", "mruby-sdl-mixer-0.2.0.tgz","mruby-sdl-mixer"]
   - []
   - ["https://github.com/bismite/mruby-emscripten/archive/refs/tags/2.0.0.tar.gz", "mruby-emscripten-2.0.0.tgz","mruby-emscripten"]
   - []

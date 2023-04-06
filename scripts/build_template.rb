@@ -78,7 +78,7 @@ def build_emscripten
     cp "build/main.mrb", "#{dst}/main.mrb"
     flags = "#{OPT} -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB -sWASM=1 #{opt}"
     shell="--shell-file src/shell/shell_bisdk.html"
-    run "emcc src/main-emscripten.c src/support-emscripten.c -o #{dst}/index.html #{flags} #{bismite_config} #{shell}"
+    run "emcc src/main-emscripten.c -o #{dst}/index.html #{flags} #{bismite_config} #{shell}"
     cp_r "#{PREFIX}/licenses", dst
     # Remove unexpected file path contained in SDL.
     empath = File.dirname which "emcc"
