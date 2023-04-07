@@ -3,6 +3,7 @@
 #include <mruby.h>
 #include <mruby/irep.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MRB_FILE_PATH ( "main.mrb")
 
