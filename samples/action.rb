@@ -11,9 +11,12 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   rot = Bi::Action::RotateBy.new(500, 90)
   move1 = Bi::Action::MoveTo.new(500, 0, 0)
   move2 = Bi::Action::MoveTo.new(500, Bi.w/2, Bi.h/2)
-  seq = Bi::Action::Sequence.new( [rot,move1,move2]){|node,action| p [:sequence, node, action] }
-  rep = Bi::Action::Repeat.new(seq){|node,action| p [:repeat, node, action] }
-  face.add_action rep
+  fadeout = Bi::Action::FadeOut.new(500)
+  fadein = Bi::Action::FadeIn.new(500)
+  seq = Bi::Action::Sequence.new( [rot,move1,move2,fadeout,fadein], repeat:-1 ){|node,action|
+    p [:sequence, node, action]
+  }
+  face.add_action seq
 
   layer = Bi::Layer.new
   layer.root = Bi::Node.new
