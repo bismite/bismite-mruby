@@ -52,6 +52,11 @@ end
 #
 # build mruby, build template
 #
+# Patch to mruby
+cp "src/mruby-patch.diff", "build/#{target}/mruby"
+Dir.chdir("build/#{target}/mruby"){
+  run "patch -p1 -i mruby-patch.diff"
+}
 run "./scripts/build_mruby.rb #{target}"
 run "./scripts/build_template.rb #{target}"
 run "./scripts/build_tools.rb #{target}"

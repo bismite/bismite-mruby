@@ -7,6 +7,8 @@
 #include <mruby/string.h>
 #include <mruby/proc.h>
 #include <mruby/variable.h>
+#include <mruby/error.h>
+#include <mruby/presym.h>
 #if MRUBY_RELEASE_NO >= 30200
 #include <mruby/internal.h>
 #endif
@@ -191,6 +193,7 @@ static void run_irep(uint8_t* irep,int argc, char* argv[])
   mrb_gv_set(mrb, mrb_intern_lit(mrb, "$0"), mrb_str_new_cstr(mrb, argv[0]));
   mrb_value result = mrb_load_irep(mrb,irep);
   if (mrb->exc) {
+    MRB_EXC_CHECK_EXIT(mrb, mrb->exc);
     if (mrb_undef_p(result)) {
       mrb_p(mrb, mrb_obj_value(mrb->exc));
     } else {

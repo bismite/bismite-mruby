@@ -4,6 +4,9 @@
 #include <mruby/array.h>
 #include <mruby/irep.h>
 #include <mruby/dump.h>
+#include <mruby/variable.h>
+#include <mruby/error.h>
+#include <mruby/presym.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,6 +38,7 @@ int main(int argc, char* argv[])
   mrb_value obj = mrb_load_irep_file(mrb,file);
 
   if (mrb->exc) {
+    MRB_EXC_CHECK_EXIT(mrb, mrb->exc);
     printf("exception:\n");
     if (mrb_undef_p(obj)) {
       mrb_p(mrb, mrb_obj_value(mrb->exc));
