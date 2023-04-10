@@ -17,7 +17,7 @@ end
 
 MRuby::CrossBuild.new(TARGET) do |conf|
   toolchain :clang
-  include_gems(conf,"emscripten",true)
+  include_gems(conf,TARGET,true)
   conf.cc do |cc|
     cc.command = 'emcc'
     cc.defines += COMMON_DEFINES

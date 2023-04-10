@@ -9,6 +9,7 @@ KEY = "abracadabra"
 
 ["emscripten","emscripten-nosimd"].each{|target|
   template = "build/#{target}/share/bismite/templates/wasm"
+  next unless Dir.exists? template
   samples_dir = "build/#{target}/samples"
   mkdir_p samples_dir
 
