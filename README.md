@@ -17,6 +17,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 9.0.0 - 2023/04/07
+- update libbismite 8.0.2
+- update mruby-libbismite : add actions(FadeOut,FadeIn,ScaleTo,ScaleBy,MoveBy)
+- update samples for action
 ## 8.0.0 - 2023/04/07
 - update mruby-bi-misc 4.0.1
 - update mruby-libbismite 5.0.0
