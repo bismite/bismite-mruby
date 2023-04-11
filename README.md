@@ -1,5 +1,7 @@
 # bismite-mruby
 
+<https://bismite.github.io/demos/>
+
 ## build on macOS
 1. install Xcode
 2. run `./make.rb macos-arm64` or `./make.rb macos-x86_64`
