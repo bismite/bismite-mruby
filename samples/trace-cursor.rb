@@ -1,7 +1,7 @@
 class Particle < Bi::Node
   attr_accessor :life, :life_max
   def initialize(tex,x,y)
-    super
+    super()
     self.set_texture tex,0,0,tex.w,tex.h
     self.set_size tex.w,tex.h
     self.set_position x,y
@@ -20,7 +20,7 @@ class Particle < Bi::Node
 end
 
 Bi::init 480,320,title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   texture = assets.texture "assets/ball.png"
 
   # layer
@@ -35,6 +35,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
     particle.create_timer(0,-1) {|t,delta| particle.life -= 1 }
     n.add particle
   }
-end
+}
 
 Bi::start_run_loop

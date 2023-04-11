@@ -3,7 +3,7 @@ class Menu < Bi::Node
   attr_accessor :selected_background_color
   attr_accessor :unselected_background_color
   def initialize(font)
-    super
+    super()
     @font = font
     @items = []
     @callbacks = []
@@ -52,7 +52,7 @@ class Menu < Bi::Node
 end
 
 Bi::init 480,320, title:__FILE__
-Bi::Archive.new("assets.dat","abracadabra").load do |assets|
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   font_texture = assets.texture "assets/font.png"
   layout = assets.read("assets/font14b.dat")
   font = Bi::Font.new font_texture, layout
@@ -81,7 +81,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.set_texture 1, face_texture
   layer.set_texture 2, root.texture
   Bi::add_layer layer
-
-end
+}
 
 Bi::start_run_loop

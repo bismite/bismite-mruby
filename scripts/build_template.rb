@@ -4,8 +4,9 @@
 #
 require_relative "lib/utils"
 
+VALID_TARGETS=%w(linux macos-arm64 macos-x86_64 emscripten emscripten-nosimd mingw)
 TARGET = ARGV[0]
-raise "unknown target #{TARGET}" unless %w(linux macos-arm64 macos-x86_64 emscripten emscripten-nosimd mingw).include?(TARGET)
+raise "unknown target #{TARGET}" unless VALID_TARGETS.include?(TARGET)
 TEMPLATE_DIR = "build/#{TARGET}/share/bismite/templates"
 PREFIX="build/#{TARGET}"
 OPT="-std=gnu11 -O3 -g0 -Wall -DNDEBUG"
@@ -64,30 +65,21 @@ end
 def build_emscripten
   libs_flag = TARGET.end_with?("-nosimd") ? "--libs-nosimd" : "--libs"
   bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags #{libs_flag}`.gsub("\n"," ")
-  # wasm, wasm-dl, wasm-single, wasm-dl-single
-  [nil,"-dl"].each{|dynamic_link| [nil,"-single"].each{|single_file|
-    name = "wasm"
-    opt = ""
-    name += dynamic_link if dynamic_link
-    opt += " -sMAIN_MODULE=1" if dynamic_link
-    name += single_file if single_file
-    opt += " -sSINGLE_FILE=1" if single_file
+  # %w(wasm wasm-dl wasm-single wasm-dl-single).each{|name|
+  %w(wasm-single).each{|name|
+    p name
+    opt=""
+    opt+=" -sMAIN_MODULE=1" if /-dl/ === name
+    opt+=" -sSINGLE_FILE=1" if /-single/ === name
     puts "build template #{name}"
     dst = File.join TEMPLATE_DIR,name
     mkdir_p dst
     cp "build/main.mrb", "#{dst}/main.mrb"
     flags = "#{OPT} -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=128MB -s MAXIMUM_MEMORY=1024MB -sWASM=1 #{opt}"
-    shell="--shell-file src/shell/shell_bisdk.html"
+    shell="--shell-file src/shell.html"
     run "emcc src/main-emscripten.c -o #{dst}/index.html #{flags} #{bismite_config} #{shell}"
     cp_r "#{PREFIX}/licenses", dst
-    # Remove unexpected file path contained in SDL.
-    empath = File.dirname which "emcc"
-    secret = "*" * empath.size
-    Dir.chdir(dst){
-      # for portability reason, sed's -i option is not appropriate...
-      Dir["*"].each{|f| run "LC_ALL=C sed -e 's@#{empath}@#{secret}@' #{f} > #{f}.tmp && mv #{f}.tmp #{f}" if File.file? f }
-    }
-  }}
+  }
 end
 
 case TARGET
