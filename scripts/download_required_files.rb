@@ -2,7 +2,7 @@
 require_relative "lib/utils"
 
 def download(url,filepath)
-  if File.exists? filepath
+  if File.exist? filepath
     puts "already downloaded #{filepath}"
   else
     if which "curl"
@@ -13,7 +13,7 @@ def download(url,filepath)
       raise "require curl or wget"
     end
   end
-  unless File.exists? filepath
+  unless File.exist? filepath
     raise "download failed: #{url}"
   end
 end
