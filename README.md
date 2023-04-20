@@ -19,6 +19,8 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 9.0.1 - 2023/04/20
+- add MRB_ARY_LENGTH_MAX=0
 ## 9.0.0 - 2023/04/07
 - update libbismite 8.0.2
 - update mruby-libbismite : add actions(FadeOut,FadeIn,ScaleTo,ScaleBy,MoveBy)
