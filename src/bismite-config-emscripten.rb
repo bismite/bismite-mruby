@@ -16,8 +16,6 @@ ARGV.each do |command|
   case command
   when "--libs"
     puts "-s USE_SDL=0 -L#{root}/lib -lmruby -lbismite #{sdl} -sMAX_WEBGL_VERSION=2"
-  when "--libs-nosimd"
-    puts "-s USE_SDL=0 -L#{root}/lib -lmruby -lbismite-nosimd #{sdl} -sMAX_WEBGL_VERSION=2"
   when "--cflags"
     puts "-s USE_SDL=0 #{DEFINES} -I#{root}/include -I#{root}/include/SDL2"
   end

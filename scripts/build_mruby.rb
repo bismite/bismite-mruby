@@ -10,13 +10,11 @@ if /macos/ === TARGET
   ENV["ARCH"] = "arm64"  if TARGET.end_with?("-arm64")
   ENV["ARCH"] = "x86_64" if TARGET.end_with?("-x86_64")
   raise "invalid target name" unless %w(arm64 x86_64).include?(ENV["ARCH"])
-elsif /emscripten/ === TARGET
-  MRUBY_CONFIG = "emscripten"
-  ENV["SIMD"] = "nosimd" if TARGET.end_with?("-nosimd")
 else
   MRUBY_CONFIG = TARGET
 end
 ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/mruby_config/#{MRUBY_CONFIG}.rb"
+rm_f ENV["MRUBY_CONFIG"]+".lock"
 Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 # ---- Install ----
@@ -49,7 +47,7 @@ Dir.chdir("build/#{TARGET}"){
   case TARGET
   when "macos-arm64", "macos-x86_64"
     macos
-  when 'emscripten', 'emscripten-nosimd'
+  when 'emscripten'
     emscripten
   else
     cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil

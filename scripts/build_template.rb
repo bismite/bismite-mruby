@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 #
-# usage: build_template.rb {linux|macos-arm64|macos-x86_64|emscripten|emscripten-nosimd|mingw}
+# usage: build_template.rb {linux|macos-arm64|macos-x86_64|emscripten|mingw}
 #
 require_relative "lib/utils"
 
-VALID_TARGETS=%w(linux macos-arm64 macos-x86_64 emscripten emscripten-nosimd mingw)
+VALID_TARGETS=%w(linux macos-arm64 macos-x86_64 emscripten mingw)
 TARGET = ARGV[0]
 raise "unknown target #{TARGET}" unless VALID_TARGETS.include?(TARGET)
 TEMPLATE_DIR = "build/#{TARGET}/share/bismite/templates"
@@ -63,8 +63,7 @@ def build_mingw
 end
 
 def build_emscripten
-  libs_flag = TARGET.end_with?("-nosimd") ? "--libs-nosimd" : "--libs"
-  bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags #{libs_flag}`.gsub("\n"," ")
+  bismite_config = `./#{PREFIX}/bin/bismite-config-emscripten --cflags --libs`.gsub("\n"," ")
   # %w(wasm wasm-dl wasm-single wasm-dl-single).each{|name|
   %w(wasm-single).each{|name|
     p name

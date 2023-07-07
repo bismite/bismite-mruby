@@ -1,14 +1,6 @@
 require_relative "common.rb"
 
-NOSIMD = (ENV['SIMD']=="nosimd")
-if NOSIMD
-  TARGET = "emscripten-nosimd"
-  LIBBISMITE = "bismite-nosimd"
-else
-  TARGET = "emscripten"
-  LIBBISMITE = "bismite"
-end
-
+TARGET = "emscripten"
 EMSCRIPTEN_FLAGS = %W(-s USE_SDL=0 -s MAIN_MODULE=1 -fPIC -flto)
 
 MRuby::Build.new do |conf|
@@ -29,7 +21,7 @@ MRuby::CrossBuild.new(TARGET) do |conf|
   conf.linker do |linker|
     linker.command = 'emcc'
     linker.library_paths << "#{BUILD_DIR}/#{TARGET}/lib"
-    linker.libraries << LIBBISMITE
+    linker.libraries << "bismite"
     linker.flags += EMSCRIPTEN_FLAGS
     linker.flags << "-sMAX_WEBGL_VERSION=2"
     linker.flags << "#{BUILD_DIR}/#{TARGET}/lib/libSDL2.a"

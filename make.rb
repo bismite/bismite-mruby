@@ -6,7 +6,7 @@ rescue LoadError
 end
 require_relative "scripts/lib/utils"
 
-VALID_TARGET = %w(macos-arm64 macos-x86_64 linux emscripten emscripten-nosimd mingw)
+VALID_TARGET = %w(macos-arm64 macos-x86_64 linux emscripten mingw)
 
 clean = ARGV.delete("clean")
 target = ARGV.shift
@@ -45,8 +45,6 @@ when "mingw"
   cp "src/bismite-config-mingw.rb", "#{install_path('mingw')}/bin/bismite-config-mingw"
 when "emscripten"
   cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten')}/bin/bismite-config-emscripten"
-when "emscripten-nosimd"
-  cp "src/bismite-config-emscripten.rb", "#{install_path('emscripten-nosimd')}/bin/bismite-config-emscripten"
 end
 
 #

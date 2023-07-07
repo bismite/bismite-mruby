@@ -24,11 +24,7 @@ ARGV.each{|target|
   Dir.chdir("build"){
     download_dir = "download/#{target}"
     common_list = files["common"]
-    if target == "emscripten-nosimd"
-      target_list = files["emscripten"]
-    else
-      target_list = files[target]
-    end
+    target_list = files[target]
     mkdir_p download_dir
     mkdir_p target
     (common_list+target_list).each_slice(2) do |url,extract_to|

@@ -12,13 +12,16 @@
 
 ## Emscripten
 1. install [emsdk](https://github.com/emscripten-core/emsdk) and enable emscripten
-2. run `./make.rb emscripten` or `./make.rb emscripten-nosimd`
+2. run `./make.rb emscripten`
 
 ## mingw-w64
 1. install mingw-w64
 2. run `./make.rb mingw`
 
 # Changelog
+## 10.0.0 - 2023/07/07
+- remove emscripten-nosimd build.
+- update emscripten 3.1.42
 ## 9.0.1 - 2023/04/20
 - add MRB_ARY_LENGTH_MAX=0
 ## 9.0.0 - 2023/04/07
