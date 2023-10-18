@@ -60,13 +60,14 @@ else
 end
 
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
+  bg_tex = assets.texture("assets/check.png")
   layer = Bi::Layer.new
-  layer.root = assets.texture("assets/check.png").to_sprite
-  Bi::add_layer layer
+  layer.add bg_tex.to_sprite
+  Bi::layers.add layer
 
   soundnode = SoundNode.new(assets)
-  layer.root.add soundnode
-  layer.set_texture 0, layer.root.texture
+  layer.add soundnode
+  layer.set_texture 0, bg_tex
   layer.set_texture 1, soundnode.texture
 }
 

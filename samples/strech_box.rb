@@ -1,6 +1,4 @@
 
-Bi.init 480,320,title:__FILE__,highdpi:false
-
 class StrechBox < Bi::Node
   attr_reader :texture
   def initialize(tex,x,y,sw,sh, w,h,corner_size)
@@ -53,14 +51,15 @@ class StrechBox < Bi::Node
   end
 end
 
-
-Bi::Archive.load("assets.dat","abracadabra") do |assets|
+Bi.init 480,320,title:__FILE__,highdpi:false
+Bi::Archive.load("assets.dat","abracadabra"){|assets|
   # layer
   layer = Bi::Layer.new
-  layer.root = Bi::Node.new
-  layer.root.set_color 0x33,0,0
-  layer.root.set_size Bi.w,Bi.h
-  Bi::add_layer layer
+  root = Bi::Node.new
+  layer.add root
+  root.set_color 0x33,0,0
+  root.set_size Bi.w,Bi.h
+  Bi::layers.add layer
 
   # texture
   tex = assets.texture("assets/frame.png")
@@ -68,8 +67,7 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
 
   box.set_scale 3,3
   box.set_position 60,20
-  layer.root.add box
+  root.add box
   layer.set_texture 0, box.texture
-end
-
+}
 Bi::start_run_loop

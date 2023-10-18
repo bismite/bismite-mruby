@@ -9,18 +9,18 @@ class Menu < Bi::Node
     @callbacks = []
     self.on_move_cursor {|n,x,y| self.check_menu_select(x,y) }
     self.on_click {|n,x,y,button,press| self.check_menu_click(x,y,button,press) }
-    @selected_background_color  = [0,0,0x99]
-    @unselected_background_color= [0,0,0x33]
+    @selected_background_color  = Bi::Color.new(0,0x33,0x33,0xff)
+    @unselected_background_color= Bi::Color.new(0,0x99,0x99,0xff)
     @vertical_margin = 20
   end
   def check_menu_select(x,y)
     swallow = false
     @items.each{|item|
       if item.include?(x,y)
-        item.set_background_color(*@selected_background_color)
+        item.background_color = @selected_background_color
         swallow = true
       else
-        item.set_background_color(*@unselected_background_color)
+        item.background_color = @unselected_background_color
       end
     }
     swallow
@@ -29,7 +29,7 @@ class Menu < Bi::Node
     swallow = false
     @items.each_with_index{|item,i|
       if item.include?(x,y)
-        item.set_background_color(*@selected_background_color)
+        item.background_color = @selected_background_color
         @callbacks[i].call item
         swallow = true
         break
@@ -45,7 +45,7 @@ class Menu < Bi::Node
 
     self.add label
     label.set_position 0, -@items.size*(@font.size+@vertical_margin)
-    label.set_background_color(*@unselected_background_color)
+    label.background_color = @unselected_background_color
     @items << label
     @callbacks << block
   end
@@ -76,11 +76,11 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
 
   # layer
   layer = Bi::Layer.new
-  layer.root = root
+  layer.add root
   layer.set_texture 0, font_texture
   layer.set_texture 1, face_texture
   layer.set_texture 2, root.texture
-  Bi::add_layer layer
+  Bi::layers.add layer
 }
 
 Bi::start_run_loop

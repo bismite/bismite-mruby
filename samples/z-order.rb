@@ -1,40 +1,32 @@
+
 Bi.init 480,320,title:__FILE__
-
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
-
-  texture = assets.texture("assets/face01.png")
+  bg_tex = assets.texture("assets/check.png")
+  face_tex = assets.texture("assets/face01.png")
+  mush_tex = assets.texture("assets/mushroom.png")
 
   # layer
   layer = Bi::Layer.new
-  layer.root = assets.texture("assets/check.png").to_sprite
-  layer.set_texture 0, texture
-  layer.set_texture 1, layer.root.texture
-  Bi::add_layer layer
+  layer.add bg_tex.to_sprite
+  layer.set_texture 0, mush_tex
+  layer.set_texture 1, face_tex
+  layer.set_texture 2, bg_tex
+  Bi::layers.add layer
 
-  # A: red
-  face_a = texture.to_sprite
-  face_a.set_position Bi.w/2,Bi.h/2
-  face_a.anchor = :center
-  face_a.set_color 0xFF,0,0
-  face_a.z = 1 # High order
+  # Face
+  face = face_tex.to_sprite
+  face.set_position Bi.w/2,Bi.h/2
+  face.anchor = :center
+  # mushroom
+  mushroom = mush_tex.to_sprite
+  mushroom.set_position Bi.w/2,Bi.h/2
+  mushroom.anchor = :center
 
-  # B: blue
-  face_b = texture.to_sprite
-  face_b.set_position Bi.w/2+50,Bi.h/2+50
-  face_b.anchor = :center
-  face_b.set_color 0,0,0xFF
-  face_b.z = 0 # Low order
-
-  layer.root.on_click{|n,x,y,button,pressed|
-    if pressed
-      tmp = face_a.z
-      face_a.z = face_b.z
-      face_b.z = tmp
-    end
-  }
-
-  layer.root.add face_a #
-  layer.root.add face_b # B after A
+  # Wrong Order
+  layer.add mushroom
+  layer.add face
+  # Fix Order
+  face.z = 0
+  mushroom.z = 1
 }
-
 Bi::start_run_loop

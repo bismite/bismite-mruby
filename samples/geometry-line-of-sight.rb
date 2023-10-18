@@ -5,55 +5,28 @@ class Block < Bi::Node
     super()
     self.set_size w,h
     self.set_position x,y
-
     l = x
     r = x + w-1
     b = y
     t = y + h-1
-
+    # left, right, top, bottom
     @sides = [
-      [l,t,l,b], # left
-      [r,t,r,b], # right
-      [l,t,r,t], # top
-      [l,b,r,b], # bottom
+      [l,t,l,b], [r,t,r,b], [l,t,r,t], [l,b,r,b],
     ]
-
+    # left-top, left-bottom, right-top, right-bottom
     @corners = [
-      [l,t],
-      [l,b],
-      [r,t],
-      [r,b]
+      [l,t], [l,b], [r,t], [r,b]
     ]
-  end
-end
-
-class LineOfSightLayer < Bi::Layer
-  def initialize(assets)
-    super()
-    sky_texture = assets.texture "assets/sky.png"
-    ball_texture = assets.texture "assets/ball.png"
-    self.set_texture 0, sky_texture
-    self.set_texture 1, ball_texture
-    self.root = LineOfSight.new(sky_texture,ball_texture)
   end
 end
 
 class LineOfSight < Bi::Node
-
-  def initialize(sky_texture,ball_texture)
+  def initialize(ball_texture)
     super()
-
-    self.set_size Bi.w, Bi.h
-
-    @sky = sky_texture.to_sprite
-    @sky.scale_x = Bi.w.to_f / @sky.w
-    @sky.scale_y = Bi.h.to_f / @sky.h
-    self.add @sky
-
     @line = Bi::Node.new
-    @line.set_color 0xff,0xff,0xff
+    @line.color = Bi::Color.new(0xff,0xff,0xff,0xff)
     @line.set_size 32,32
-    @line.anchor = :west
+    @line.anchor = :left
     @line.scale_y = 1.0 / @line.h
     @line.x = Bi.w/2
     @line.y = Bi.h/2
@@ -61,7 +34,7 @@ class LineOfSight < Bi::Node
 
     @ball = ball_texture.to_sprite
     @ball.anchor = :center
-    @ball.set_color 0,0xff,0
+    @ball.color = Bi::Color.new(0,0xff,0,0xff)
     self.add @ball
 
     reset_blocks
@@ -71,7 +44,6 @@ class LineOfSight < Bi::Node
       reset_blocks
     end
 
-    # self.on_move_cursor{|node,x,y| point(x,y) }
     @sight_angle = 0
     self.create_timer(0,-1){|t,delta|
       @sight_angle += 0.0005*delta
@@ -92,8 +64,8 @@ class LineOfSight < Bi::Node
       x = Bi.w/2 + distance * Math::cos(angle)
       y = Bi.h/2 + distance * Math::sin(angle)
       b = Block.new x,y,rand(32..64), rand(32..64)
-      b.set_color 0xff,0xff,0xff
-      b.opacity = 0.5
+      b.color = Bi::Color.new(0xff,0xff,0xff,0xff)
+      b.color.a = 128
       self.add b
       b
     end
@@ -114,12 +86,12 @@ class LineOfSight < Bi::Node
     collide_block = nil
 
     @blocks.each{|block|
-      block.set_color 0xff,0xff,0xff
+      block.color = Bi::Color.new(0xff,0xff,0xff,64)
       blocks = block.sides.to_a + block.corners.to_a
       nearest = Bi::Line::nearest_intersection(@line.x, @line.y, x, y, blocks)
 
       if nearest
-        block.set_color 0xff,0xff,0
+        block.color = Bi::Color.new(0xff,0xff,0,64)
         if intersection
           if Bi::Line::compare_length(@line.x,@line.y, intersection[0], intersection[1],
                                       @line.x, @line.y, nearest[0], nearest[1] ) > 0
@@ -134,7 +106,7 @@ class LineOfSight < Bi::Node
     }
 
     if intersection and collide_block
-      collide_block.set_color 0xff,0,0
+      collide_block.color = Bi::Color.new(0xff,0,0,64)
       @ball.set_position(*intersection)
       @ball.visible = true
     end
@@ -144,11 +116,18 @@ class LineOfSight < Bi::Node
 end
 
 Bi.init 480,320, title:__FILE__
-
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
-  layer = LineOfSightLayer.new assets
-  Bi::add_layer layer
+  layer = Bi::Layer.new
+  sky_texture = assets.texture "assets/sky.png"
+  ball_texture = assets.texture "assets/ball.png"
+  layer.set_texture 0, sky_texture
+  layer.set_texture 1, ball_texture
+  sky = sky_texture.to_sprite
+  p sky.color.r
+  p sky.tint.r
+  layer.add sky
+  layer.add LineOfSight.new(ball_texture)
+  Bi::layers.add layer
 }
-
 Bi::start_run_loop

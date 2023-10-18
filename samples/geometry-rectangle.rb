@@ -1,10 +1,9 @@
 
 class RectCollide < Bi::Node
 
-  def rect(x,y,w,h,r,g,b,opacity)
+  def rect(x,y,w,h,r,g,b)
     rect = Bi::Node.new
-    rect.set_color r,g,b
-    rect.opacity = opacity
+    rect.set_color r,g,b, 128
     rect.set_size w,h
     rect.set_position x,y
     rect
@@ -27,17 +26,17 @@ class RectCollide < Bi::Node
       @blocks << b
     end
 
-    @me = rect Bi.w/2, Bi.h/2, 20,20, 0xff,0xff,0xff, 0.5
+    @me = rect Bi.w/2, Bi.h/2, 20,20, 0xff,0xff,0xff
     self.add @me
 
-    @ghost = rect @me.x,@me.y, @me.w,@me.h, 0xff,0,0, 0.5
+    @ghost = rect @me.x,@me.y, @me.w,@me.h, 0xff,0,0
     self.add @ghost
 
-    @pushed = rect @me.x, @me.y, @me.w, @me.h, 0xff,0xff,0, 0.5
+    @pushed = rect @me.x, @me.y, @me.w, @me.h, 0xff,0xff,0
     self.add @pushed
 
-    @line = rect Bi.w/2,Bi.h/2,32,32, 0xff,0xff,0xff, 1.0
-    @line.anchor = :west
+    @line = rect Bi.w/2,Bi.h/2,32,32, 0xff,0xff,0xff
+    @line.anchor = :left
     @line.scale_y = 1.0 / @line.h
     self.add @line
 
@@ -80,8 +79,7 @@ class RectCollide < Bi::Node
     collide_block = nil
 
     @blocks.each{|block|
-      block.set_color 0xff,0xff,0xff
-      block.opacity = 0.5
+      block.set_color 0xff,0xff,0xff,128
 
       # Minkowski addition
       rx = block.x - @me.w
@@ -151,10 +149,10 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   sky = assets.texture "assets/sky.png"
   ball = assets.texture "assets/ball.png"
   layer = Bi::Layer.new
-  layer.root = RectCollide.new sky,ball
+  layer.add RectCollide.new sky,ball
   layer.set_texture 0, sky
   layer.set_texture 1,ball
-  Bi::add_layer layer
+  Bi::layers.add layer
 }
 
 Bi::start_run_loop

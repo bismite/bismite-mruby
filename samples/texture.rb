@@ -1,21 +1,22 @@
 
 Bi.init 480,320,title:__FILE__,highdpi:false
 
-# layer
-layer = Bi::Layer.new
-layer.root = Bi::Texture.new("assets/check.png").to_sprite
-Bi::add_layer layer
-
 # texture
-tex = Bi::Texture.new("assets/face01.png")
+bg_tex = Bi::Texture.new("assets/check.png")
+face_tex = Bi::Texture.new("assets/face01.png")
 
 # Sprite
-face = tex.to_sprite
-face.set_position Bi.w/2,Bi.h/2
+face = face_tex.to_sprite
 face.anchor = :center
-layer.root.add face
+face.set_position Bi.w/2,Bi.h/2
 
-layer.set_texture 0, layer.root.texture
-layer.set_texture 1, tex
+# layer
+layer = Bi::Layer.new
+layer.add bg_tex.to_sprite
+layer.add face
+layer.set_texture 0, bg_tex
+layer.set_texture 1, face_tex
+Bi::layers.add layer
 
+# start
 Bi::start_run_loop

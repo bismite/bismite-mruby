@@ -3,7 +3,7 @@ mruby:
   version: 3.2.0
   release_no: 30200
 builds:
-  macos-x86_64:
+  macos-arm64:
     https://github.com/iij/mruby-env.git:
       url: https://github.com/iij/mruby-env.git
       branch: master

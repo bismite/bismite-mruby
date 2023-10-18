@@ -6,8 +6,8 @@ class Particle < Bi::Node
     self.set_size tex.w,tex.h
     self.set_position x,y
     self.anchor = :center
-    self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
-    @life = @life_max = 100 + rand(100)
+    self.color = Bi::Color.new rand(0xFF),rand(0xFF),rand(0xFF),0xff
+    @life = @life_max = rand(100..200)
     @vx = (rand()-0.5) * 3
     @vy = (rand()-0.5) * 3
     @xx = x.to_f
@@ -18,7 +18,7 @@ class Particle < Bi::Node
       self.parent.remove self
     else
       @life = life
-      self.opacity = @life / @life_max.to_f
+      self.color.a =  @life
     end
   end
   def move
@@ -32,16 +32,16 @@ end
 class ParticleLayer < Bi::Layer
   def initialize(assets)
     super()
-
-    self.root = assets.texture("assets/sky.png").to_sprite
+    @root = assets.texture("assets/sky.png").to_sprite
+    self.add @root
     @ball_texture = assets.texture "assets/ball.png"
 
-    self.set_texture 0, self.root.texture
+    self.set_texture 0, @root.texture
     self.set_texture 1, @ball_texture
     self.set_blend_factor GL_SRC_ALPHA,GL_ONE,GL_SRC_ALPHA,GL_ONE
 
     @frame_count = 0
-    self.root.create_timer(0,-1){|t,delta|
+    @root.create_timer(0,-1){|t,delta|
       if @frame_count < 30
         @frame_count += 1
       else
@@ -49,21 +49,18 @@ class ParticleLayer < Bi::Layer
         self.add_particle rand(Bi.w), rand(Bi.h), rand(20..100)
       end
     }
-
   end
   def add_particle(x,y,num)
     num.times{
       particle = Particle.new @ball_texture, x, y
       particle.create_timer(0,-1){|t,delta| particle.move }
-      self.root.add particle
+      @root.add particle
     }
   end
 end
 
-
 Bi::init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  Bi::add_layer ParticleLayer.new(assets)
+  Bi::layers.add ParticleLayer.new(assets)
 end
-
 Bi::start_run_loop

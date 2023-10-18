@@ -1,7 +1,22 @@
 #!/usr/bin/env ruby
 require_relative "lib/utils"
 
+TARGET = ARGV.first
+DOWNLOAD_DIR="download/#{TARGET}"
+LIB_VER="10.0.0-rc4"
+LIB_NAME="libbismite-#{TARGET}-#{LIB_VER}.tgz"
+LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LIB_NAME}"
+GITHUB_URLS = [
+  %w(mruby mruby 3.2.0),
+  %w(bismite mruby-libbismite 6.0.0),
+  %w(bismite mruby-bi-misc 4.1.0),
+  %w(bismite mruby-libbismite 6.0.0),
+  %w(bismite mruby-sdl-mixer 1.0.0),
+  %w(bismite mruby-emscripten 2.0.0)
+]
+
 def download(url,filepath)
+  puts "Download #{url} to #{filepath}"
   if File.exist? filepath
     puts "already downloaded #{filepath}"
   else
@@ -18,32 +33,28 @@ def download(url,filepath)
   end
 end
 
-files = YAML.load File.read("scripts/required_files.yml")
+def extract(archive_path,to)
+  run "tar xf #{archive_path} -C #{to}"
+end
+
 mkdir_p "build"
-ARGV.each{|target|
-  Dir.chdir("build"){
-    download_dir = "download/#{target}"
-    common_list = files["common"]
-    target_list = files[target]
-    mkdir_p download_dir
-    mkdir_p target
-    (common_list+target_list).each_slice(2) do |url,extract_to|
-      if extract_to.empty?
-        filename = File.basename(url)
-        extract_name = nil
-      else
-        filename = extract_to[0]
-        extract_name = extract_to[1]
-      end
-      puts "Download #{url} to #{filename}"
-      filepath = File.join "download",target,filename
-      download url,filepath
-      if extract_name
-        mkdir_p File.join(target,extract_name) rescue nil
-        run "tar xf #{filepath} -C #{target}/#{extract_name} --strip-component 1"
-      else
-        run "tar xf #{filepath} -C #{target}"
-      end
-    end
+Dir.chdir("build"){
+  mkdir_p DOWNLOAD_DIR
+  mkdir_p TARGET
+  # libbismite
+  if ENV["LIBBISMITE_ARCHIVE"]
+    extract ENV["LIBBISMITE_ARCHIVE"],TARGET
+  else
+    download LIB_URL,"#{DOWNLOAD_DIR}/#{LIB_NAME}"
+    extract "#{DOWNLOAD_DIR}/#{LIB_NAME}",TARGET
+  end
+  # github
+  GITHUB_URLS.each{|dir,name,ver|
+    url = "https://github.com/#{dir}/#{name}/archive/refs/tags/#{ver}.tar.gz"
+    filepath = "#{DOWNLOAD_DIR}/#{name}-#{ver}.tgz"
+    download url,filepath
+    extract filepath,TARGET
+    rm_rf "#{TARGET}/#{name}"
+    mv "#{TARGET}/#{name}-#{ver}", "#{TARGET}/#{name}"
   }
 }

@@ -1,9 +1,4 @@
 #!/usr/bin/env ruby
-begin
-  require "dotenv/load"
-rescue LoadError
-  nil
-end
 require_relative "scripts/lib/utils"
 
 VALID_TARGET = %w(macos-arm64 macos-x86_64 linux emscripten mingw)

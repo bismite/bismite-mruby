@@ -20,17 +20,19 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   Bi::layers.add layer
   layer.add bg_tex.to_sprite
   layer.add face
-  # shader
-  shader_vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
-  shader_frag_distortion = SHADER_HEADER + assets.read("assets/shaders/distortion.frag")
-  shader_frag_blur = SHADER_HEADER + assets.read("assets/shaders/blur.frag")
-  layer.shader = Bi::Shader.new shader_vert,shader_frag_distortion
-  layer.create_timer(500,-1) {|timer,dt|
-    layer.set_shader_extra_data 0, rand
-    layer.set_shader_extra_data 1, rand
-    layer.set_shader_extra_data 2, rand
-    layer.set_shader_extra_data 3, 0
-  }
+  # PostProcessLayer
+  pp = Bi::PostProcessLayer.new
+  vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
+  frag = SHADER_HEADER + assets.read("assets/shaders/blur.frag")
+  framebuffer_texture = Bi::layers.framebuffer.to_texture
+  pp.set_texture 0,framebuffer_texture
+  pp.shader = Bi::Shader.new vert,frag
+  pp_node = Bi::Node.new
+  pp_node.set_texture framebuffer_texture,0,0,framebuffer_texture.w,framebuffer_texture.h
+  pp_node.flip_vertical = true
+  pp_node.set_size 480,320
+  pp.add pp_node
+  Bi::layers.add pp
 end
 
 Bi::start_run_loop

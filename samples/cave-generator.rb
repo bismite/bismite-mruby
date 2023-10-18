@@ -1,7 +1,7 @@
 
-class CaveGeneratorExample < Bi::Node
-  WALL_COLOR  = [0x18,0x01,0x0d]
-  FLOOR_COLOR = [0x64,0x4d,0x37]
+class CaveGenerator < Bi::Node
+  WALL_COLOR  = Bi::Color.new(0x18,0x01,0x0d,0xfF)
+  FLOOR_COLOR = Bi::Color.new(0x64,0x4d,0x37,0xfF)
   GRID_SIZE = 4
   STEP_MAX = 10
   BIRTH = [5,6,7,8]
@@ -9,7 +9,6 @@ class CaveGeneratorExample < Bi::Node
 
   def initialize(w,h)
     super()
-    self.set_size w,h
     grid_width = (w/GRID_SIZE).to_i
     grid_height = (h/GRID_SIZE).to_i
     @step = 0
@@ -40,8 +39,7 @@ class CaveGeneratorExample < Bi::Node
 
   def update_grids
     @grid.each.with_index{|g,i|
-      color = g==0 ? WALL_COLOR : FLOOR_COLOR
-      @nodes[i].set_color(*color)
+      @nodes[i].color = g==0 ? WALL_COLOR : FLOOR_COLOR
     }
   end
 end
@@ -50,7 +48,7 @@ Bi.init 480,320, title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
   layer = Bi::Layer.new
-  layer.root = CaveGeneratorExample.new(Bi.w,Bi.h)
-  Bi::add_layer layer
+  layer.add CaveGenerator.new(Bi.w,Bi.h)
+  Bi::layers.add layer
 }
 Bi.start_run_loop

@@ -1,6 +1,11 @@
 require "fileutils"
 require "yaml"
 require 'digest'
+begin
+  require "dotenv/load"
+rescue LoadError
+  nil
+end
 
 include FileUtils
 

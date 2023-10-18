@@ -6,33 +6,34 @@ class Particle < Bi::Node
     self.set_size tex.w,tex.h
     self.set_position x,y
     self.anchor = :center
-    self.set_color rand(0xFF),rand(0xFF),rand(0xFF)
-    @life = @life_max = 20 + rand(20)
+    self.set_color rand(0xFF),rand(0xFF),rand(0xFF),0xff
+    @life = @life_max = 200
   end
   def life=(life)
     if life < 0
       self.remove_from_parent
     else
       @life = life
-      self.opacity = @life/@life_max.to_f
+      self.color.a = @life
     end
   end
 end
 
 Bi::init 480,320,title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
-  texture = assets.texture "assets/ball.png"
+  ball_tex = assets.texture "assets/ball.png"
+  bg_tex = assets.texture "assets/sky.png"
 
-  # layer
+  bg = bg_tex.to_sprite
   layer = Bi::Layer.new
-  layer.root = assets.texture("assets/sky.png").to_sprite
-  layer.set_texture 0, texture
-  layer.set_texture 1, layer.root.texture
-  Bi::add_layer layer
+  layer.add bg
+  layer.set_texture 0, ball_tex
+  layer.set_texture 1, bg_tex
+  Bi::layers.add layer
 
-  layer.root.on_move_cursor {|n,x,y|
-    particle = Particle.new texture, x, y
-    particle.create_timer(0,-1) {|t,delta| particle.life -= 1 }
+  bg.on_move_cursor {|n,x,y|
+    particle = Particle.new ball_tex, x, y
+    particle.create_timer(0,-1) {|t,delta| particle.life -= 4 }
     n.add particle
   }
 }
