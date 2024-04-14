@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require_relative "scripts/lib/utils"
 
-VALID_TARGET = %w(macos-arm64 macos-x86_64 linux emscripten mingw)
+VALID_TARGET = %w(macos linux emscripten mingw)
 
 clean = ARGV.delete("clean")
 target = ARGV.shift
@@ -30,10 +30,8 @@ run "./scripts/download_required_files.rb #{target}"
 # Install bismite-config
 #
 case target
-when "macos-arm64"
-  cp "src/bismite-config.rb", "#{install_path("macos-arm64")}/bin/bismite-config"
-when "macos-x86_64"
-  cp "src/bismite-config.rb", "#{install_path("macos-x86_64")}/bin/bismite-config"
+when "macos"
+  cp "src/bismite-config.rb", "#{install_path("macos")}/bin/bismite-config"
 when "linux"
   cp "src/bismite-config.rb", "#{install_path('linux')}/bin/bismite-config"
 when "mingw"

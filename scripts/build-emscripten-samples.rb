@@ -2,7 +2,7 @@
 require "FileUtils"
 include FileUtils
 
-HOST = RUBY_PLATFORM.include?("darwin") ? "macos-arm64" : "linux"
+HOST = RUBY_PLATFORM.include?("darwin") ? "macos" : "linux"
 COMPILER = "build/#{HOST}/bin/bismite"
 PACKER = "build/#{HOST}/bin/bismite-asset-pack"
 KEY = "abracadabra"

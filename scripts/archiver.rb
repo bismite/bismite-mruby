@@ -29,11 +29,11 @@ BUILD_DIR = File.expand_path File.join __dir__,"..","build"
 COMMON_LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 
 
-if arch=="macos-arm64" or arch=="macos-x86_64"
+if arch=="macos"
   command = "clang"
   libpath = "-L#{BUILD_DIR}/#{arch}/lib"
   libs = COMMON_LIBS.map{|l| "-l#{l}" }.join(" ")
-  flags = "-framework OpenGL -arch #{arch[6..-1]}"
+  flags = "-framework OpenGL -arch arm64"
   dylib = target.gsub ".a", ".dylib"
   if target.end_with? "libmruby.a"
     additional_command = "install_name_tool -id @rpath/libmruby.dylib #{dylib}"

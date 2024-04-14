@@ -5,15 +5,7 @@ TARGET = ARGV[0]
 PREFIX = install_path(TARGET)
 
 # Build mruby
-if /macos/ === TARGET
-  MRUBY_CONFIG = "macos"
-  ENV["ARCH"] = "arm64"  if TARGET.end_with?("-arm64")
-  ENV["ARCH"] = "x86_64" if TARGET.end_with?("-x86_64")
-  raise "invalid target name" unless %w(arm64 x86_64).include?(ENV["ARCH"])
-else
-  MRUBY_CONFIG = TARGET
-end
-ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/mruby_config/#{MRUBY_CONFIG}.rb"
+ENV["MRUBY_CONFIG"] = "#{Dir.pwd}/mruby_config/#{TARGET}.rb"
 rm_f ENV["MRUBY_CONFIG"]+".lock"
 Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
@@ -21,7 +13,7 @@ Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 puts "mruby install to build/#{TARGET}".yellow
 
-def macos
+def install_macos
   cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil
   cp_r "mruby/build/#{TARGET}/include/.", "#{PREFIX}/include/" rescue nil
   cp "mruby/build/#{TARGET}/lib/libmruby.dylib", "#{PREFIX}/lib/libmruby.dylib"
@@ -32,7 +24,7 @@ def macos
   }
 end
 
-def emscripten
+def install_emscripten
   from = "mruby/build/#{TARGET}"
   to = "#{PREFIX}"
   mkdir_p "#{to}/include"
@@ -45,10 +37,10 @@ Dir.chdir("build/#{TARGET}"){
   %w(bin include lib).each{|d| mkdir_p d }
   cp_r "mruby/include/.", "#{PREFIX}/include/"
   case TARGET
-  when "macos-arm64", "macos-x86_64"
-    macos
+  when "macos", "macos"
+    install_macos
   when 'emscripten'
-    emscripten
+    install_emscripten
   else
     cp_r "mruby/build/#{TARGET}/bin/.", "#{PREFIX}/bin/" rescue nil
     cp_r "mruby/build/#{TARGET}/include/.", "#{PREFIX}/include/" rescue nil # presym headers

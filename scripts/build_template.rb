@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 #
-# usage: build_template.rb {linux|macos-arm64|macos-x86_64|emscripten|mingw}
+# usage: build_template.rb {linux|macos|emscripten|mingw}
 #
 require_relative "lib/utils"
 
-VALID_TARGETS=%w(linux macos-arm64 macos-x86_64 emscripten mingw)
+VALID_TARGETS=%w(linux macos emscripten mingw)
 TARGET = ARGV[0]
 raise "unknown target #{TARGET}" unless VALID_TARGETS.include?(TARGET)
 TEMPLATE_DIR = "build/#{TARGET}/share/bismite/templates"
@@ -29,8 +29,7 @@ def build_linux
 end
 
 def build_macos
-  arch = TARGET.split("-").last
-  dst = "#{TEMPLATE_DIR}/macos-#{arch}"
+  dst = "#{TEMPLATE_DIR}/macos"
   resource_dir = "#{dst}/template.app/Contents/Resources"
   mkdir_p dst
   cp_r "src/template.app", dst
@@ -38,7 +37,7 @@ def build_macos
   mkdir_p "#{resource_dir}/lib"
   cp "build/main.mrb", "#{resource_dir}/main.mrb"
   bismite_config = `./#{PREFIX}/bin/bismite-config --cflags --libs`.gsub("\n"," ")
-  run "clang src/main.c -o #{resource_dir}/main #{bismite_config} -arch #{arch} #{OPT}"
+  run "clang src/main.c -o #{resource_dir}/main #{bismite_config} -arch arm64 #{OPT}"
   run "install_name_tool -add_rpath @executable_path/lib #{resource_dir}/main"
   libs = [ "#{PREFIX}/lib/libmruby.dylib" ]
   libs += %w( libSDL2.dylib libSDL2_image.dylib libSDL2_mixer.dylib ).map{|l|
@@ -84,7 +83,7 @@ end
 case TARGET
 when "linux"
   build_linux
-when /macos/
+when "macos"
   build_macos
 when "mingw"
   build_mingw
