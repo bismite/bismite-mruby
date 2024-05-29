@@ -9,8 +9,8 @@ end
 Bi.init 480,320,title:__FILE__,highdpi:false
 Bi::Archive.new("assets.dat","abracadabra").load{|assets|
   # texture
-  bg_tex = Bi::Texture.new("assets/map.png")
-  mush_tex = Bi::Texture.new("assets/mushroom.png")
+  bg_tex = assets.texture("assets/map.png")
+  mush_tex = assets.texture("assets/mushroom.png")
   # layer
   layer = Bi::Layer.new
   layer.add bg_tex.to_sprite
