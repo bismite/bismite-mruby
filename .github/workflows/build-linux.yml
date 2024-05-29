@@ -2,7 +2,7 @@ name: Build Linux
 on:
   push:
     tags:
-      - '*'
+      - "*"
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -12,10 +12,10 @@ jobs:
           sudo apt update
           sudo apt install libgl-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev clang
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run: ./make.rb linux
       - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@2.9.0
         with:
           file: tmp/bismite-mruby-linux.tgz
           asset_name: bismite-mruby-linux-${{github.ref_name}}.tgz
