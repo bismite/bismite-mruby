@@ -41,7 +41,7 @@ def build_macos
   run "install_name_tool -add_rpath @executable_path/lib #{resource_dir}/main"
   libs = [ "#{PREFIX}/lib/libmruby.dylib" ]
   libs += %w( libSDL2.dylib libSDL2_image.dylib libSDL2_mixer.dylib ).map{|l|
-    File.join( "#{PREFIX}/lib", File.readlink("#{PREFIX}/lib/#{l}") )
+    File.join( "#{PREFIX}/lib", l )
   }
   cp libs, "#{resource_dir}/lib"
   cp_r "#{PREFIX}/licenses", dst
