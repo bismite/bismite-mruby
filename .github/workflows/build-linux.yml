@@ -1,7 +1,8 @@
 name: Build Linux
 on:
-  branches:
-    - "*"
+  push:
+    branches:
+      - "*"
   workflow_call:
 jobs:
   build:
