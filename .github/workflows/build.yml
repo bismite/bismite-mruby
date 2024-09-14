@@ -1,4 +1,4 @@
-name: Build MinGW
+name: Build
 on: [push]
 env:
   EM_VERSION: 3.1.64
