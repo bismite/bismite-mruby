@@ -11,6 +11,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: ./make.rb linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bismite-mruby-linux.tgz
+          path: tmp/bismite-mruby-linux.tgz
       - name: Upload binaries to release
         if: github.tag != ''
         uses: svenstaro/upload-release-action@2.9.0
