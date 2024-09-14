@@ -19,9 +19,9 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 10.0.0 - 2024/09/14
+## 10.0.1 - 2024/09/14
 - update mruby 3.3.0
-- update libbismite 10.0.2
+- update libbismite 10.0.3
 - remove emscripten-nosimd build.
 - update emscripten 3.1.64
 - no longer support x86_64 for macos.
