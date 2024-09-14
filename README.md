@@ -4,7 +4,7 @@
 
 ## build on macOS
 1. install Xcode
-2. run `./make.rb macos-arm64` or `./make.rb macos-x86_64`
+2. run `./make.rb macos`
 
 ## build on Linux
 1. install libgl-dev, clang, and ruby (e.g. `sudo apt install libgl-dev clang ruby`)
@@ -19,9 +19,12 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 10.0.0 - 2023/07/07
+## 10.0.0 - 2024/09/14
+- update mruby 3.3.0
+- update libbismite 10.0.2
 - remove emscripten-nosimd build.
-- update emscripten 3.1.42
+- update emscripten 3.1.64
+- no longer support x86_64 for macos.
 ## 9.0.1 - 2023/04/20
 - add MRB_ARY_LENGTH_MAX=0
 ## 9.0.0 - 2023/04/07
