@@ -1,5 +1,8 @@
 name: Build Linux
-on: [push, workflow_call]
+on:
+  branches:
+    - "*"
+  workflow_call:
 jobs:
   build:
     runs-on: ubuntu-24.04
