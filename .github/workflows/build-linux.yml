@@ -13,7 +13,7 @@ jobs:
       - run: ./make.rb linux
       - uses: actions/upload-artifact@v4
         with:
-          name: bismite-mruby-linux.tgz
+          name: bismite-mruby-linux-${{github.sha}}.tgz
           path: tmp/bismite-mruby-linux.tgz
       - name: Upload binaries to release
         if: github.tag != ''
