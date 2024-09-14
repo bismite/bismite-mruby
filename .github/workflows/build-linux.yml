@@ -10,7 +10,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install libgl-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev clang
+          sudo apt install libgl-dev clang
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: ./make.rb linux
