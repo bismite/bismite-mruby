@@ -13,7 +13,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: bismite-mruby-linux-${{github.sha}}.tgz
-          path: bismite-mruby-linux.tgz
+          path: ./bismite-mruby-linux.tgz
       - run: ls -l
       - run: file *
       - uses: svenstaro/upload-release-action@2.9.0
