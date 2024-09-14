@@ -14,6 +14,7 @@ jobs:
           - { os: "macos-14", target: "macos" }
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v4
       - name: Install dependencies for mingw
         if: ${{ matrix.target == 'mingw' }}
         run: sudo apt-get install mingw-w64
@@ -22,10 +23,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libgl-dev clang
-      - name: Setup cache
+      - uses: actions/cache@v4
         if: ${{ matrix.target == 'emscripten' }}
         id: cache-system-libraries
-        uses: actions/cache@v4
         with:
           path: ${{env.EM_CACHE_FOLDER}}
           key: ${{env.EM_VERSION}}-${{ runner.os }}
@@ -34,8 +34,7 @@ jobs:
         with:
           version: ${{env.EM_VERSION}}
           actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
-      - uses: actions/checkout@v4
-      - run: ./make.rb ${{matrix.target}}
+      - run: ./make.rb ${{matrix.target}} clean
       - uses: actions/upload-artifact@v4
         with:
           name: bismite-mruby-${{matrix.target}}-${{github.sha}}.tgz
