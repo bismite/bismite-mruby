@@ -9,6 +9,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: ./make.rb mingw
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bismite-mruby-mingw-${{github.sha}}.tgz
+          path: tmp/bismite-mruby-mingw.tgz
       - name: Publish
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         uses: svenstaro/upload-release-action@2.9.0
