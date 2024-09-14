@@ -14,6 +14,7 @@ jobs:
         with:
           name: bismite-mruby-linux-${{github.sha}}.tgz
           path: bismite-mruby-linux.tgz
+      - run: ls -l
       - uses: svenstaro/upload-release-action@2.9.0
         with:
           file: bismite-mruby-linux.tgz
