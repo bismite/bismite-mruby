@@ -1,5 +1,5 @@
 name: Build Linux
-on: [push]
+on: [push, workflow_call]
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -15,10 +15,3 @@ jobs:
         with:
           name: bismite-mruby-linux-${{github.sha}}.tgz
           path: tmp/bismite-mruby-linux.tgz
-      - name: Upload binaries to release
-        if: startsWith('refs/tags/', github.ref)
-        uses: svenstaro/upload-release-action@2.9.0
-        with:
-          file: tmp/bismite-mruby-linux.tgz
-          asset_name: bismite-mruby-linux-${{github.ref_name}}.tgz
-          overwrite: true
