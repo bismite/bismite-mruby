@@ -3,26 +3,28 @@ require "FileUtils"
 include FileUtils
 
 HOST = RUBY_PLATFORM.include?("darwin") ? "macos" : "linux"
-COMPILER = "build/#{HOST}/bin/bismite"
-PACKER = "build/#{HOST}/bin/bismite-asset-pack"
+COMPILER = File.expand_path  "build/#{HOST}/bin/bismite"
+PACKER = File.expand_path  "build/#{HOST}/bin/bismite-asset-pack"
 KEY = "abracadabra"
 
-template = "build/emscripten/share/bismite/templates/wasm-single"
-samples_dir = "build/emscripten/samples"
+template = File.expand_path "build/emscripten/share/bismite/templates/wasm-single"
+dst_dir = File.expand_path "build/emscripten/samples"
 
 unless Dir.exist? template
   puts "missing: #{template}"
   exit
 end
-puts "mkdir -p #{samples_dir}"
-mkdir_p samples_dir
+puts "mkdir -p #{dst_dir}"
+mkdir_p dst_dir
 
-puts `#{PACKER} samples/assets #{samples_dir} #{KEY}`
+puts `#{PACKER} samples/assets #{dst_dir} #{KEY}`
 
-Dir["samples/*.rb"].each{|file|
-  name = File.basename(file,File.extname(file))
-  puts `#{COMPILER} compile #{samples_dir}/#{name}.mrb #{file}`
-  html = File.read "#{template}/index.html"
-  html.gsub!("main.mrb","#{name}.mrb")
-  File.write "#{samples_dir}/#{name}.html", html
+Dir.chdir("samples"){
+  Dir["*.rb"].each{|file|
+    name = File.basename(file,File.extname(file))
+    puts `#{COMPILER} compile #{dst_dir}/#{name}.mrb #{file}`
+    html = File.read "#{template}/index.html"
+    html.gsub!("main.mrb","#{name}.mrb")
+    File.write "#{dst_dir}/#{name}.html", html
+  }
 }

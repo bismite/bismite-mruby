@@ -21,7 +21,7 @@ class Requires
     filename = filename+".rb" unless filename.end_with? ".rb"
     @load_path.find{|l|
       f = File.join(l,filename)
-      return File.expand_path(f) if File.exist? f
+      return f if File.exist? f
     }
     return nil
   end
@@ -104,7 +104,7 @@ end
 def command_run(argv)
   srcfile = ARGV.shift
   valid srcfile, "invalid srcfile"
-  load_paths = [ File.dirname(srcfile) ] + get_loadpaths(argv)
+  load_paths = get_loadpaths(argv).revers + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
   tmp = r.read
   tmp.pop
@@ -117,7 +117,7 @@ def command_compile(argv)
   valid outfile,"invalid outfile"
   srcfile = ARGV.shift
   valid srcfile,"invalid srcfile"
-  load_paths = [ File.dirname(srcfile) ] + get_loadpaths(argv)
+  load_paths = get_loadpaths(argv).reverse + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
   files = r.read.join(" ")
   run "#{MRBC} -g -o #{outfile} #{files}"
