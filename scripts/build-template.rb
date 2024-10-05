@@ -2,7 +2,7 @@
 #
 # usage: build_template.rb {linux|macos|emscripten|mingw}
 #
-require_relative "lib/utils"
+require_relative "utils"
 
 VALID_TARGETS=%w(linux macos emscripten mingw)
 TARGET = ARGV[0]

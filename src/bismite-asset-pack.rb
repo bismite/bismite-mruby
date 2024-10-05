@@ -1,3 +1,4 @@
+#!/usr/bin/env bismite-mruby
 
 if ARGV.size != 3
   puts "usage: bismite-asset-pack path/to/assets destination/dir/path/ SECRET"

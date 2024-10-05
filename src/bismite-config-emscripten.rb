@@ -15,7 +15,7 @@ sdl = "#{root}/lib/libSDL2_image.a #{root}/lib/libSDL2_mixer.a #{root}/lib/libSD
 ARGV.each do |command|
   case command
   when "--libs"
-    puts "-s USE_SDL=0 -L#{root}/lib -lmruby -lbismite #{sdl} -sMAX_WEBGL_VERSION=2"
+    puts "-s USE_SDL=0 -L#{root}/lib -lmruby-static -lbismite #{sdl} -sMAX_WEBGL_VERSION=2"
   when "--cflags"
     puts "-s USE_SDL=0 #{DEFINES} -I#{root}/include -I#{root}/include/SDL2"
   end

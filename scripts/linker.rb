@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 def run(cmd,args)
-  puts "#{cmd} #{args.join(' ')}"
+  puts "linker.rb: #{cmd} #{args.join(' ')}"
   exec cmd, *args
 end
 

@@ -19,6 +19,9 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 11.0.0
+- rename mruby,mirb,mruby-strip -> bismite-mruby,bismite-mirb,bismite-mruby-strip
+- Change bismite command from executable binary to script.
 ## 10.0.1 - 2024/09/14
 - update mruby 3.3.0
 - update libbismite 10.0.3

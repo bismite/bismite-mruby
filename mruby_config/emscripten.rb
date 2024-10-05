@@ -28,5 +28,8 @@ MRuby::CrossBuild.new(TARGET) do |conf|
     linker.flags << "#{BUILD_DIR}/#{TARGET}/lib/libSDL2_image.a"
     linker.flags << "#{BUILD_DIR}/#{TARGET}/lib/libSDL2_mixer.a"
   end
-  conf.archiver.command = 'emar'
+  conf.archiver do |archiver|
+    archiver.command = "#{SCRIPTS_DIR}/archiver.rb"
+    archiver.archive_options = 'emscripten %{outfile} %{objs}'
+  end
 end

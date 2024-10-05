@@ -21,7 +21,7 @@ puts `#{PACKER} samples/assets #{samples_dir} #{KEY}`
 
 Dir["samples/*.rb"].each{|file|
   name = File.basename(file,File.extname(file))
-  puts `#{COMPILER} dump #{file} #{samples_dir}/#{name}.mrb`
+  puts `#{COMPILER} compile #{samples_dir}/#{name}.mrb #{file}`
   html = File.read "#{template}/index.html"
   html.gsub!("main.mrb","#{name}.mrb")
   File.write "#{samples_dir}/#{name}.html", html

@@ -36,6 +36,6 @@ MRuby::CrossBuild.new('mingw') do |conf|
 
   conf.archiver do |archiver|
     archiver.command = "#{SCRIPTS_DIR}/archiver.rb"
-    archiver.archive_options = 'x86_64-w64-mingw32 %{outfile} %{objs}'
+    archiver.archive_options = 'mingw %{outfile} %{objs}'
   end
 end

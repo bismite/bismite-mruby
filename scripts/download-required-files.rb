@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
-require_relative "lib/utils"
+require_relative "utils"
 
 TARGET = ARGV.first
 DOWNLOAD_DIR="download/#{TARGET}"
-LIB_VER="10.0.3"
+LIB_VER="10.1.0"
 LIB_NAME="libbismite-#{TARGET}-#{LIB_VER}.tgz"
 LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LIB_NAME}"
 GITHUB_URLS = [
   %w(mruby mruby 3.3.0),
-  %w(bismite mruby-libbismite 7.0.0),
+  %w(bismite mruby-libbismite 7.1.0),
   %w(bismite mruby-bi-misc 4.1.0),
   %w(bismite mruby-sdl-mixer 1.0.0),
   %w(bismite mruby-emscripten 2.0.0)

@@ -40,7 +40,7 @@ def which(cmd)
 end
 
 def install_path(target)
-  root = File.absolute_path(File.join( File.dirname(File.expand_path(__FILE__)), "../.." ))
+  root = File.expand_path(File.join(__dir__, ".." ))
   if %w(macos linux mingw emscripten).include? target
     "#{root}/build/#{target}"
   else

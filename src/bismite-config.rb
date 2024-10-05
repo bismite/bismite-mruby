@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-root = File.absolute_path(File.join(File.expand_path(File.dirname($0)),".."))
-
-MACOS_STATIC_LIBS = %w(mruby-static bismite SDL2 SDL2_mixer SDL2_image).map{|l| "#{root}/lib/lib#{l}.a" }.join(" ")
-LINUX_STATIC_LIBS = %w(mruby-static bismite).map{|l| "#{root}/lib/lib#{l}.a" }.join(" ")
+ROOT = File.expand_path File.join File.dirname($0), ".."
+OS = `uname -a`
+MACOS_STATIC_LIBS = %w(mruby-static bismite SDL2 SDL2_mixer SDL2_image).map{|l| "#{ROOT}/lib/lib#{l}.a" }.join(" ")
+LINUX_STATIC_LIBS = %w(mruby-static bismite).map{|l| "#{ROOT}/lib/lib#{l}.a" }.join(" ")
 DEFINES = %w(
   MRB_INT64
   MRB_UTF8_STRING
@@ -13,26 +13,26 @@ DEFINES = %w(
   MRB_ARY_LENGTH_MAX=0
 ).map{|d| "-D#{d}" }.join(" ")
 
-if /Darwin/ === `uname -a` # macos
+if OS.include? "Darwin"
   ARGV.each do |command|
     case command
     when "--libs"
-      puts "-L#{root}/lib -lmruby -lbismite -lSDL2 -lSDL2_mixer -lSDL2_image -framework OpenGL"
+      puts "-L#{ROOT}/lib -lmruby -lbismite -lSDL2 -lSDL2_mixer -lSDL2_image -framework OpenGL"
     when "--static-libs"
-      puts "-L#{root}/lib #{MACOS_STATIC_LIBS} -liconv -lm -framework OpenGL -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal"
+      puts "-L#{ROOT}/lib #{MACOS_STATIC_LIBS} -liconv -lm -framework OpenGL -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal"
     when "--cflags"
-      puts "#{DEFINES} -I#{root}/include -I#{root}/include/SDL2 -D_THREAD_SAFE"
+      puts "#{DEFINES} -I#{ROOT}/include -I#{ROOT}/include/SDL2 -D_THREAD_SAFE"
     end
   end
 else # linux
   ARGV.each do |command|
     case command
     when "--libs"
-      puts "-L#{root}/lib -lmruby -lbismite -lm -lGL -ldl"
+      puts "-L#{ROOT}/lib -lmruby -lbismite -lm -lGL -ldl"
     when "--static-libs"
-      puts "-L#{root}/lib #{LINUX_STATIC_LIBS} -lm -lGL -ldl"
+      puts "-L#{ROOT}/lib #{LINUX_STATIC_LIBS} -lm -lGL -ldl"
     when "--cflags"
-      puts "#{DEFINES} -I#{root}/include"
+      puts "#{DEFINES} -I#{ROOT}/include"
     end
   end
 end
