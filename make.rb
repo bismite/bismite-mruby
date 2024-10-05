@@ -71,14 +71,15 @@ end
 #
 # archive
 #
-name = "bismite-mruby-#{TARGET}"
-rm_rf "tmp/#{name}"
-mkdir_p "tmp/#{name}/share"
-cp_r "build/#{TARGET}/bin", "tmp/#{name}"
-cp_r "build/#{TARGET}/lib", "tmp/#{name}"
-cp_r "build/#{TARGET}/include", "tmp/#{name}"
-cp_r "build/#{TARGET}/share/bismite", "tmp/#{name}/share/"
-cp_r "build/#{TARGET}/licenses", "tmp/#{name}"
-Dir.chdir("tmp"){
-  run "tar czf #{name}.tgz #{name}"
+Dir.chdir("build/#{TARGET}"){
+  a = "bismite-mruby-#{TARGET}"
+  rm_rf a
+  rm_f "#{a}.tgz"
+  mkdir_p a
+  cp_r "bin", a
+  cp_r "lib", a
+  cp_r "include", a
+  cp_r "template-#{TARGET}", a
+  cp_r "licenses", a
+  run "tar czf #{a}.tgz #{a}"
 }

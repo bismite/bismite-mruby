@@ -52,5 +52,6 @@ Dir.chdir(PREFIX){
   when "mingw"
     copy_bins ".exe"
     copy_libs ".dll"
+    cp "#{PREFIX}/lib/libmruby.dll", "#{PREFIX}/bin/"
   end
 }
