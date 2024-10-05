@@ -129,9 +129,9 @@ when "run"
   command_run ARGV
 when "compile"
   command_compile ARGV
-when "-h" || "--help"
+when "-h","--help"
   usage
-when "-v" || "--version"
+when "-v","--version"
   version
 else
   usage_and_exit

@@ -33,7 +33,7 @@ def install_tool(t)
   cp "src/#{t}.rb", File.join(install_path(TARGET),"bin",t)
 end
 case TARGET
-when "macos" || "linux"
+when "macos","linux"
   install_tool "bismite-config"
 when "mingw"
   install_tool "bismite-config-mingw"

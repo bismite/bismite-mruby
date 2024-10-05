@@ -87,6 +87,6 @@ when "macos"
   build_macos
 when "mingw"
   build_mingw
-when /emscripten/
+when "emscripten"
   build_emscripten
 end
