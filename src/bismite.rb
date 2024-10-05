@@ -104,7 +104,7 @@ end
 def command_run(argv)
   srcfile = ARGV.shift
   valid srcfile, "invalid srcfile"
-  load_paths = get_loadpaths(argv).revers + [ File.dirname(srcfile) ]
+  load_paths = get_loadpaths(argv).reverse + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
   tmp = r.read
   tmp.pop
