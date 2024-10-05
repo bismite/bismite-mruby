@@ -27,10 +27,14 @@ OBJS = ARGV.join(" ")
 BUILD_DIR = File.expand_path File.join __dir__,"..","build"
 COMMON_LIBS = %w(SDL2 SDL2_image SDL2_mixer bismite)
 
-exit unless TARGET.end_with? "libmruby.a"
+# ignore libmruby_core
+unless TARGET.end_with? "libmruby.a"
+  puts "ignore #{TARGET}".yellow
+  exit
+end
 
-def make_shared(command,libname,paths,libs,flags)
-  run "#{command} -shared -o #{libname} #{paths} #{libs} #{flags} #{OBJS}"
+def make_shared(command,libname,opts)
+  run "#{command} -shared -o #{libname} #{opts}"
 end
 
 def make_static(command)
@@ -40,27 +44,25 @@ end
 
 case ARCH
 when "macos"
-  libpath = "-L#{BUILD_DIR}/macos/lib"
-  libs = COMMON_LIBS.map{|l| "-l#{l}" }.join(" ")
-  flags = "-framework OpenGL -arch arm64"
   libname = TARGET.gsub ".a", ".dylib"
-  make_shared "clang", libname, libpath, libs, flags
+  libpath = "-L#{BUILD_DIR}/macos/lib"
+  libs = COMMON_LIBS.map{|l| "-l#{l}" }.join(" ") + " -framework OpenGL"
+  make_shared "clang", libname, "-arch arm64 #{libpath} #{libs} #{OBJS}"
   run  "install_name_tool -id @rpath/libmruby.dylib #{libname}"
   make_static "ar"
 when "linux"
+  libname = TARGET.gsub ".a", ".so"
   libpath = "-L#{BUILD_DIR}/linux/lib"
   libs = (COMMON_LIBS+["GL"]).map{|l| "-l#{l}" }.join(" ")
-  flags = "-flto"
-  libname = TARGET.gsub ".a", ".so"
-  make_shared "clang", libname, libpath, libs, flags
+  make_shared "clang", libname, "#{libpath} #{libs} #{OBJS}"
   make_static "ar"
 when "mingw"
+  libname = TARGET.gsub ".a", ".dll"
   libpath = "-L#{BUILD_DIR}/mingw/bin -L#{BUILD_DIR}/mingw/lib"
   libs = (COMMON_LIBS+["opengl32","ws2_32"]).map{|l| "-l#{l}" }.join(" ")
-  flags = "-static-libgcc"
-  libname = TARGET.gsub ".a", ".dll"
-  make_shared "x86_64-w64-mingw32-gcc", libname, libpath, libs, flags
+  make_shared "x86_64-w64-mingw32-gcc", libname, "#{libpath} #{libs} #{OBJS} -static-libgcc"
   make_static "x86_64-w64-mingw32-ar"
 when "emscripten"
+  # no shared lib
   make_static "emar"
 end
