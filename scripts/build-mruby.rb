@@ -24,21 +24,13 @@ Dir.chdir("build/#{TARGET}/mruby"){ run "rake -v" }
 
 puts "mruby install to build/#{TARGET}".yellow
 
-def copy_bins(target,ext="")
-  BINARIES.each{|b| cp "mruby/build/#{target}/bin/#{b}#{ext}", "bin/bismite-#{b}#{ext}" }
+def copy_bins(ext="")
+  BINARIES.each{|b| cp "mruby/build/#{TARGET}/bin/#{b}#{ext}", "bin/bismite-#{b}#{ext}" }
 end
 
-def install_macos
-  copy_bins TARGET
-  cp "mruby/build/#{TARGET}/lib/libmruby.dylib", "#{PREFIX}/lib/libmruby.dylib"
+def copy_libs(ext=nil)
   cp "mruby/build/#{TARGET}/lib/libmruby-static.a", "#{PREFIX}/lib/libmruby-static.a"
-  BINARIES.each{|bin|
-    run "install_name_tool -add_rpath @executable_path/../lib bin/bismite-#{bin}"
-  }
-end
-
-def install_emscripten
-  cp_r "mruby/build/#{TARGET}/lib", "./"
+  cp "mruby/build/#{TARGET}/lib/libmruby#{ext}", "#{PREFIX}/lib/libmruby#{ext}" if ext
 end
 
 Dir.chdir(PREFIX){
@@ -46,22 +38,19 @@ Dir.chdir(PREFIX){
   cp_r "mruby/include", "./"
   cp_r "mruby/build/#{TARGET}/include", "./"
   case TARGET
-  when "macos", "macos"
-    install_macos
+  when "macos"
+    copy_bins
+    copy_libs ".dylib"
+    BINARIES.each{|bin|
+      run "install_name_tool -add_rpath @executable_path/../lib bin/bismite-#{bin}"
+    }
   when 'emscripten'
-    install_emscripten
-  when 'linux' || 'mingw'
-    cp_r "mruby/build/#{TARGET}/include", "./"
-    if "linux" == TARGET
-      copy_bins TARGET
-      cp "mruby/build/#{TARGET}/lib/libmruby.so", "lib/libmruby.so"
-      cp "mruby/build/#{TARGET}/lib/libmruby-static.a", "lib/libmruby-static.a"
-    elsif "mingw" == TARGET
-      copy_bins TARGET, ".exe"
-      cp "mruby/build/#{TARGET}/lib/libmruby.dll", "bin/libmruby.dll"
-      cp "mruby/build/#{TARGET}/lib/libmruby-static.a", "lib/libmruby-static.a"
-    else
-      cp_r "mruby/build/#{TARGET}/lib", "./"
-    end
+    copy_libs
+  when 'linux'
+    copy_bins
+    copy_libs ".so"
+  when "mingw"
+    copy_bins ".exe"
+    copy_libs ".dll"
   end
 }
