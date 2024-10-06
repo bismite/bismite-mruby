@@ -2,11 +2,15 @@
 
 <https://bismite.github.io/demos/>
 
-## build on macOS
+# Usage example
+`bismite run main.rb` / `bismite compile output-file.mrb main.rb -I lib`
+
+# Build
+## macOS
 1. install Xcode
 2. run `./make.rb macos`
 
-## build on Linux
+## Linux
 1. install libgl-dev, clang, and ruby (e.g. `sudo apt install libgl-dev clang ruby`)
 2. run `./make.rb linux`
 
@@ -19,9 +23,11 @@
 2. run `./make.rb mingw`
 
 # Changelog
-## 11.0.0
+## 11.0.0 - 2024/10/06
 - rename mruby,mirb,mruby-strip -> bismite-mruby,bismite-mirb,bismite-mruby-strip
 - Change bismite command from executable binary to script.
+- `bismite run` and `bismite compile` handles `#require foo/bar` macro for import other `.rb` file.
+  - see `samples/require.rb`, `samples/require2.rb`,
 ## 10.0.1 - 2024/09/14
 - update mruby 3.3.0
 - update libbismite 10.0.3

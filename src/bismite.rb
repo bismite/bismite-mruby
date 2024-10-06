@@ -90,7 +90,7 @@ def get_loadpaths(argv)
     elsif arg == "-I"
       path = argv.shift
       valid path,"invalid path"
-      load_path << path
+      loadpath << path
     elsif arg.start_with? "-I"
       loadpath << arg[2..-1]
     else
