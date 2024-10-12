@@ -107,9 +107,8 @@ def command_run(argv)
   load_paths = get_loadpaths(argv).reverse + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
   tmp = r.read
-  tmp.pop
-  libs = tmp.map{|i| "-r #{i}" }.join(" ")
-  run "#{MRUBY} #{libs} #{srcfile}"
+  tmp.unshift MRUBY
+  execvp MRUBY,tmp
 end
 
 def command_compile(argv)
@@ -119,8 +118,9 @@ def command_compile(argv)
   valid srcfile,"invalid srcfile"
   load_paths = get_loadpaths(argv).reverse + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
-  files = r.read.join(" ")
-  run "#{MRBC} -g -o #{outfile} #{files}"
+  files = r.read
+  arg = [MRBC,"-g","-o",outfile] + files
+  execvp MRBC,arg
 end
 
 command = ARGV.shift
