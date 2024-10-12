@@ -3,11 +3,6 @@
 MRUBY="bismite-mruby"
 MRBC="bismite-mrbc"
 
-def run(cmd)
-  puts cmd
-  puts `#{cmd}`
-end
-
 class Requires
   attr_reader :files
 
