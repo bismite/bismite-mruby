@@ -26,11 +26,11 @@ class Requires
     filepath = find filename
     position = origin&&lineno ? "(#{origin}:#{lineno})" :  ""
     unless filepath
-      STDERR.puts "ERROR: #{filename} not found. #{position}"
+      puts "ERROR: #{filename} not found. #{position}"
       exit
     end
     if @dupe_check[filepath]
-      STDERR.puts "INFO: #{filepath} already included. #{position}"
+      puts "INFO: #{filepath} already included. #{position}"
       return []
     end
     @dupe_check[filepath] = true
@@ -54,7 +54,7 @@ class Requires
 end
 
 def version
-  puts "bismite version 11.0.1"
+  puts "bismite version 11.0.2"
 end
 
 def usage
@@ -102,8 +102,11 @@ def command_run(argv)
   load_paths = get_loadpaths(argv).reverse + [ File.dirname(srcfile) ]
   r = Requires.new srcfile,load_paths
   tmp = r.read
-  tmp.unshift MRUBY
-  execvp MRUBY,tmp
+  main = tmp.pop
+  libs = tmp.map{|f| "-r#{f}" }
+  arg = [MRUBY] + libs + [main]
+  # puts arg.join(" ")
+  execvp MRUBY,arg
 end
 
 def command_compile(argv)
