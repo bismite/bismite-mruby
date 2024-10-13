@@ -25,7 +25,7 @@
 # Changelog
 ## 11.0.2 - 2024/10/13
 - fix bismite.rb
-## 11.0.1 - 2024/10/07
+## 11.0.1 - 2024/10/13
 - update mruby-bi-misc 4.2.0, execvp for bismite.rb
 ## 11.0.0 - 2024/10/06
 - rename mruby,mirb,mruby-strip -> bismite-mruby,bismite-mirb,bismite-mruby-strip
