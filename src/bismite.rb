@@ -1,7 +1,7 @@
 #!/usr/bin/env bismite-mruby
 
-MRUBY="bismite-mruby"
-MRBC="bismite-mrbc"
+MRUBY=File.join(File.expand_path(File.dirname($0)),"bismite-mruby")
+MRBC=File.join(File.expand_path(File.dirname($0)),"bismite-mrbc")
 
 class Requires
   attr_reader :files

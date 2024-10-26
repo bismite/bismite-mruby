@@ -10,9 +10,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   font = Bi::Font.new(texture,assets.read("assets/font14b.dat"))
   text = "The quick brown fox jumps over the lazy dog. 0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ いろはにほへと　ちりぬるを　わかよたれそ　つねならむ カタカナと、Alphabetと、ひらがな。"
   # column
-  col = Bi::Node.new
-  col.set_position 40,0
-  col.set_size 200,Bi.h
+  col = Bi::Node.xywh 40,0,200,Bi.h
   col.set_color 0,0x33,0x11
   layer.add col
   # labels

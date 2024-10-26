@@ -11,15 +11,13 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   face_tex = assets.texture("assets/face01.png")
   # Sprite
   face = face_tex.to_sprite
-  face.set_position Bi.w/2,Bi.h/2
-  face.anchor = :center
   # layer
   layer = Bi::Layer.new
   layer.set_texture 0, bg_tex
   layer.set_texture 1, face_tex
   Bi::layers.add layer
   layer.add bg_tex.to_sprite
-  layer.add face
+  layer.add face,:center,:center
   # PostProcessLayer
   pp = Bi::PostProcessLayer.new
   vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")

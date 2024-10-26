@@ -8,7 +8,7 @@ LIB_NAME="libbismite-#{TARGET}-#{LIB_VER}.tgz"
 LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LIB_NAME}"
 GITHUB_URLS = [
   %w(mruby mruby 3.3.0),
-  %w(bismite mruby-libbismite 7.1.0),
+  %w(bismite mruby-libbismite 7.2.0),
   %w(bismite mruby-bi-misc 4.2.0),
   %w(bismite mruby-sdl-mixer 1.0.0),
   %w(bismite mruby-emscripten 2.0.0)

@@ -17,8 +17,7 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
     label.anchor = :bottom_right
     label.set_color 0xff, 0xff, 0xff, (0xff*(1.0-i*0.05)).to_i
     label.text = "Press any Key"
-    label.set_position Bi.w - 10, 10 + i*20
-    root.add label
+    root.add label,Bi.w - 10, 10 + i*20
     label
   }
   # event handler

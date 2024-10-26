@@ -28,10 +28,8 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   # face layer
   layer = Bi::Layer.new
   face = face_tex.to_sprite
-  layer.add face
-  face.anchor = :center
   face.scale = 2.0
-  face.set_position Bi.w/2, Bi.h/2
+  layer.add face,:center,:center
   layer.set_texture 0, face_tex
   layer_group.add layer
 

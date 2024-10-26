@@ -15,11 +15,7 @@ class CaveGenerator < Bi::Node
     @grid = (grid_width*grid_height).times.map{ rand(100)<50?0:1 }
     self.border grid_width, grid_height
     @nodes = grid_height.times.map{|y| grid_width.times.map{|x|
-      n = Bi::Node.new
-      n.set_position x*4,y*4
-      n.set_size 4,4
-      add n
-      n
+      add Bi::Node.xywh x*4,y*4,4,4
     }}.flatten
     self.update_grids
     self.create_timer(500,-1){|t,delta|

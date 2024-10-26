@@ -20,13 +20,13 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   layer.add face,:center,:center
   # shader
   shader_vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
-  shader_frag_distortion = SHADER_HEADER + assets.read("assets/shaders/distortion.frag")
-  layer.shader = Bi::Shader.new shader_vert,shader_frag_distortion
-  layer.create_timer(500,-1) {|timer,dt|
-    layer.set_shader_extra_data 0, rand
-    layer.set_shader_extra_data 1, rand
-    layer.set_shader_extra_data 2, rand
-    layer.set_shader_extra_data 3, 0
+  shader_frag = SHADER_HEADER + assets.read("assets/shaders/collapse.frag")
+  layer.shader = Bi::Shader.new shader_vert,shader_frag
+  # animation
+  t=0
+  layer.create_timer(0,-1) {|timer,dt|
+    t+=dt/2000.0
+    face.set_shader_extra_data 0, Math::sin(t).abs
   }
 end
 
