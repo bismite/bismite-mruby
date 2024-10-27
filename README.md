@@ -23,6 +23,16 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 12.0.0 - 2024/10/28
+- update mruby-libbismite 7.2.0
+  - new function `Bi::Node.rect` etc
+  - update `Bi::Node#add` with position
+  - add `String#to_color`, `Integer#to_color`
+  - `Bi::Node#color=` accepts `Bi::Color`, `Integer`, `String`
+  - see <https://github.com/bismite/mruby-libbismite>
+- add new samples: version.rb, simple.rb, shader-collapse.rb, color-setter.rb
+- update samples: color-tint.rb, label-linewrap.rb, label.rb
+- bismite.rb use bismite-mruby/bismite-mrbc in same directory
 ## 11.0.2 - 2024/10/13
 - fix bismite.rb
 ## 11.0.1 - 2024/10/13
