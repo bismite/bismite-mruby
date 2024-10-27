@@ -9,7 +9,7 @@ COMMON_DEFINES = %w(
   MRB_STR_LENGTH_MAX=0
   MRB_ARY_LENGTH_MAX=0
 )
-COMMON_CFLAGS = %w(-Wall -Werror-implicit-function-declaration -Wwrite-strings -std=c11 -O2 -g0)
+COMMON_CFLAGS = %w(-Wall -Werror-implicit-function-declaration -Wwrite-strings -std=gnu11 -O2 -g0)
 
 def include_gems(conf,target,without_bin=false)
 

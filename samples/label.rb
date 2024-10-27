@@ -1,3 +1,4 @@
+
 Bi::init 480,320, title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
   layer = Bi::Layer.new
@@ -23,13 +24,12 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
     fonts.each{|font|
       label = Bi::Label.new font
       label.set_text text
-      label.set_position 10, y*18
-      label.color = Bi::Color.new(0, 0, 0, 128)
-      label.tint = Bi::Color.new(0, 0, 0xff, 128)
-      label.set_color_with_range 3,6, Bi::Color.new(0xff,0,0,0xff)
-      label.set_tint_with_range 9,12, Bi::Color.new(0,0xff,0,0xff)
-      label.background_color = Bi::Color.new(0xff,0xff,0xff,0xff)
-      layer.add label
+      label.color = Bi::Color.black
+      label.tint = 0xffff0080
+      label.set_color_with_range 3,6, Bi::Color.rgb(0xff0000)
+      label.set_tint_with_range 9,12, Bi::Color.rgb(0x00ff00)
+      label.background_color = Bi::Color.white
+      layer.add label,10, y*18
       y += 1
     }
   }

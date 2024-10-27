@@ -16,21 +16,21 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
   layer.set_texture 0, bg_tex
   layer.set_texture 1, mush_tex
   Bi::layers.add layer
-  # Modulate
+  # Color(Modulate)
   [0xFF0000FF,0x00FF00FF,0x0000FFFF,0x000000FF].each_with_index{|color,x|
     mushroom = newmushroom(mush_tex)
-    mushroom.color = Bi::Color.rgba32(color)
+    mushroom.color = color
     layer.add mushroom,20+x*100,200
   }
   # Tint
   [0xFF000066,0x00FF0066,0x0000FF66,0xFFFFFFFF].each_with_index{|color,x|
     mushroom = newmushroom(mush_tex)
-    mushroom.tint = Bi::Color.rgba32(color)
+    mushroom.tint = color
     layer.add mushroom,20+x*100,20
   }
   # Transparent
   mushroom = newmushroom(mush_tex)
-  mushroom.color = Bi::Color.rgba32(0xffffff33)
+  mushroom.opacity = 0.5
   mushroom.anchor = :center
   layer.add mushroom,Bi.w/2, Bi.h/2
 }
