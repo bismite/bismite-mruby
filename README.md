@@ -23,6 +23,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 13.0.0 - 2024/11/03
+- update libbismite 11.0.0
+  - Cropped textures are now handled by shaders.
+- fix samples: fix deprecated `set_color` (event-keyboard.rb, event-menu.rb, event-trace-cursor.rb, geometry-rectangle.rb, spotlight.rb, strech_box.rb)
 ## 12.0.0 - 2024/10/28
 - update mruby-libbismite 7.2.0
   - new function `Bi::Node.rect` etc

@@ -54,7 +54,7 @@ class Requires
 end
 
 def version
-  puts "bismite version 12.0.0"
+  puts "bismite version 13.0.0"
 end
 
 def usage
