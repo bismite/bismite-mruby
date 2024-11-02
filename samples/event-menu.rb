@@ -67,10 +67,10 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   root.add face
 
   menu = Menu.new(font)
-  menu.add_item("RED"){|item| face.set_color 0xff,0,0 }
-  menu.add_item("GREEN"){|item| face.set_color 0,0xff,0 }
-  menu.add_item("BLUE"){|item| face.set_color 0,0,0xff }
-  menu.add_item("WHITE"){|item| face.set_color 0xff,0xff,0xff }
+  menu.add_item("RED"){|item| face.color = 0xff0000ff }
+  menu.add_item("GREEN"){|item| face.color = 0x00ff00ff }
+  menu.add_item("BLUE"){|item| face.color = 0x0000ffff }
+  menu.add_item("WHITE"){|item| face.color = 0xffffffff }
   menu.set_position 240,160
   root.add menu
 

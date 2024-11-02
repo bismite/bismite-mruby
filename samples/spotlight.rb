@@ -15,7 +15,7 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
   layer1.set_texture 0, bg_tex
   layer1.set_texture 1, mushroom_tex
   shadow = Bi::Node.rect Bi.w,Bi.h
-  shadow.set_color 0,0,0,128
+  shadow.color = 0x00000080
   layer1.add shadow
   # 2nd layer (spotlight)
   layer2 = Bi::Layer.new

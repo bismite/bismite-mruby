@@ -57,7 +57,7 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   layer = Bi::Layer.new
   root = Bi::Node.new
   layer.add root
-  root.set_color 0x33,0,0
+  root.color = 0x330000ff
   root.set_size Bi.w,Bi.h
   Bi::layers.add layer
 

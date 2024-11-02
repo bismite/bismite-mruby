@@ -15,7 +15,7 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
   labels = 15.times.map{|i|
     label = Bi::Label.new font
     label.anchor = :bottom_right
-    label.set_color 0xff, 0xff, 0xff, (0xff*(1.0-i*0.05)).to_i
+    label.color = Bi::Color.new(0xff, 0xff, 0xff, (0xff*(1.0-i*0.05)).to_i)
     label.text = "Press any Key"
     root.add label,Bi.w - 10, 10 + i*20
     label

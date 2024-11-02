@@ -6,7 +6,7 @@ class Particle < Bi::Node
     self.set_size tex.w,tex.h
     self.set_position x,y
     self.anchor = :center
-    self.set_color rand(0xFF),rand(0xFF),rand(0xFF),0xff
+    self.color = Bi::Color.new(rand(0xFF),rand(0xFF),rand(0xFF),0xff)
     @life = @life_max = 200
   end
   def life=(life)
