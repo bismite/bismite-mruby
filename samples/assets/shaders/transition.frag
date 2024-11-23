@@ -7,8 +7,8 @@ uniform sampler2D sampler[16];
 uniform float time;
 uniform vec2 resolution;
 uniform float scale;
-uniform mat4 layer_extra_data;
-out vec4 output_color;
+uniform mat4 shader_extra_data;
+out vec4 color;
 
 vec4 getTextureColor(int samplerID,vec2 xy) {
   if(samplerID==0){ return texture(sampler[0], xy); }
@@ -30,21 +30,18 @@ vec4 getTextureColor(int samplerID,vec2 xy) {
   return vec4(0);
 }
 
-const float GRID_SIZE = 50.0;
-const float S_GRID_SIZE = 5.0;
+const float GRID_SIZE = 32.0;
+const float S_GRID_SIZE = 4.0;
 
 void main()
 {
-  // float progress = (1.0 + sin(time)) / 2.0;
-  float progress = layer_extra_data[0][0];
-  // output_color = c0*progress + c1*(1.0-progress);
-
+  float progress = shader_extra_data[0][0];
   vec2 xy = gl_FragCoord.xy / scale;
   xy = floor(xy / S_GRID_SIZE) * S_GRID_SIZE;
   vec2 tmp = fract(xy / GRID_SIZE);
-  if ( tmp.x + tmp.y > progress * 2.0 ) {
-    output_color = getTextureColor(0, uv);
+  if ( (tmp.x + tmp.y)/2.0 < progress ) {
+    color = getTextureColor(0, uv);
   }else{
-    output_color = getTextureColor(1, uv);
+    color = getTextureColor(1, uv);
   }
 }
