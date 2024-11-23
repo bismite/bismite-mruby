@@ -1,11 +1,11 @@
 
-Bi::init 480,320, title:__FILE__
+Bi::init 480,320, title:__FILE__, highdpi:true
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  Bi::color = Bi::Color.rgb 0x330000
-  layer = Bi::Layer.new
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  Bi.add shader_node
   texture = assets.texture "assets/font.png", false
-  layer.set_texture 0, texture
+  shader_node.set_texture 0, texture
   # font and text
   font = Bi::Font.new(texture,assets.read("assets/font14b.dat"))
   text = [
@@ -18,7 +18,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   # column
   col = Bi::Node.xywh 40,0,200,Bi.h
   col.color = 0x003311FF
-  layer.add col
+  shader_node.add col
   # labels
   line_height =14
   y=Bi.h-line_height

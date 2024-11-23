@@ -6,25 +6,21 @@ end
 
 Bi.init 480,320,title:__FILE__,hidpi:true
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  # Texture
-  bg_tex = assets.texture("assets/check.png")
-  face_tex = assets.texture("assets/face01.png")
-  # Sprite
-  face = face_tex.to_sprite
-  # layer
-  layer = Bi::Layer.new
-  layer.set_texture 0, bg_tex
-  layer.set_texture 1, face_tex
-  Bi::layers.add layer
-  layer.add bg_tex.to_sprite
-  layer.add face,:center,:center
-  # shader
+  bg = assets.texture("assets/check.png").to_sprite
+  face = assets.texture("assets/face01.png").to_sprite
+  face.anchor = :center
+  shader_node = Bi::ShaderNode.new
+  shader_node.set_texture 0, bg.texture
+  shader_node.set_texture 1, face.texture
+  shader_node.add bg
+  shader_node.add face,240,160
   shader_vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
   shader_frag = SHADER_HEADER + assets.read("assets/shaders/collapse.frag")
-  layer.shader = Bi::Shader.new shader_vert,shader_frag
+  shader_node.shader = Bi::Shader.new shader_vert,shader_frag
+  Bi.add shader_node
   # animation
   t=0
-  layer.create_timer(0,-1) {|timer,dt|
+  shader_node.create_timer(0,-1) {|timer,dt|
     t+=dt/2000.0
     face.set_shader_extra_data 0, Math::sin(t).abs
   }

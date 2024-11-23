@@ -10,21 +10,20 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   face.set_scale 2,2
   face.anchor = :center
 
-  # layer
-  layer = Bi::Layer.new
-  layer.add bg
-  layer.add face
-  layer.set_texture 0, face.texture
-  layer.set_texture 1, bg.texture
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.add bg
+  shader_node.add face
+  shader_node.set_texture 0, face.texture
+  shader_node.set_texture 1, bg.texture
+  Bi.add shader_node
 
-  timer_rotate = Bi.layers.create_timer(0,-1){|timer,dt| face.angle += dt*0.01 }
+  timer_rotate = Bi.default_framebuffer_node.create_timer(0,-1){|timer,dt| face.angle += dt*0.01 }
   face.create_timer(500,5){|timer,dt|
     face.tint = Bi::Color.new(rand(0xff),rand(0xff),rand(0xff),0xff)
   }
 
   bg.on_click {|n,x,y,button,press|
-    Bi.layers.remove_timer timer_rotate if timer_rotate
+    Bi.default_framebuffer_node.remove_timer timer_rotate if timer_rotate
     timer_rotate = nil
   }
 end

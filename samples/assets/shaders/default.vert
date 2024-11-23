@@ -1,10 +1,9 @@
 uniform mat4 camera;
-in vec2 resolution;
 in vec2 node_size;
+in mat4 transform;
 in vec2 vertex;
 in vec4 texture_uv;
 in vec4 texture_crop_uv;
-in mat4 transform;
 in int texture_index;
 in vec4 tint;
 in vec4 modulate;

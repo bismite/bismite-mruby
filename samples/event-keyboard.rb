@@ -1,15 +1,15 @@
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load{|assets|
-  Bi.color = Bi::Color.new 0x33,0,0,0xff
+
   # texture
   texture = assets.texture "assets/font.png"
-  # layer
-  layer = Bi::Layer.new
-  layer.set_texture 0, texture
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  shader_node.set_texture 0, texture
+  Bi.add shader_node
   root = Bi::Node.new
-  layer.add root
+  shader_node.add root
   # font and labels
   font = Bi::Font.new texture, assets.read("assets/font12.dat")
   labels = 15.times.map{|i|

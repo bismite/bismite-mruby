@@ -66,10 +66,10 @@ end
 Bi.init 480,320, title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
   bg_tex = assets.texture("assets/sky.png")
-  layer = Bi::Layer.new
-  layer.set_texture 0, bg_tex
-  layer.add bg_tex.to_sprite
-  layer.add LineIntersection.new
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.set_texture 0, bg_tex
+  shader_node.add bg_tex.to_sprite
+  shader_node.add LineIntersection.new
+  Bi.add shader_node
 }
 Bi::start_run_loop

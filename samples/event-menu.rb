@@ -74,13 +74,13 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   menu.set_position 240,160
   root.add menu
 
-  # layer
-  layer = Bi::Layer.new
-  layer.add root
-  layer.set_texture 0, font_texture
-  layer.set_texture 1, face_texture
-  layer.set_texture 2, root.texture
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  shader_node.add root
+  shader_node.set_texture 0, font_texture
+  shader_node.set_texture 1, face_texture
+  shader_node.set_texture 2, root.texture
+  Bi.add shader_node
 }
 
 Bi::start_run_loop

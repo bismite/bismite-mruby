@@ -43,8 +43,8 @@ end
 Bi.init 480,320, title:__FILE__
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
-  layer = Bi::Layer.new
-  layer.add CaveGenerator.new(Bi.w,Bi.h)
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.add CaveGenerator.new(Bi.w,Bi.h)
+  Bi.add shader_node
 }
 Bi.start_run_loop

@@ -148,11 +148,11 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   srand(Time.now.to_i)
   sky = assets.texture "assets/sky.png"
   ball = assets.texture "assets/ball.png"
-  layer = Bi::Layer.new
-  layer.add RectCollide.new sky,ball
-  layer.set_texture 0, sky
-  layer.set_texture 1,ball
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.add RectCollide.new sky,ball
+  shader_node.set_texture 0, sky
+  shader_node.set_texture 1,ball
+  Bi.add shader_node
 }
 
 Bi::start_run_loop

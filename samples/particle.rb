@@ -29,7 +29,7 @@ class Particle < Bi::Node
   end
 end
 
-class ParticleLayer < Bi::Layer
+class ParticleShaderNode < Bi::ShaderNode
   def initialize(assets)
     super()
     @root = assets.texture("assets/sky.png").to_sprite
@@ -61,6 +61,6 @@ end
 
 Bi::init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load do |assets|
-  Bi::layers.add ParticleLayer.new(assets)
+  Bi.add ParticleShaderNode.new(assets)
 end
 Bi::start_run_loop

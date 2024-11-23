@@ -53,13 +53,13 @@ end
 
 Bi.init 480,320,title:__FILE__,highdpi:false
 Bi::Archive.load("assets.dat","abracadabra"){|assets|
-  # layer
-  layer = Bi::Layer.new
+
+  shader_node = Bi::ShaderNode.new
   root = Bi::Node.new
-  layer.add root
+  shader_node.add root
   root.color = 0x330000ff
   root.set_size Bi.w,Bi.h
-  Bi::layers.add layer
+  Bi.add shader_node
 
   # texture
   tex = assets.texture("assets/frame.png")
@@ -68,6 +68,6 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   box.set_scale 3,3
   box.set_position 60,20
   root.add box
-  layer.set_texture 0, box.texture
+  shader_node.set_texture 0, box.texture
 }
 Bi::start_run_loop

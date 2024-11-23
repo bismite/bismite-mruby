@@ -25,11 +25,11 @@ Bi::Archive.load("assets.dat","abracadabra"){|assets|
   bg_tex = assets.texture "assets/sky.png"
 
   bg = bg_tex.to_sprite
-  layer = Bi::Layer.new
-  layer.add bg
-  layer.set_texture 0, ball_tex
-  layer.set_texture 1, bg_tex
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.add bg
+  shader_node.set_texture 0, ball_tex
+  shader_node.set_texture 1, bg_tex
+  Bi.add shader_node
 
   bg.on_move_cursor {|n,x,y|
     particle = Particle.new ball_tex, x, y

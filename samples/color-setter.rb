@@ -6,10 +6,10 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
     n = Bi::Node.xywh 30+x*90,200-y*90, 60,60
     rects << n
   }}
-  # layer
-  layer = Bi::Layer.new
-  rects.each{|r| layer.add r }
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  rects.each{|r| shader_node.add r }
+  Bi.add shader_node
   #
   rects[0].set_color Bi::Color.rgba(0xFF00FFFF) # Magenta
   rects[1].set_tint  Bi::Color.rgba(0xFF00FFFF) # Magenta

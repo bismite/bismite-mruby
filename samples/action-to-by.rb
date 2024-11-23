@@ -34,14 +34,14 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   # To Actions
   to_actions face_blue
   #
-  layer = Bi::Layer.new
-  layer.add bg_tex.to_sprite
-  layer.add face_green
-  layer.add face_red
-  layer.add face_blue
-  layer.set_texture 0, bg_tex
-  layer.set_texture 1, face_tex
-  Bi::layers.add layer
+  shader_node = Bi::ShaderNode.new
+  shader_node.add bg_tex.to_sprite
+  shader_node.add face_green
+  shader_node.add face_red
+  shader_node.add face_blue
+  shader_node.set_texture 0, bg_tex
+  shader_node.set_texture 1, face_tex
+  Bi.add shader_node
 end
 
 Bi::start_run_loop

@@ -1,7 +1,7 @@
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load{|assets|
-  Bi.color = Bi::Color.new(0x33,0,0,0xff)
+
   # texture
   font_tex = assets.texture "assets/font.png"
   # Labels
@@ -25,10 +25,10 @@ Bi::Archive.new("assets.dat","abracadabra").load{|assets|
       l.text = texts[i]
     }
   }
-  # layer
-  layer = Bi::Layer.new
-  layer.add root
-  layer.set_texture 0, font_tex
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  shader_node.add root
+  shader_node.set_texture 0, font_tex
+  Bi.add shader_node
 }
 Bi::start_run_loop

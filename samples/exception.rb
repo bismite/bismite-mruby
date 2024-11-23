@@ -15,14 +15,14 @@ end
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load{|assets|
-  Bi.color = Bi::Color.new 0x33,0,0,0xff
+
   face_tex = assets.texture("assets/face01.png")
   bad_node = BadNode.new face_tex
-  # layer
-  layer = Bi::Layer.new
-  layer.add bad_node
-  layer.set_texture 0, face_tex
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  shader_node.add bad_node
+  shader_node.set_texture 0, face_tex
+  Bi.add shader_node
 }
 
 

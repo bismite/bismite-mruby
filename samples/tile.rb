@@ -7,11 +7,11 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   # texture
   wall = assets.texture "assets/wall16.png"
   floor = assets.texture "assets/floor16.png"
-  # layer
-  layer = Bi::Layer.new
-  layer.set_texture 0, wall
-  layer.set_texture 1, floor
-  Bi::layers.add layer
+
+  shader_node = Bi::ShaderNode.new
+  shader_node.set_texture 0, wall
+  shader_node.set_texture 1, floor
+  Bi.add shader_node
   # tiles
   @tiles = 3.times.map{|i| [wall, [i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE] ] }
   @tiles+= 3.times.map{|i| [floor, [i*TILE_SIZE,0,TILE_SIZE,TILE_SIZE] ] }
@@ -20,7 +20,7 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   w.times{|x| h.times{|y|
     tile = @tiles.sample
     tile = tile.first.to_sprite(*tile.last)
-    layer.add tile
+    shader_node.add tile
     tile.x = x*TILE_SIZE
     tile.y = y*TILE_SIZE
   }}
