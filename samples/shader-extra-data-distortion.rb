@@ -12,7 +12,6 @@ Bi::Archive.new("assets.dat","abracadabra").load do |assets|
   shader_frag = SHADER_HEADER + assets.read("assets/shaders/distortion.frag")
   shader_node.shader = Bi::Shader.new shader_vert,shader_frag
   Bi.add shader_node
-  p [shader_node.w,shader_node.h]
   # Draw
   bg = assets.texture("assets/check.png").to_sprite
   face = assets.texture("assets/face01.png").to_sprite

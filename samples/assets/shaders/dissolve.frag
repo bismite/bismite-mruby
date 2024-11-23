@@ -32,21 +32,19 @@ vec4 getTextureColor(int index,vec2 xy) {
   return vec4(0.0);
 }
 
-vec4 blur(int i, vec2 direction,float power)
-{
-  vec4 c = vec4(0.0);
-  vec2 s = direction/resolution;
-  float d = power / 110.0;
-  for(float q=1.0; q<=10.0; q+=1.0) {
-    c += getTextureColor(i, uv.xy + s*q ) * d*(11.0-q);
-    c += getTextureColor(i, uv.xy - s*q ) * d*(11.0-q);
-  }
-  return c;
-}
-
 void main()
 {
-  float power = cos(time*3.0)*0.5 + 0.5;
-  vec4 c = getTextureColor(_texture_index, uv) * (1.0-power);
-  color = c + blur(_texture_index, vec2(1.0,0.0), power );
+  vec4 noise = getTextureColor(1, uv);
+  vec4 c = getTextureColor(0, uv);
+  float level = sin(time*2.0) + 0.1;
+  float height = noise.r;
+  if( height > level ){
+    if( abs(height-level) < 0.01 && c.a > 0.0 ){
+      color = vec4(1.0,0.0,0.0,c.a);
+    }else{
+      color = c;
+    }
+  }else{
+    discard;
+  }
 }
