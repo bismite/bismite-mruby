@@ -23,6 +23,12 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 14.0.0
+- update libbismite 12.1.1
+- update mruby-libbismite 8.1.0
+- update samples.
+- add new sample: framebuffer-node.rb, framebuffer-mrt.rb
+- rename samples/transition.rb -> samples/shader-transition.rb
 ## 13.0.0 - 2024/11/03
 - update libbismite 11.0.0
   - Cropped textures are now handled by shaders.
