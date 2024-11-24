@@ -3,12 +3,12 @@ require_relative "utils"
 
 TARGET = ARGV.first
 DOWNLOAD_DIR="download/#{TARGET}"
-LIB_VER="12.0.1"
+LIB_VER="12.1.1"
 LIB_NAME="libbismite-#{TARGET}-#{LIB_VER}.tgz"
 LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LIB_NAME}"
 GITHUB_URLS = [
   %w(mruby mruby 3.3.0),
-  ENV["MRUBY_LIBBISMITE"] ? nil : %w(bismite mruby-libbismite 7.2.0),
+  ENV["MRUBY_LIBBISMITE"] ? nil : %w(bismite mruby-libbismite 8.0.0),
   ENV["MRUBY_BI_MISC"] ? nil : %w(bismite mruby-bi-misc 4.2.0),
   ENV["MRUBY_SDL_MIXER"] ? nil : %w(bismite mruby-sdl-mixer 1.0.0),
   ENV["MRUBY_EMSCRIPTEN"] ? nil : %w(bismite mruby-emscripten 2.0.0)
