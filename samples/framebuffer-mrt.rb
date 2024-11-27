@@ -9,7 +9,7 @@ def make_framebuffer_node(w,h)
   # 2 Render Target Textures
   fb_node.framebuffer = Bi::Framebuffer.new Bi.w,Bi.h,2
   fb_node.flip_vertical = true
-  fb_tex = fb_node.framebuffer.to_texture(0)
+  fb_tex = fb_node.framebuffer.textures[0]
   fb_node.set_texture fb_tex, 0,0,fb_tex.w,fb_tex.h
   fb_node
 end
@@ -31,9 +31,9 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   framebuffer_node = make_framebuffer_node(Bi.w,Bi.h)
   framebuffer_node.add mrt_shader_node
   # Silhouette Node (Second Texture of Framebuffer)
-  second_node = framebuffer_node.framebuffer.to_texture(1).to_sprite
+  second_node = framebuffer_node.framebuffer.textures[1].to_sprite
   second_node.flip_vertical = true
-  second_node.set_position -20,-20
+  second_node.set_position(-20,-20)
 
   # Draw
   shader_node = Bi::ShaderNode.new

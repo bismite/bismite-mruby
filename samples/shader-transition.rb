@@ -12,7 +12,7 @@ class SceneA < Bi::Node
     self.flip_vertical = true
     self.set_size(w,h)
     self.framebuffer = Bi::Framebuffer.new(w,h)
-    tex = self.framebuffer.to_texture(0)
+    tex = self.framebuffer.textures[0]
     self.set_texture tex,0,0,tex.w,tex.h
     shader = Bi::ShaderNode.new
     self.add shader
@@ -39,7 +39,7 @@ class SceneB < Bi::Node
     self.flip_vertical = true
     self.set_size(w,h)
     self.framebuffer = Bi::Framebuffer.new(w,h)
-    tex = self.framebuffer.to_texture(0)
+    tex = self.framebuffer.textures[0]
     self.set_texture tex,0,0,tex.w,tex.h
     shader = Bi::ShaderNode.new
     self.add shader

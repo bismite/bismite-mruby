@@ -8,7 +8,7 @@ def make_framebuffer_node(w,h)
   fb_node = Bi::Node.rect w,h
   fb_node.framebuffer = Bi::Framebuffer.new Bi.w,Bi.h
   fb_node.flip_vertical = true
-  fb_tex = fb_node.framebuffer.to_texture(0)
+  fb_tex = fb_node.framebuffer.textures[0]
   fb_node.set_texture fb_tex, 0,0,fb_tex.w,fb_tex.h
   fb_node
 end

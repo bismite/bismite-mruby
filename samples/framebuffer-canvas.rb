@@ -16,10 +16,10 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   fb_shader.add face
   fb_node.add fb_shader
   Bi.draw_framebuffer_node fb_node
-  fb_node.framebuffer.save_png "canvas.png"
+  fb_node.framebuffer.textures[0].save_png "canvas.png"
 
   # Sprite from Framebuffer
-  fb_texture = fb_node.framebuffer.to_texture
+  fb_texture = fb_node.framebuffer.textures[0]
   new_sprite = fb_texture.to_sprite
   new_sprite.flip_vertical = true
   new_sprite.set_position 100,100

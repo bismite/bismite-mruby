@@ -6,7 +6,7 @@ in vec4 _modulate;
 uniform sampler2D sampler[16];
 uniform float time;
 uniform vec2 resolution;
-uniform float scale;
+uniform vec2 viewport_size;
 uniform mat4 shader_extra_data;
 out vec4 color;
 
@@ -35,6 +35,7 @@ const float S_GRID_SIZE = 4.0;
 
 void main()
 {
+  float scale = viewport_size.x / resolution.x;
   float progress = shader_extra_data[0][0];
   vec2 xy = gl_FragCoord.xy / scale;
   xy = floor(xy / S_GRID_SIZE) * S_GRID_SIZE;
