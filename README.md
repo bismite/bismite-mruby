@@ -23,6 +23,12 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 15.1.0 - 2024/11/28
+- update libbismite 12.3.0
+  - fix image flip.
+- update mruby-libbismite 9.1.0
+  - add TextureMapping class. add Bi::Node#set_texture_mapping()
+  - add Bi::Node#children
 ## 15.0.0
 - update libbismite 12.2.0
 - update mruby-libbismite 9.0.0
