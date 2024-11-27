@@ -23,6 +23,12 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 15.0.0
+- update libbismite 12.2.0
+- update mruby-libbismite 9.0.0
+- update emscripten 3.1.71
+- update samples
+  - use framebuffer textures attribute, remove scale uniform from shaders.
 ## 14.0.0
 - update libbismite 12.1.1
 - update mruby-libbismite 8.1.0
