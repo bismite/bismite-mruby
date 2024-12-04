@@ -23,6 +23,11 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 16.0.0 - 2024/12/05
+- update libbismite 12.3.1
+  - call glFlush() after framebuffer drawed.
+- update mruby-libbismite 10.0.0
+  - rename function Bi::ShaderNode#z_order -> Bi::ShaderNode#z
 ## 15.1.0 - 2024/11/28
 - update libbismite 12.3.0
   - fix image flip.
