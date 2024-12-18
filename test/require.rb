@@ -1,5 +1,7 @@
-p [:dollar_zero, $0]
-p [:ARGV, ARGV]
-puts "this is require.rb"
 
-require "platform.rb"
+# run `bismite run require.rb`
+
+# import require-sub.rb
+#require lib/require-sub
+
+puts "this is require.rb"

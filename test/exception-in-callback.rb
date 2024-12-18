@@ -1,9 +1,9 @@
 
 class BadNode < Bi::Node
-  def initialize(tex)
+  def initialize
     super()
-    self.set_texture tex,0,0,tex.w,tex.h
-    self.set_size tex.w,tex.h
+    self.set_position 100,100
+    self.set_size 100,100
     @i = 0
     self.create_timer(500,3){|timer,dt|
       puts @i
@@ -15,15 +15,10 @@ end
 
 Bi.init 480,320, title:__FILE__
 Bi::Archive.new("assets.dat","abracadabra").load{|assets|
-
-  face_tex = assets.texture("assets/face01.png")
-  bad_node = BadNode.new face_tex
-
+  bad_node = BadNode.new
   shader_node = Bi::ShaderNode.new
   shader_node.add bad_node
-  shader_node.set_texture 0, face_tex
   Bi.add shader_node
 }
-
 
 Bi::start_run_loop

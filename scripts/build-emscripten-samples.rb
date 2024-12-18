@@ -10,32 +10,42 @@ def run(cmd)
 end
 
 HOST = RUBY_PLATFORM.include?("darwin") ? "macos" : "linux"
+BISMITE = File.expand_path "build/#{HOST}/bin/bismite"
+TEMPLATE = File.expand_path "build/emscripten/template-emscripten/wasm-single"
 KEY = "abracadabra"
 
-template = "build/emscripten/template-emscripten/wasm-single"
-unless Dir.exist? template
-  puts "missing: #{template}"
+unless File.exist? BISMITE
+  puts "missing: #{BISMITE}"
   exit
 end
 
-dst_dir = "build/emscripten/samples"
-mkdir_p dst_dir
-run "build/#{HOST}/bin/bismite-asset-pack samples/assets #{dst_dir} #{KEY}"
+unless Dir.exist? TEMPLATE
+  puts "missing: #{TEMPLATE}"
+  exit
+end
 
-Dir.chdir("samples"){
-  compiler = "../build/#{HOST}/bin/bismite"
-  template = File.join "../", template
-  dst_dir = File.join "../", dst_dir
-  Dir["*.rb"].each{|file|
-    name = File.basename(file,File.extname(file))
-    if file=="require2.rb"
-      cmd = "#{compiler} compile #{dst_dir}/#{name}.mrb #{file} -Ilib"
-    else
-      cmd = "#{compiler} compile #{dst_dir}/#{name}.mrb #{file}"
-    end
-    run cmd
-    html = File.read "#{template}/index.html"
-    html.gsub!("main.mrb","#{name}.mrb")
-    File.write "#{dst_dir}/#{name}.html", html
+def compile(dir)
+  dst_dir = File.expand_path "build/emscripten/#{dir}"
+  mkdir_p dst_dir
+  assets_dir = "#{dir}/assets"
+  if Dir.exist? assets_dir
+    run "build/#{HOST}/bin/bismite-asset-pack #{assets_dir} #{dst_dir} #{KEY}"
+  end
+  Dir.chdir(dir){
+    Dir["*.rb"].each{|file|
+      name = File.basename(file,File.extname(file))
+      if file=="require2.rb"
+        cmd = "#{BISMITE} compile #{dst_dir}/#{name}.mrb #{file} -Ilib"
+      else
+        cmd = "#{BISMITE} compile #{dst_dir}/#{name}.mrb #{file}"
+      end
+      run cmd
+      html = File.read "#{TEMPLATE}/index.html"
+      html.gsub!("main.mrb","#{name}.mrb")
+      File.write "#{dst_dir}/#{name}.html", html
+    }
   }
-}
+end
+
+compile "samples"
+compile "test"
