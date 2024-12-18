@@ -2,7 +2,7 @@
 
 MRUBY=File.join(File.expand_path(File.dirname($0)),"bismite-mruby")
 MRBC=File.join(File.expand_path(File.dirname($0)),"bismite-mrbc")
-BISMITE_VERSION="16.0.0"
+BISMITE_VERSION="16.1.0"
 
 class Requires
   attr_reader :files

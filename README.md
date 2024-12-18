@@ -23,6 +23,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 16.1.0
+- update libbismite 13.0.0, mruby-libbismite 10.1.0.
+  - more robust timer processing.
+  - add Bi::Timer#node, Bi::Node#timers
 ## 16.0.0 - 2024/12/05
 - update libbismite 12.3.1
   - call glFlush() after framebuffer drawed.
