@@ -9,7 +9,8 @@ LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LI
 GITHUB_URLS = [
   %w(mruby mruby 3.3.0),
   ENV["MRUBY_LIBBISMITE"] ? nil : %w(bismite mruby-libbismite 10.1.0),
-  ENV["MRUBY_BI_MISC"] ? nil : %w(bismite mruby-bi-misc 4.2.0),
+  ENV["MRUBY_BI_MISC"] ? nil : %w(bismite mruby-bi-misc 5.0.0),
+  ENV["MRUBY_BI_CRC"] ? nil : %w(bismite mruby-bi-crc 1.0.0),
   ENV["MRUBY_SDL_MIXER"] ? nil : %w(bismite mruby-sdl-mixer 1.0.0),
   ENV["MRUBY_EMSCRIPTEN"] ? nil : %w(bismite mruby-emscripten 2.0.0)
 ].compact

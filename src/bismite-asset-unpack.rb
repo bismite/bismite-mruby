@@ -6,7 +6,7 @@ if ARGV.size != 3
 end
 SRC = ARGV[0]
 DST = ARGV[1]
-KEY = Bi::crc64 0,ARGV[2]
+KEY = Bi::crc64 ARGV[2]
 
 def mkdir_p(dst)
   dirs = dst.split("/").reject(&:empty?)

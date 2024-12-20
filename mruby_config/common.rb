@@ -23,6 +23,7 @@ def include_gems(conf,target,without_bin=false)
   conf.gem github: 'iij/mruby-iijson'
   conf.gem( ENV['MRUBY_LIBBISMITE'] || "#{BUILD_DIR}/#{target}/mruby-libbismite" )
   conf.gem( ENV['MRUBY_BI_MISC']    || "#{BUILD_DIR}/#{target}/mruby-bi-misc" )
+  conf.gem( ENV['MRUBY_BI_CRC']     || "#{BUILD_DIR}/#{target}/mruby-bi-crc" )
   conf.gem( ENV['MRUBY_SDL_MIXER']  || "#{BUILD_DIR}/#{target}/mruby-sdl-mixer" )
   conf.gem( ENV['MRUBY_EMSCRIPTEN'] || "#{BUILD_DIR}/#{target}/mruby-emscripten" )
 end
