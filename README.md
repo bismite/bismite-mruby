@@ -23,6 +23,8 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 16.2.0 - 2024/12/21
+- add mruby-bi-crc, update mruby-bi-misc 5.0.0
 ## 16.1.0
 - update libbismite 13.0.0, mruby-libbismite 10.1.0.
   - more robust timer processing.
