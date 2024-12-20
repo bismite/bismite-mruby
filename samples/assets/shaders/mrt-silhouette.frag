@@ -8,9 +8,11 @@ in vec4 _modulate;
 uniform sampler2D sampler[16];
 uniform float time;
 uniform vec2 resolution;
+uniform float scale;
 uniform mat4 shader_extra_data;
 
 layout (location = 0) out vec4 color0;
+layout (location = 1) out vec4 color1;
 
 vec4 getTextureColor(int index,vec2 xy,vec4 crop) {
   if( index < 0 || 16 <= index ) { return vec4(1.0); }
@@ -43,29 +45,8 @@ vec4 getTextureColor(int index,vec2 xy,vec4 crop) {
 
 void main()
 {
-  vec4 r = getTextureColor(0, uv, crop);
-  vec4 g = getTextureColor(1, uv, crop);
-  vec4 b = getTextureColor(2, uv, crop);
-  vec4 c = getTextureColor(3, uv, crop);
-  vec4 m = getTextureColor(4, uv, crop);
-  vec4 y = getTextureColor(5, uv, crop);
-  vec4 k = getTextureColor(6, uv, crop);
-
-  if(gl_FragCoord.x > 420.0){
-    color0 = k;
-  }else if(gl_FragCoord.x > 360.0){
-    color0 = y;
-  }else if(gl_FragCoord.x > 300.0){
-    color0 = m;
-  }else if(gl_FragCoord.x > 240.0){
-    color0 = c;
-  }else if(gl_FragCoord.x > 180.0){
-    color0 = b;
-  }else if(gl_FragCoord.x > 120.0){
-    color0 = g;
-  }else if(gl_FragCoord.x > 60.0){
-    color0 = r;
-  }else{
-    color0 = k;
-  }
+  vec4 c = getTextureColor(_texture_index, uv, crop);
+  c = vec4(_tint.rgb + c.rgb*(1.0-_tint.a), c.a * _modulate.a );
+  color0 = vec4(0.0, 0.0, 0.0, (c.a>0.0?1.0:0.0)); // silhouette
+  color1 = vec4(c.r, c.g, c.b, c.a );
 }

@@ -3,7 +3,7 @@ require_relative "utils"
 
 TARGET = ARGV.first
 DOWNLOAD_DIR="download/#{TARGET}"
-LIB_VER="13.0.0"
+LIB_VER="14.0.0"
 LIB_NAME="libbismite-#{TARGET}-#{LIB_VER}.tgz"
 LIB_URL="https://github.com/bismite/libbismite/releases/download/#{LIB_VER}/#{LIB_NAME}"
 GITHUB_URLS = [

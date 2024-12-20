@@ -46,7 +46,5 @@ vec4 getTextureColor(int index,vec2 xy,vec4 crop) {
 void main()
 {
   vec4 c = getTextureColor(_texture_index, uv, crop);
-  c = vec4(_tint.rgb + c.rgb*(1.0-_tint.a), c.a * _modulate.a );
-  color0 = vec4(c.r, c.g, c.b, c.a );
-  color1 = vec4(0.0, 0.0, 0.0, (c.a>0.0?1.0:0.0)); // silhouette
+  color1 = vec4(_tint.rgb + c.rgb*(1.0-_tint.a), c.a * _modulate.a );
 }

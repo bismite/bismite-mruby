@@ -4,45 +4,49 @@ else
   SHADER_HEADER="#version 410\n"
 end
 
-def make_framebuffer_node(w,h)
-  fb_node = Bi::Node.rect w,h
-  # 2 Render Target Textures
-  fb_node.framebuffer = Bi::Framebuffer.new Bi.w,Bi.h,2
-  fb_node.flip_vertical = true
-  fb_tex = fb_node.framebuffer.textures[0]
-  fb_node.set_texture fb_tex, 0,0,fb_tex.w,fb_tex.h
-  fb_node
+# 8 Render Target Textures
+#  0: Result
+#  1-7: RGBCMYK
+class MrtFramebufferNode < Bi::Node
+  def initialize
+    super()
+    maptex = $assets.texture("assets/map.png")
+    self.set_size maptex.w, maptex.h
+    self.flip_vertical = true
+    # Framebuffer
+    self.framebuffer = Bi::Framebuffer.new self.w,self.h,8
+    fbtex = self.framebuffer.textures[0]
+    self.set_texture fbtex, 0,0,fbtex.w,fbtex.h
+    # Shader Node 1: render textures 1-7
+    shader_node1 = Bi::ShaderNode.new
+    vert = SHADER_HEADER + $assets.read("assets/shaders/default.vert")
+    frag = SHADER_HEADER + $assets.read("assets/shaders/mrt_rgbcmyk.frag")
+    shader_node1.shader = Bi::Shader.new vert,frag
+    shader_node1.add maptex.to_sprite
+    shader_node1.set_texture 0, maptex
+    # Shader Node 2: render RGBCMYK to texture0
+    shader_node2 = Bi::ShaderNode.new
+    vert = SHADER_HEADER + $assets.read("assets/shaders/default.vert")
+    frag = SHADER_HEADER + $assets.read("assets/shaders/mrt_rgbcmyk_blend.frag")
+    shader_node2.shader = Bi::Shader.new vert,frag
+    shader_node2.add Bi::Node.rect(self.w,self.h)
+    7.times{|i|
+      shader_node2.set_texture i, self.framebuffer.textures[1+i]
+    }
+    self.add shader_node1
+    self.add shader_node2
+  end
 end
 
 Bi.init 480,320,title:__FILE__,highdpi:true
 Bi::Archive.load("assets.dat","abracadabra") do |assets|
-  bg = assets.texture("assets/map.png").to_sprite
-  face = assets.texture("assets/face01.png").to_sprite
-  face.anchor = :center
-  face.set_position Bi.w/2,Bi.h/2
-
-  # Framebuffer Node, Multiple Render Target
-  mrt_shader_node = Bi::ShaderNode.new
-  vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
-  frag = SHADER_HEADER + assets.read("assets/shaders/mrt.frag")
-  mrt_shader_node.shader = Bi::Shader.new vert,frag
-  mrt_shader_node.add face
-  mrt_shader_node.set_texture 0, face.texture
-  framebuffer_node = make_framebuffer_node(Bi.w,Bi.h)
-  framebuffer_node.add mrt_shader_node
-  # Silhouette Node (Second Texture of Framebuffer)
-  second_node = framebuffer_node.framebuffer.textures[1].to_sprite
-  second_node.flip_vertical = true
-  second_node.set_position(-20,-20)
-
+  $assets = assets
+  # Framebuffer Node
+  framebuffer_node = MrtFramebufferNode.new
   # Draw
   shader_node = Bi::ShaderNode.new
-  shader_node.add bg
-  shader_node.add second_node
   shader_node.add framebuffer_node
-  shader_node.set_texture 0,bg.texture
-  shader_node.set_texture 1,second_node.texture
-  shader_node.set_texture 2,framebuffer_node.texture
+  shader_node.set_texture 0,framebuffer_node.texture
   Bi.add shader_node
 end
 Bi::start_run_loop
