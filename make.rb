@@ -32,15 +32,16 @@ run "./scripts/download-required-files.rb #{TARGET}"
 def install_tool(t)
   cp "src/#{t}.rb", File.join(install_path(TARGET),"bin",t)
 end
+TOOLS = %w(bismite bismite-asset-pack bismite-asset-unpack)
 case TARGET
 when "macos","linux"
   install_tool "bismite-config"
+  TOOLS.each{|t| install_tool t }
 when "mingw"
   install_tool "bismite-config-mingw"
 when "emscripten"
   install_tool "bismite-config-emscripten"
 end
-%w(bismite bismite-asset-pack bismite-asset-unpack).each{|t| install_tool t }
 
 #
 # build mruby, build template
