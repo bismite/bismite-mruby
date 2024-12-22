@@ -23,6 +23,10 @@
 2. run `./make.rb mingw`
 
 # Changelog
+## 17.0.0 - 2024/12/23
+- update libbismite 15.0.0, mruby-libbismite 11.0.0, mruby-bi-misc 6.0.0
+  - add Bi::Shader#set_output() and get_output()
+  - add Bi::take_screenshot()
 ## 16.2.0 - 2024/12/21
 - add mruby-bi-crc, update mruby-bi-misc 5.0.0
 ## 16.1.0
