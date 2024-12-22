@@ -11,7 +11,6 @@ uniform vec2 resolution;
 uniform float scale;
 uniform mat4 shader_extra_data;
 
-layout (location = 0) out vec4 color0;
 layout (location = 1) out vec4 color1;
 
 vec4 getTextureColor(int index,vec2 xy,vec4 crop) {

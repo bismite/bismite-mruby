@@ -17,6 +17,10 @@ Bi::Archive.load("assets.dat","abracadabra") do |assets|
   vert = SHADER_HEADER + assets.read("assets/shaders/default.vert")
   frag = SHADER_HEADER + assets.read("assets/shaders/mrt-simple.frag")
   shader_node.shader = Bi::Shader.new vert,frag
+  shader_node.shader.set_output(0,false)
+  shader_node.shader.set_output(1,true)
+  p shader_node.shader.get_output(0)
+  p shader_node.shader.get_output(1)
   shader_node.add Bi::Node.xywh(100,100,100,100)
   fb_node.add shader_node
   # Copy texture[1] -> texture[0]

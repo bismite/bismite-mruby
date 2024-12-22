@@ -22,6 +22,8 @@ class MrtFramebufferNode < Bi::Node
     vert = SHADER_HEADER + $assets.read("assets/shaders/default.vert")
     frag = SHADER_HEADER + $assets.read("assets/shaders/mrt_rgbcmyk.frag")
     shader_node1.shader = Bi::Shader.new vert,frag
+    shader_node1.shader.set_output(0,false)
+    (1..7).each{|index| shader_node1.shader.set_output(index,true) }
     shader_node1.add maptex.to_sprite
     shader_node1.set_texture 0, maptex
     # Shader Node 2: render RGBCMYK to texture0

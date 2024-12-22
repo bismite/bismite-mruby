@@ -10,7 +10,6 @@ uniform float time;
 uniform vec2 resolution;
 uniform mat4 shader_extra_data;
 
-layout (location = 0) out vec4 color0;
 layout (location = 1) out vec4 color1;
 layout (location = 2) out vec4 color2;
 layout (location = 3) out vec4 color3;
